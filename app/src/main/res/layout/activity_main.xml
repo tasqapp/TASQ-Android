@@ -6,13 +6,110 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sup TASQ!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+        <TextView
+            android:id="@+id/add_task_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="65dp"
+            android:layout_marginTop="50dp"
+            android:text="Task Name"
+            android:textColor="@color/text_black"/>
+
+        <EditText
+            android:id="@+id/task_name_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/add_task_label"
+            android:layout_alignLeft="@id/add_task_label"
+            android:text="+ add a task..."
+            android:textColor="@color/text_grey"/>
+
+        <TextView
+            android:id="@+id/due_date_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/task_name_label"
+            android:layout_marginLeft="65dp"
+            android:layout_marginTop="50dp"
+            android:text="Due Date"
+            android:textColor="@color/text_black"/>
+
+        <EditText
+            android:id="@+id/due_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/due_date_label"
+            android:layout_alignLeft="@id/due_date_label"
+            android:text="Ex. September 8th"
+            android:textColor="@color/text_grey"/>
+<!--    TODO: change the due date to be a calendar icon and a time selection to the right of it-->
+
+        <TextView
+            android:id="@+id/task_priority_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/due_date"
+            android:layout_marginLeft="65dp"
+            android:layout_marginTop="50dp"
+            android:text="Task Priority"
+            android:textColor="@color/text_black"/>
+
+        <Spinner
+            android:id="@+id/priority_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:prompt="@string/priority_prompt"
+            android:entries="@array/priority_list"
+            android:layout_below="@id/task_priority_label"
+            android:layout_alignLeft="@id/task_priority_label"
+            />
+<!--    TODO: finish spinner implementation    -->
+
+        <TextView
+            android:id="@+id/attachments_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/priority_spinner"
+            android:layout_marginLeft="65dp"
+            android:layout_marginTop="50dp"
+            android:text="Attachments"
+            android:textColor="@color/text_black"/>
+
+        <Button
+            android:id="@+id/attachments_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/attachments_label"
+            android:layout_alignLeft="@id/attachments_label"
+            android:backgroundTint="@color/button_orange"
+            android:text="+ add files"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/subtasks_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/attachments_button"
+            android:layout_marginLeft="65dp"
+            android:layout_marginTop="50dp"
+            android:text="Subtasks"
+            android:textColor="@color/text_black"/>
+
+        <EditText
+            android:id="@+id/add_subtask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/subtasks_label"
+            android:layout_alignLeft="@id/subtasks_label"
+            android:text="+ add subtask"
+            android:textColor="@color/text_grey"/>
+
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
