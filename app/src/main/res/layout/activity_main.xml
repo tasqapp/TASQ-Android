@@ -184,20 +184,20 @@
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:buttonTint="color_tag_red" />
+                    app:buttonTint="@color/color_tag_red" />
 
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/color_tag_blue"/>
+                    app:buttonTint="@color/color_tag_blue"/>
 
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/color_tag_green"/>
+                    app:buttonTint="@color/color_tag_green"/>
                 
             </RadioGroup>
-<!--      TODO: add radio button functionality, and figure out how to change color      -->
+<!--      TODO: add radio button functionality      -->
 
             
 
