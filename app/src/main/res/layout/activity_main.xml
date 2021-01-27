@@ -109,6 +109,7 @@
                 android:id="@+id/attachments_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 android:layout_below="@id/attachments_label"
                 android:layout_alignLeft="@id/attachments_label"
                 android:backgroundTint="@color/button_orange"
@@ -146,6 +147,8 @@
                 android:id="@+id/reminder_clear_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="188dp"
+                android:layout_marginLeft="30dp"
                 android:background="@drawable/button_border"
                 android:textColor="@color/button_orange"
                 android:text="CLEAR"/>
@@ -154,9 +157,49 @@
                 android:id="@+id/date_clear_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="68dp"
+                android:layout_alignLeft="@+id/reminder_clear_button"
+                android:layout_below="@+id/reminder_clear_button"
                 android:background="@drawable/button_border"
                 android:textColor="@color/button_orange"
                 android:text="CLEAR"/>
+
+            <TextView
+                android:id="@+id/color_tags_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="140dp"
+                android:layout_marginLeft="30dp"
+                android:text="Color Tags"
+                android:layout_below="@+id/date_clear_button"
+                android:textColor="@color/text_black"/>
+
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@+id/color_tags_label"
+                android:layout_alignLeft="@+id/color_tags_label">
+                
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:buttonTint="color_tag_red" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/color_tag_blue"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/color_tag_green"/>
+                
+            </RadioGroup>
+<!--      TODO: add radio button functionality, and figure out how to change color      -->
+
+            
 
         </RelativeLayout>
 
