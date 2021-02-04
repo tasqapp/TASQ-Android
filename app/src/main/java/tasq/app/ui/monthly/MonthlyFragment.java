@@ -86,6 +86,8 @@ public class MonthlyFragment extends Fragment {
             @Override
             public void onDayClick(Date dateClicked) {
                 Context context = getActivity().getApplicationContext();
+                String toastText = "";
+                int dateMatched = 0;
                 for (int i=0; i < allTasks.size(); i++) {
                     Task currentTask = allTasks.get(i);
                     String date = Task.getDate(currentTask);
@@ -98,9 +100,15 @@ public class MonthlyFragment extends Fragment {
                         e.printStackTrace();
                     }
                     if (dateClicked.toString().compareTo(currentDate.toString()) == 0) {
-                        Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+                        dateMatched++;
+                        if(dateMatched==1) {
+                            toastText = toastText + text;
+                        } else {
+                            toastText = toastText + ", " + text;
+                        }
                     }
                 }
+                Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
             }
 
             @Override
