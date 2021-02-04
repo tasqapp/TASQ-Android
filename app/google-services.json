@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1004767430255",
+    "project_id": "tasq-app",
+    "storage_bucket": "tasq-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1004767430255:android:b410e6838e66acecbb2f9a",
+        "android_client_info": {
+          "package_name": "tasq.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1004767430255-hr3mbs78uhnd8ld9jf2le17rvmhtg99l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA995EYd3qMUFSor1qffU7YjULEEsKh_K0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1004767430255-hr3mbs78uhnd8ld9jf2le17rvmhtg99l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

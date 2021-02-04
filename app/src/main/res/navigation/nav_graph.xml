@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@+id/daily_page">
+    <fragment
+        android:id="@+id/add_edit_task"
+        android:name="tasq.app.ui.addedit.AddEditFragment"
+        android:label="Add Task"
+        tools:layout="@layout/add_edit_fragment" />
+    <fragment
+        android:id="@+id/daily_page"
+        android:name="tasq.app.ui.daily.DailyFragment"
+        android:label="Daily"
+        tools:layout="@layout/daily_fragment" />
+    <fragment
+        android:id="@+id/weekly_page"
+        android:name="tasq.app.ui.weekly.WeeklyFragment"
+        android:label="Weekly"
+        tools:layout="@layout/weekly_fragment" />
+    <fragment
+        android:id="@+id/monthly_page"
+        android:name="tasq.app.ui.monthly.MonthlyFragment"
+        android:label="Monthly"
+        tools:layout="@layout/monthly_fragment" />
+    <fragment
+        android:id="@+id/sometime_page"
+        android:name="tasq.app.ui.sometime.SometimeFragment"
+        android:label="Sometime"
+        tools:layout="@layout/sometime_fragment" />
+</navigation>

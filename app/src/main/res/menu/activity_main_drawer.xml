@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+<!--        <item-->
+<!--            android:id="@+id/add_edit_task"-->
+<!--            android:title="Add Task" />-->
+        <item
+            android:id="@+id/daily_page"
+            android:title="Daily" />
+        <item
+            android:id="@+id/weekly_page"
+            android:title="Weekly" />
+        <item
+            android:id="@+id/monthly_page"
+            android:title="Monthly" />
+        <item
+            android:id="@+id/sometime_page"
+            android:title="Sometime" />
+    </group>
+
+</menu>

@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">TASQ-app</string>
+
+    <string name="priority_prompt">Priority</string>
+
+    <string-array name="priority_list">
+        <item>Low</item>
+        <item>Medium</item>
+        <item>High</item>
+        <item>Extreme</item>
+    </string-array>
+</resources>
