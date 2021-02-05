@@ -1,5 +1,6 @@
 package tasq.app.ui.addedit;
 
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -9,6 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,6 +33,7 @@ public class AddEditFragment extends Fragment {
 
     private AddEditViewModel mViewModel;
     private MonthlyViewModel model;
+    private NavController navController;
 
     public static AddEditFragment newInstance() {
         return new AddEditFragment();
@@ -60,6 +65,7 @@ public class AddEditFragment extends Fragment {
         radio = (RadioGroup) this.getActivity().findViewById(R.id.radiobuttons);
         date = (EditText) this.getActivity().findViewById(R.id.due_date);
         description = (EditText) this.getActivity().findViewById(R.id.task_name_label);
+        navController = Navigation.findNavController(getView());
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +87,8 @@ public class AddEditFragment extends Fragment {
                 //add to global arrayList of tasks (using add/edit model)
                 Task newTask = new Task(selectedColor, dueDate, taskDesc);
                 mViewModel.setTask(newTask);
+                // Return to previous screen.
+                navController.navigateUp();
             }
         });
     }
