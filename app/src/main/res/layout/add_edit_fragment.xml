@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/add_task_label"
                 android:layout_alignLeft="@id/add_task_label"
-                android:text="+ add a task..."
+                android:hint="+ add a task..."
                 android:textColor="@color/text_grey"/>
 
             <TextView
@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/due_date_label"
                 android:layout_alignLeft="@id/due_date_label"
-                android:text="Ex. September 8th"
+                android:hint="Ex. September 8th"
                 android:textColor="@color/text_grey"/>
 
             <!--    TODO: change the due date to be a calendar icon and a time selection to the right of it-->
@@ -72,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/reminder_label"
                 android:layout_alignLeft="@id/reminder_label"
-                android:text="None"
+                android:hint="None"
                 android:textColor="@color/text_grey"/>
 
             <TextView

@@ -40,7 +40,7 @@ import tasq.app.ui.addedit.AddEditViewModel;
 
 public class MonthlyFragment extends Fragment {
     CompactCalendarView compactCalendar;
-    private SimpleDateFormat dateFormatMonth = new SimpleDateFormat("MMMM- yyyy", Locale.getDefault());
+    private SimpleDateFormat dateFormatMonth = new SimpleDateFormat("MMMM, yyyy", Locale.getDefault());
     private MonthlyViewModel mViewModel;
     private AddEditViewModel model;
     List<Event> allEvents = new ArrayList<Event>();
@@ -62,7 +62,7 @@ public class MonthlyFragment extends Fragment {
 
         mViewModel = new ViewModelProvider(requireActivity()).get(MonthlyViewModel.class);
         mViewModel.getTask().observe(getViewLifecycleOwner(), item -> {
-           //do nothing currently
+           // do nothing currently
         });
 
         model = new ViewModelProvider(requireActivity()).get(AddEditViewModel.class);
@@ -79,7 +79,7 @@ public class MonthlyFragment extends Fragment {
         SimpleDateFormat formatNowYear = new SimpleDateFormat("yyyy");
         java.util.Date nowDate = new java.util.Date();
         String currentYear = formatNowYear.format(nowDate);
-        actionBar.setTitle(month_name + "- " + currentYear);
+        actionBar.setTitle(month_name + ", " + currentYear);
 
         compactCalendar = (CompactCalendarView) getActivity().findViewById(R.id.compactcalendar_view);
         compactCalendar.setUseThreeLetterAbbreviation(true);
