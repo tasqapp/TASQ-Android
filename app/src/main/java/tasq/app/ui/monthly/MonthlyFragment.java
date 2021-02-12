@@ -8,6 +8,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -45,7 +49,6 @@ public class MonthlyFragment extends Fragment {
     public static MonthlyFragment newInstance() {
         return new MonthlyFragment();
     }
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -86,8 +89,7 @@ public class MonthlyFragment extends Fragment {
             @Override
             public void onDayClick(Date dateClicked) {
                 Context context = getActivity().getApplicationContext();
-                String toastText = "";
-                int dateMatched = 0;
+                ArrayList<Task> dayTasks = new ArrayList<Task>();
                 for (int i=0; i < allTasks.size(); i++) {
                     Task currentTask = allTasks.get(i);
                     String date = Task.getDate(currentTask);
@@ -100,15 +102,26 @@ public class MonthlyFragment extends Fragment {
                         e.printStackTrace();
                     }
                     if (dateClicked.toString().compareTo(currentDate.toString()) == 0) {
-                        dateMatched++;
-                        if(dateMatched==1) {
-                            toastText = toastText + text;
-                        } else {
-                            toastText = toastText + ", " + text;
-                        }
+                        dayTasks.add(currentTask);
                     }
                 }
-                Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
+                //add textview's of tasks to bottom of relative layout
+                RelativeLayout rl=(RelativeLayout) getActivity().findViewById(R.id.relativeview);
+                ScrollView sv = new ScrollView(context);
+                sv.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                LinearLayout ll = new LinearLayout(context);
+                ll.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                ll.setOrientation(LinearLayout.HORIZONTAL);
+                sv.addView(ll);
+
+                for (int i=0; i < dayTasks.size(); i++) {
+                    Task task = dayTasks.get(i);
+                    TextView b = new TextView(context);
+                    b.setText(Task.getText(task));
+                    ll.addView(b);
+                }
+
+                rl.addView(sv);
             }
 
             @Override
@@ -139,7 +152,7 @@ public class MonthlyFragment extends Fragment {
             Event ev1 = new Event(eventColor, time, text);
             compactCalendar.addEvent(ev1);
             }
-        }
+    }
       public void newEvent(String [] taskInfo) {
         int eventColor;
         String color = taskInfo[0];
