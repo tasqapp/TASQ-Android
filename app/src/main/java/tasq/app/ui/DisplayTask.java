@@ -76,7 +76,7 @@ public class DisplayTask extends Fragment {
                 String oldDate = sp.getString("taskDate", "---") ;
                 String oldName = sp.getString("taskName", "---") ;
                 String oldColor = sp.getString("taskColor", "---") ;
-                Task oldTask = new Task(oldColor, oldDate, oldName);
+                Task oldTask = new Task(oldColor, oldDate, oldName, false); //TODO: implement proper 'completed' field fetching/setting
 
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity()) ;
                 SharedPreferences.Editor editor = sharedPreferences.edit() ;
@@ -95,7 +95,7 @@ public class DisplayTask extends Fragment {
                     editor.putString("taskColor", "Green") ;
                 }
                 editor.apply() ;
-                Task newTask = new Task(taskColor, date.getText().toString(), name.getText().toString() );
+                Task newTask = new Task(taskColor, date.getText().toString(), name.getText().toString(), false ); //TODO: implement proper 'completed' field fetching/setting
                 if (newTask != null && oldTask != null) {
                     Log.d("DISPLAY", "Task text: " + taskColor);
                     Log.d("DISPLAY", "Task text: " + Task.getColor(oldTask));

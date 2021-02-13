@@ -85,7 +85,7 @@ public class AddEditFragment extends Fragment {
                 //add to monthly calendar
                 model.setTask(arr);
                 //add to global arrayList of tasks (using add/edit model)
-                Task newTask = new Task(selectedColor, dueDate, taskDesc);
+                Task newTask = new Task(selectedColor, dueDate, taskDesc, false); //TODO: implement proper 'completed' field fetching/setting
                 mViewModel.setTask(newTask);
                 // Return to previous screen.
                 navController.navigateUp();
