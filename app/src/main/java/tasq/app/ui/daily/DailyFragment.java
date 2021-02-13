@@ -47,10 +47,8 @@ public class DailyFragment extends Fragment {
         });
 
         dailyDate = getActivity().findViewById(R.id.daily_screen_date) ;
+        //TODO: make sure the date displayed is the date of the current day selected
         String curDate = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(new Date()) ;
         dailyDate.setText(curDate);
     }
-
-    //add buttons to the scrollView
-
 }
