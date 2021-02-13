@@ -114,7 +114,7 @@ public class MonthlyFragment extends Fragment {
                 LinearLayout ll = new LinearLayout(context);
                 ll.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
                 ll.setOrientation(LinearLayout.VERTICAL);
-                ll.addView(sv);
+                sv.addView(ll);
 
                 for (int i=0; i < dayTasks.size(); i++) {
                     Task task = dayTasks.get(i);
