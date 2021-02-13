@@ -48,16 +48,20 @@ public class DisplayTask extends Fragment {
         Toolbar actionBar = ((MainActivity) getActivity()).findViewById(R.id.toolbar);
         actionBar.setTitle("Edit Task");
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity()) ;
-        Button submit = getActivity().findViewById(R.id.submitbutton);
 
+        Button submit = getActivity().findViewById(R.id.submitbutton);
         EditText date = getActivity().findViewById(R.id.due_date);
-        date.setText(sp.getString("taskDate", "---")) ;
         EditText name = getActivity().findViewById(R.id.task_name_label);
-        name.setText(sp.getString("taskName", "---")) ;
-        RadioGroup buttons = getActivity().findViewById(R.id.radiobuttons);
-        navController = Navigation.findNavController(getView()) ;
+
         RadioButton red = getActivity().findViewById(R.id.redbutton);
         RadioButton blue = getActivity().findViewById(R.id.bluebutton);
+        RadioGroup buttons = getActivity().findViewById(R.id.radiobuttons);
+
+        date.setText(sp.getString("taskDate", "---")) ;
+        name.setText(sp.getString("taskName", "---")) ;
+        //TODO: fill in remaining attributes
+
+        navController = Navigation.findNavController(getView()) ;
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override

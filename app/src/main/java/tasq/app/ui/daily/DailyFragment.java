@@ -92,9 +92,12 @@ public class DailyFragment extends Fragment {
                     SharedPreferences.Editor editor = sharedPreferences.edit() ;
                     editor.putString("taskName", Task.getText(task)) ;
                     editor.putString("taskDate", Task.getDate(task)) ;
-                    //editor.putString("taskDate", Task.getDate(task)) ;
+                    editor.putString("taskColor", Task.getColor(task)) ;
                     editor.apply() ;
                     navController.navigate(R.id.displayTask_page) ;
+                    task.setText(sharedPreferences.getString("taskName", "---")) ;
+                    task.setDate(sharedPreferences.getString("taskDate", "---")) ;
+                    task.setColor(sharedPreferences.getString("taskColor", "---")) ;
                 }
             });
             //TODO: finish button visuals
