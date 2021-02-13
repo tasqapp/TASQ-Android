@@ -56,6 +56,10 @@ public class DailyFragment extends Fragment {
         curDate = new Date() ;
         model.getTask().observe(getViewLifecycleOwner(), item -> {
             Log.d("DAILY", "Got event");
+            for (int i = 0; i < item.size(); i++) {
+                Task task = item.get(i);
+                Log.d("ARRAYLIST2", "Item name:" + Task.getText(task));
+            }
             updateUI(item) ;
         });
         dailyDate = getActivity().findViewById(R.id.daily_screen_date) ;
@@ -64,6 +68,7 @@ public class DailyFragment extends Fragment {
     }
     //TODO: reformat daily date to only display month, year
     private void updateUI(ArrayList<Task> arr) {
+        Log.d("DAILY", "Array size: " + arr.size());
         LinearLayout ll = getActivity().findViewById(R.id.daily_central_layout) ;
         ArrayList<Task> allTasks = new ArrayList<Task>() ;
         curDate = new Date() ;
@@ -80,7 +85,6 @@ public class DailyFragment extends Fragment {
             }
             if(curDate.toString().compareTo(curTaskDate.toString()) == 0) {
                 allTasks.add(curTask);
-                Log.d("DAILY", "Size is " + allTasks.size());
             }
         }
         for (Task task : allTasks) {
@@ -98,11 +102,6 @@ public class DailyFragment extends Fragment {
                     task.setText(sharedPreferences.getString("taskName", "---")) ;
                     task.setDate(sharedPreferences.getString("taskDate", "---")) ;
                     task.setColor(sharedPreferences.getString("taskColor", "---")) ;
-                    String newName = sharedPreferences.getString("taskName", "---") ;
-                    String newDate = sharedPreferences.getString("taskDate", "---") ;
-                    String newColor = sharedPreferences.getString("taskColor", "---") ;
-                    Task newTask = new Task(newColor, newDate, newName);
-                    model.updateTask(task, newTask);
                 }
             });
             //TODO: finish button visuals

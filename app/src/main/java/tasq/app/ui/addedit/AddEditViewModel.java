@@ -33,20 +33,20 @@ public class AddEditViewModel extends ViewModel {
 
     public void updateTask(Task oldTask, Task newTask) {
         ArrayList<Task> favourites = userTasks.getValue();
-        ArrayList<Task> clonedFavs;
-        if (favourites == null) {
-            clonedFavs = new ArrayList<Task>();
-        } else {
-            clonedFavs = new ArrayList<Task>(favourites.size());
-            for (int i = 0; i < favourites.size(); i++) {
-                Task currentTask = favourites.get(i);
-                if (Task.getText(currentTask).equals(Task.getText(oldTask)) && Task.getDate(currentTask).equals(Task.getDate(oldTask)) && Task.getColor(currentTask).equals(Task.getColor(oldTask))) {
-                    clonedFavs.add(newTask);
-                }
-                clonedFavs.add(currentTask);
+        for (int i = 0; i < favourites.size(); i++) {
+            Task currentTask = favourites.get(i);
+            if (Task.getText(currentTask).equals(Task.getText(oldTask)) && Task.getDate(currentTask).equals(Task.getDate(oldTask)) && Task.getColor(currentTask).equals(Task.getColor(oldTask))) {
+                Log.d("ADDEDIT", "In if statement");
+                //Task task = new Task(Task.getColor(newTask), Task.getDate(newTask), Task.getText(newTask));
+                favourites.add(newTask);
+                favourites.remove(currentTask);
             }
         }
-        userTasks.setValue(clonedFavs);
+        userTasks.setValue(favourites);
+        for (int i = 0; i < favourites.size(); i++) {
+            Task task = favourites.get(i);
+            Log.d("ARRAYLIST", "Item name:" + Task.getText(task));
+        }
     }
 
     public ArrayList<Task> addNewTask(Task addition) {

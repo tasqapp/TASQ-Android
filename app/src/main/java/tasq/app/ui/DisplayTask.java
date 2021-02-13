@@ -25,11 +25,13 @@ import android.widget.RadioGroup;
 import tasq.app.MainActivity;
 import tasq.app.R;
 import tasq.app.Task;
+import tasq.app.ui.addedit.AddEditViewModel;
 
 public class DisplayTask extends Fragment {
 
     private DisplayTaskViewModel mViewModel;
     private NavController navController ;
+    private AddEditViewModel model;
 
     public static DisplayTask newInstance() {
         return new DisplayTask();
@@ -43,6 +45,8 @@ public class DisplayTask extends Fragment {
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        Task oldTask;
+        Task newTask;
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(DisplayTaskViewModel.class);
         Toolbar actionBar = ((MainActivity) getActivity()).findViewById(R.id.toolbar);
@@ -59,26 +63,46 @@ public class DisplayTask extends Fragment {
 
         date.setText(sp.getString("taskDate", "---")) ;
         name.setText(sp.getString("taskName", "---")) ;
+
+
         //TODO: fill in remaining attributes
 
         navController = Navigation.findNavController(getView()) ;
+        model = new ViewModelProvider(requireActivity()).get(AddEditViewModel.class);
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String oldDate = sp.getString("taskDate", "---") ;
+                String oldName = sp.getString("taskName", "---") ;
+                String oldColor = sp.getString("taskColor", "---") ;
+                Task oldTask = new Task(oldColor, oldDate, oldName);
+
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity()) ;
                 SharedPreferences.Editor editor = sharedPreferences.edit() ;
                 editor.putString("taskName", name.getText().toString()) ;
                 editor.putString("taskDate", date.getText().toString()) ;
                 int selectedId = buttons.getCheckedRadioButtonId();
+                String taskColor;
                 if(selectedId == red.getId()) {
+                    taskColor = "Red";
                     editor.putString("taskColor", "Red") ;
                 } else if (selectedId == blue.getId()) {
-                    editor.putString("taskColor", "Green") ;
-                } else {
+                    taskColor = "Blue";
                     editor.putString("taskColor", "Blue") ;
+                } else {
+                    taskColor = "Green";
+                    editor.putString("taskColor", "Green") ;
                 }
                 editor.apply() ;
+                Task newTask = new Task(taskColor, date.getText().toString(), name.getText().toString() );
+                if (newTask != null && oldTask != null) {
+                    Log.d("DISPLAY", "Task text: " + taskColor);
+                    Log.d("DISPLAY", "Task text: " + Task.getColor(oldTask));
+                } else {
+                    Log.d("DISPLAY", "Null something ");
+                }
+                model.updateTask(oldTask, newTask);
                 navController.navigateUp();
             }
         });
