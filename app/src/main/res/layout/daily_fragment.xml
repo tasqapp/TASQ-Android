@@ -9,13 +9,23 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <TextView
+            android:id="@+id/daily_screen_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:textSize="45sp"/>
+
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_below="@+id/daily_screen_date">
             <LinearLayout
                 android:id="@+id/central_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <!--  Tasks  -->
@@ -34,50 +44,13 @@
                         android:paddingBottom="20dp"
                         android:paddingEnd="70dp"
                         android:paddingStart="70dp"
-                        android:layout_marginTop="30dp"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginEnd="20dp"
                         android:layout_marginBottom="15dp"
                         android:textAllCaps="false"
                         android:textAlignment="textStart"
                         android:text="Take out garbage"
-                        android:textSize="25sp"
-                        android:textColor="@color/white"/>
-
-                    <ImageButton
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="6dp"
-                        android:layout_gravity="center|left"
-                        android:background="@drawable/ic_baseline_arrow_forward_ios_24"
-                        android:tint="@color/main_yellow"
-                        tools:ignore="RtlHardcoded">
-
-                    </ImageButton>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:id="@+id/sample_task_2"
-                    android:weightSum="0.6">
-                    <Button
-                        android:background="@drawable/task_plain"
-                        android:layout_width="match_parent"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="20dp"
-                        android:paddingBottom="20dp"
-                        android:paddingEnd="70dp"
-                        android:paddingStart="70dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginBottom="15dp"
-                        android:textAllCaps="false"
-                        android:textAlignment="textStart"
-                        android:text="Take little duckies on a walk to the park and make lunch"
                         android:textSize="25sp"
                         android:textColor="@color/white"/>
 
@@ -100,3 +73,4 @@
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
