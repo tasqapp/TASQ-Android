@@ -98,6 +98,11 @@ public class DailyFragment extends Fragment {
                     task.setText(sharedPreferences.getString("taskName", "---")) ;
                     task.setDate(sharedPreferences.getString("taskDate", "---")) ;
                     task.setColor(sharedPreferences.getString("taskColor", "---")) ;
+                    String newName = sharedPreferences.getString("taskName", "---") ;
+                    String newDate = sharedPreferences.getString("taskDate", "---") ;
+                    String newColor = sharedPreferences.getString("taskColor", "---") ;
+                    Task newTask = new Task(newColor, newDate, newName);
+                    model.updateTask(task, newTask);
                 }
             });
             //TODO: finish button visuals

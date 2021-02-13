@@ -31,6 +31,24 @@ public class AddEditViewModel extends ViewModel {
        userTasks.setValue(newArr);
     }
 
+    public void updateTask(Task oldTask, Task newTask) {
+        ArrayList<Task> favourites = userTasks.getValue();
+        ArrayList<Task> clonedFavs;
+        if (favourites == null) {
+            clonedFavs = new ArrayList<Task>();
+        } else {
+            clonedFavs = new ArrayList<Task>(favourites.size());
+            for (int i = 0; i < favourites.size(); i++) {
+                Task currentTask = favourites.get(i);
+                if (Task.getText(currentTask).equals(Task.getText(oldTask)) && Task.getDate(currentTask).equals(Task.getDate(oldTask)) && Task.getColor(currentTask).equals(Task.getColor(oldTask))) {
+                    clonedFavs.add(newTask);
+                }
+                clonedFavs.add(currentTask);
+            }
+        }
+        userTasks.setValue(clonedFavs);
+    }
+
     public ArrayList<Task> addNewTask(Task addition) {
         ArrayList<Task> favourites = userTasks.getValue();
         ArrayList<Task> clonedFavs;
