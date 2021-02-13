@@ -122,10 +122,10 @@ public class MonthlyFragment extends Fragment {
                     b.setText(Task.getText(task));
                     ll.addView(b);
                 }
-                if(ll.getParent() != null) {
-                    ((ViewGroup)ll.getParent()).removeView(ll);
+                if(sv.getParent() != null) {
+                    ((ViewGroup)sv.getParent()).removeView(sv);
                 }
-                rl.addView(ll);
+                rl.addView(sv);
             }
 
             @Override
