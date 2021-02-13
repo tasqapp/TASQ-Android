@@ -45,4 +45,6 @@ public class DailyFragment extends Fragment {
         });
     }
 
+    //add buttons to the scrollView
+
 }
