@@ -104,6 +104,7 @@ public class DailyFragment extends Fragment {
             //TODO: finish button visuals
             taskButton.setAllCaps(false) ;
             taskButton.setText(Task.getText(task)) ;
+            taskButton.setTextColor(getResources().getColor(R.color.white)) ;
             taskButton.setBackgroundResource(R.drawable.task_plain) ;
             taskButton.setTextAlignment(Button.TEXT_ALIGNMENT_VIEW_START) ;
             taskButton.setTextSize(25) ;
