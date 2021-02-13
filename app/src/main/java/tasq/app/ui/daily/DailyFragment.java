@@ -86,7 +86,7 @@ public class DailyFragment extends Fragment {
             taskButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    navController.navigate(R.id.displayTask_page) ;
                 }
             });
             //TODO: finish button visuals
