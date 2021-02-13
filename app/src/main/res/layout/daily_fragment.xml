@@ -8,7 +8,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
         <TextView
             android:id="@+id/daily_screen_date"
             android:layout_width="match_parent"
@@ -19,6 +18,7 @@
             android:textSize="45sp"/>
 
         <ScrollView
+            android:id="@+id/daily_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/daily_screen_date">
@@ -29,12 +29,8 @@
                 android:orientation="vertical">
 
                 <!--  Tasks  -->
-
-
             </LinearLayout>
-
         </ScrollView>
-
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
