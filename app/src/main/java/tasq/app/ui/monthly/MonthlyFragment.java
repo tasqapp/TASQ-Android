@@ -116,10 +116,17 @@ public class MonthlyFragment extends Fragment {
                 ll.setOrientation(LinearLayout.VERTICAL);
                 sv.addView(ll);
 
+                TextView label = new TextView(context);
+                label.setText("Your tasks for this day:");
+                label.setTextSize(30);
+                label.setTextColor(Color.parseColor("#EBC91E"));
+                ll.addView(label);
                 for (int i=0; i < dayTasks.size(); i++) {
                     Task task = dayTasks.get(i);
                     TextView b = new TextView(context);
                     b.setText(Task.getText(task));
+                    b.setTextSize(30);
+                    b.setTextColor(Color.parseColor("#EBC91E"));
                     ll.addView(b);
                 }
                 if(sv.getParent() != null) {
@@ -156,25 +163,6 @@ public class MonthlyFragment extends Fragment {
             Event ev1 = new Event(eventColor, time, text);
             compactCalendar.addEvent(ev1);
             }
-    }
-      public void newEvent(String [] taskInfo) {
-        int eventColor;
-        String color = taskInfo[0];
-        String date = taskInfo[1];
-        String text = taskInfo[2];
-        if(color.equals("Red")) {
-            eventColor = Color.RED;
-        } else if (color.equals("Blue")) {
-            eventColor = Color.BLUE;
-        } else {
-            eventColor = Color.GREEN;
-        }
-        long time = convertTime(date);
-        Event ev1 = new Event(eventColor,time, text);
-        allEvents.add(ev1);
-        for (int i = 0; i < allEvents.size(); i++) {
-            compactCalendar.addEvent(allEvents.get(i));
-        }
     }
 
     public Long convertTime(String Date)
