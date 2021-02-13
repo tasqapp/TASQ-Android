@@ -5,18 +5,22 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date ;
-import java.util.Locale;
+import java.util.Date;
 
 import tasq.app.R;
 import tasq.app.Task;
@@ -27,8 +31,9 @@ public class DailyFragment extends Fragment {
     private DailyViewModel mViewModel;
     private AddEditViewModel model;
     private TextView dailyDate ;
-    private ArrayList<Task> allTasks = new ArrayList<Task>() ;
     private Date curDate ;
+
+    private NavController navController ;
 
     public static DailyFragment newInstance() {
         return new DailyFragment();
@@ -45,6 +50,7 @@ public class DailyFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(getActivity()).get(DailyViewModel.class);
         model = new ViewModelProvider(requireActivity()).get(AddEditViewModel.class);
+        navController = Navigation.findNavController(getView()) ;
         curDate = new Date() ;
         model.getTask().observe(getViewLifecycleOwner(), item -> {
             Log.d("DAILY", "Got event");
@@ -54,8 +60,10 @@ public class DailyFragment extends Fragment {
         //TODO: make sure the date displayed is the date of the current day selected
         dailyDate.setText(curDate.toString());
     }
-
+    //TODO: reformat daily date to only display month, year
     private void updateUI(ArrayList<Task> arr) {
+        LinearLayout ll = getActivity().findViewById(R.id.daily_central_layout) ;
+        ArrayList<Task> allTasks = new ArrayList<Task>() ;
         curDate = new Date() ;
         for (int i = 0 ; i < arr.size() ; i++) {
             Task curTask = arr.get(i) ;
@@ -65,14 +73,28 @@ public class DailyFragment extends Fragment {
             try {
                 curTaskDate = formatter.parse(date) ;
                 curDate = formatter.parse(date) ;
-            } catch (ParseException e){
+            } catch (ParseException e) {
                 e.printStackTrace() ;
             }
-            Log.d("DAILY", curDate.toString() + " " + curTaskDate.toString()) ;
-            if(curDate.equals(curTaskDate.toString())) {
-                allTasks.add(curTask) ;
+            if(curDate.toString().compareTo(curTaskDate.toString()) == 0) {
+                allTasks.add(curTask);
+                Log.d("DAILY", "Size is " + allTasks.size());
             }
         }
-        System.out.println(allTasks.size());
+        for (Task task : allTasks) {
+            Button taskButton = new Button(getActivity()) ;
+            taskButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+            //TODO: finish button visuals
+            taskButton.setText(Task.getText(task)) ;
+            taskButton.setBackgroundResource(R.drawable.task_plain) ;
+            taskButton.setWidth(LinearLayout.LayoutParams.MATCH_PARENT) ;
+            taskButton.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT) ;
+            ll.addView(taskButton) ;
+        }
     }
 }
