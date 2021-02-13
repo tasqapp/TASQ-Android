@@ -22,4 +22,19 @@ public class Task {
     public static String getColor(Task task) {
         return task.color;
     }
+
+    public void setText(String text) {
+
+        this.taskText = text;
+    }
+
+    public void setDate(String date) {
+
+        this.dueDate = date;
+    }
+
+    public void setColor(String color) {
+
+        this.color = color;
+    }
 }
