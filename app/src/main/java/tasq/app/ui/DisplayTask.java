@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import tasq.app.MainActivity;
@@ -55,10 +56,25 @@ public class DisplayTask extends Fragment {
         name.setText(sp.getString("taskName", "---")) ;
         RadioGroup buttons = getActivity().findViewById(R.id.radiobuttons);
         navController = Navigation.findNavController(getView()) ;
+        RadioButton red = getActivity().findViewById(R.id.redbutton);
+        RadioButton blue = getActivity().findViewById(R.id.bluebutton);
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity()) ;
+                SharedPreferences.Editor editor = sharedPreferences.edit() ;
+                editor.putString("taskName", name.getText().toString()) ;
+                editor.putString("taskDate", date.getText().toString()) ;
+                int selectedId = buttons.getCheckedRadioButtonId();
+                if(selectedId == red.getId()) {
+                    editor.putString("taskColor", "Red") ;
+                } else if (selectedId == blue.getId()) {
+                    editor.putString("taskColor", "Green") ;
+                } else {
+                    editor.putString("taskColor", "Blue") ;
+                }
+                editor.apply() ;
                 navController.navigateUp();
             }
         });
