@@ -3,7 +3,6 @@ package tasq.app.ui.daily;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,7 +64,6 @@ public class DailyFragment extends Fragment {
         DateFormat df = new SimpleDateFormat("EEE MMM dd");
         dailyDate.setText(df.format(date));
     }
-    //TODO: reformat daily date to only display month, year
     private void updateUI(ArrayList<Task> arr) {
         LinearLayout ll = getActivity().findViewById(R.id.daily_central_layout) ;
         ArrayList<Task> allTasks = new ArrayList<Task>() ;
@@ -102,13 +100,20 @@ public class DailyFragment extends Fragment {
                     task.setDate(sharedPreferences.getString("taskDate", "---")) ;
                     task.setColor(sharedPreferences.getString("taskColor", "---")) ;
                 }
-            });
+            }) ;
             //TODO: finish button visuals
+            taskButton.setAllCaps(false) ;
             taskButton.setText(Task.getText(task)) ;
             taskButton.setBackgroundResource(R.drawable.task_plain) ;
-            taskButton.setWidth(LinearLayout.LayoutParams.MATCH_PARENT) ;
-            taskButton.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT) ;
-            //taskButton.
+            taskButton.setTextAlignment(Button.TEXT_ALIGNMENT_VIEW_START) ;
+            taskButton.setTextSize(25) ;
+            taskButton.setPadding(70, 20, 70, 20) ;
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            ) ;
+            lp.setMargins(30, 15, 140, 15) ;
+            taskButton.setLayoutParams(lp);
             ll.addView(taskButton) ;
         }
     }
