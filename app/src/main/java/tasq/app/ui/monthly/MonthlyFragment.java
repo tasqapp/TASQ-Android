@@ -108,22 +108,22 @@ public class MonthlyFragment extends Fragment {
                 //add textview's of tasks to bottom of relative layout
                 RelativeLayout rl=(RelativeLayout) getActivity().findViewById(R.id.relativeview);
                 ScrollView sv = new ScrollView(context);
-                RelativeLayout.LayoutParams params= new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
+                RelativeLayout.LayoutParams params= new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
                 params.addRule(RelativeLayout.BELOW, R.id.compactcalendar_view);
                 sv.setLayoutParams(params);
-                //LinearLayout ll = new LinearLayout(context);
-                //ll.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-               // ll.setOrientation(LinearLayout.HORIZONTAL);
-                //sv.addView(ll);
+                LinearLayout ll = new LinearLayout(context);
+                ll.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                ll.setOrientation(LinearLayout.VERTICAL);
+                ll.addView(sv);
 
                 for (int i=0; i < dayTasks.size(); i++) {
                     Task task = dayTasks.get(i);
                     TextView b = new TextView(context);
                     b.setText(Task.getText(task));
-                    sv.addView(b);
+                    ll.addView(b);
                 }
 
-                rl.addView(sv);
+                rl.addView(ll);
             }
 
             @Override
