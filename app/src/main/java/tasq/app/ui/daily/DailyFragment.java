@@ -1,6 +1,8 @@
 package tasq.app.ui.daily;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -86,6 +88,10 @@ public class DailyFragment extends Fragment {
             taskButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity()) ;
+                    SharedPreferences.Editor editor = sharedPreferences.edit() ;
+                    editor.putString("taskName", Task.getText(task)) ;
+                    editor.apply() ;
                     navController.navigate(R.id.displayTask_page) ;
                 }
             });
