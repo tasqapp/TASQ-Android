@@ -108,7 +108,7 @@ public class MonthlyFragment extends Fragment {
                 //add textview's of tasks to bottom of relative layout
                 RelativeLayout rl=(RelativeLayout) getActivity().findViewById(R.id.relativeview);
                 ScrollView sv = new ScrollView(context);
-                RelativeLayout.LayoutParams params= new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+                RelativeLayout.LayoutParams params= new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
                 params.addRule(RelativeLayout.BELOW, R.id.compactcalendar_view);
                 sv.setLayoutParams(params);
                 LinearLayout ll = new LinearLayout(context);
@@ -122,7 +122,9 @@ public class MonthlyFragment extends Fragment {
                     b.setText(Task.getText(task));
                     ll.addView(b);
                 }
-
+                if(ll.getParent() != null) {
+                    ((ViewGroup)ll.getParent()).removeView(ll);
+                }
                 rl.addView(ll);
             }
 
