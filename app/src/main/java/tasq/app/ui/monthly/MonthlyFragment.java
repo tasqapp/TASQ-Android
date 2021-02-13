@@ -107,23 +107,24 @@ public class MonthlyFragment extends Fragment {
                 }
                 //add textview's of tasks to bottom of relative layout
                 RelativeLayout rl=(RelativeLayout) getActivity().findViewById(R.id.relativeview);
+                LinearLayout ll = (LinearLayout) getActivity().findViewById(R.id.linear);
+                ll.removeAllViews();
                 ScrollView sv = new ScrollView(context);
                 RelativeLayout.LayoutParams params= new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
                 params.addRule(RelativeLayout.BELOW, R.id.compactcalendar_view);
                 sv.setLayoutParams(params);
-                LinearLayout ll = new LinearLayout(context);
-                ll.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                ll.setOrientation(LinearLayout.VERTICAL);
+                if(ll.getParent() != null) {
+                    ((ViewGroup)ll.getParent()).removeView(ll);
+                }
                 sv.addView(ll);
-
-                TextView label = new TextView(context);
+                TextView label = new TextView(getActivity());
                 label.setText("Your tasks for this day:");
                 label.setTextSize(30);
                 label.setTextColor(Color.parseColor("#EBC91E"));
                 ll.addView(label);
                 for (int i=0; i < dayTasks.size(); i++) {
                     Task task = dayTasks.get(i);
-                    TextView b = new TextView(context);
+                    TextView b = new TextView(getActivity());
                     b.setText(Task.getText(task));
                     b.setTextSize(30);
                     b.setTextColor(Color.parseColor("#EBC91E"));
