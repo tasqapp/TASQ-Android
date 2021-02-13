@@ -91,6 +91,8 @@ public class DailyFragment extends Fragment {
                     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity()) ;
                     SharedPreferences.Editor editor = sharedPreferences.edit() ;
                     editor.putString("taskName", Task.getText(task)) ;
+                    editor.putString("taskDate", Task.getDate(task)) ;
+                    //editor.putString("taskDate", Task.getDate(task)) ;
                     editor.apply() ;
                     navController.navigate(R.id.displayTask_page) ;
                 }
@@ -100,6 +102,7 @@ public class DailyFragment extends Fragment {
             taskButton.setBackgroundResource(R.drawable.task_plain) ;
             taskButton.setWidth(LinearLayout.LayoutParams.MATCH_PARENT) ;
             taskButton.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT) ;
+            //taskButton.
             ll.addView(taskButton) ;
         }
     }
