@@ -2,6 +2,7 @@
     <string name="app_name">TASQ-app</string>
 
     <string name="priority_prompt">Priority</string>
+    <string name="weekly_week_of">Week of</string>
 
     <string-array name="priority_list">
         <item>Low</item>
