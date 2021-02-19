@@ -40,7 +40,8 @@ import tasq.app.ui.addedit.AddEditViewModel;
 
 public class MonthlyFragment extends Fragment {
     CompactCalendarView compactCalendar;
-    private SimpleDateFormat dateFormatMonth = new SimpleDateFormat("MMMM, yyyy", Locale.getDefault());
+    private SimpleDateFormat dateFormatMonth =
+            new SimpleDateFormat("MMMM, yyyy", Locale.getDefault());
     private MonthlyViewModel mViewModel;
     private AddEditViewModel model;
     List<Event> allEvents = new ArrayList<Event>();
@@ -81,7 +82,8 @@ public class MonthlyFragment extends Fragment {
         String currentYear = formatNowYear.format(nowDate);
         actionBar.setTitle(month_name + ", " + currentYear);
 
-        compactCalendar = (CompactCalendarView) getActivity().findViewById(R.id.compactcalendar_view);
+        compactCalendar = (CompactCalendarView) getActivity()
+                .findViewById(R.id.compactcalendar_view);
         compactCalendar.setUseThreeLetterAbbreviation(true);
 
 
@@ -110,7 +112,10 @@ public class MonthlyFragment extends Fragment {
                 LinearLayout ll = (LinearLayout) getActivity().findViewById(R.id.linear);
                 ll.removeAllViews();
                 ScrollView sv = new ScrollView(context);
-                RelativeLayout.LayoutParams params= new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
+                RelativeLayout.LayoutParams params =
+                        new RelativeLayout.LayoutParams(
+                                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                                RelativeLayout.LayoutParams.WRAP_CONTENT);
                 params.addRule(RelativeLayout.BELOW, R.id.compactcalendar_view);
                 sv.setLayoutParams(params);
                 if(ll.getParent() != null) {

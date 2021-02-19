@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
 
-
 import tasq.app.Task;
 
 public class AddEditViewModel extends ViewModel {
@@ -17,6 +16,7 @@ public class AddEditViewModel extends ViewModel {
     public AddEditViewModel() {
         userTasks = userTasks;
     }
+
     public AddEditViewModel(MutableLiveData<ArrayList<Task>> newTask) {
         userTasks = userTasks;
     }
@@ -27,15 +27,17 @@ public class AddEditViewModel extends ViewModel {
 
     public void setTask(Task addition) {
         Log.d("MODEL", "In model");
-       ArrayList<Task> newArr =  addNewTask(addition);
-       userTasks.setValue(newArr);
+        ArrayList<Task> newArr = addNewTask(addition);
+        userTasks.setValue(newArr);
     }
 
     public void updateTask(Task oldTask, Task newTask) {
         ArrayList<Task> favourites = userTasks.getValue();
         for (int i = 0; i < favourites.size(); i++) {
             Task currentTask = favourites.get(i);
-            if (Task.getText(currentTask).equals(Task.getText(oldTask)) && Task.getDate(currentTask).equals(Task.getDate(oldTask)) && Task.getColor(currentTask).equals(Task.getColor(oldTask))) {
+            if (Task.getText(currentTask).equals(Task.getText(oldTask))
+                    && Task.getDate(currentTask).equals(Task.getDate(oldTask))
+                    && Task.getColor(currentTask).equals(Task.getColor(oldTask))) {
                 Log.d("ADDEDIT", "In if statement");
                 //Task task = new Task(Task.getColor(newTask), Task.getDate(newTask), Task.getText(newTask));
                 favourites.add(newTask);

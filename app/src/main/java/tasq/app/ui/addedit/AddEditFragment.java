@@ -1,20 +1,6 @@
 package tasq.app.ui.addedit;
 
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +9,12 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import java.util.ArrayList;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import tasq.app.R;
 import tasq.app.Task;
@@ -31,13 +22,6 @@ import tasq.app.ui.monthly.MonthlyViewModel;
 
 public class AddEditFragment extends Fragment {
 
-    private AddEditViewModel mViewModel;
-    private MonthlyViewModel model;
-    private NavController navController;
-
-    public static AddEditFragment newInstance() {
-        return new AddEditFragment();
-    }
     RadioButton red;
     RadioButton blue;
     RadioButton green;
@@ -45,6 +29,13 @@ public class AddEditFragment extends Fragment {
     EditText date;
     EditText description;
     Button submit;
+    private AddEditViewModel mViewModel;
+    private MonthlyViewModel model;
+    private NavController navController;
+
+    public static AddEditFragment newInstance() {
+        return new AddEditFragment();
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -72,7 +63,7 @@ public class AddEditFragment extends Fragment {
             public void onClick(View v) {
                 String selectedColor;
                 int color = radio.getCheckedRadioButtonId();
-                if(color == red.getId()) {
+                if (color == red.getId()) {
                     selectedColor = "Red";
                 } else if (color == blue.getId()) {
                     selectedColor = "Blue";
