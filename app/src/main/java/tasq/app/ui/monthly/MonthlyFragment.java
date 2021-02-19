@@ -1,3 +1,15 @@
+/**
+ * HANNAH BUZARD
+ * DAVID KIPNIS
+ * TYLER KJELDGAARD
+ * DANIEL SHTUNYUK
+ *
+ * WESTERN WASHINGTON UNIVERSITY
+ * CSCI 412 - WINTER 2021
+ *
+ * TASQ APPLICATION PROJECT
+ */
+
 package tasq.app.ui.monthly;
 
 import android.content.Context;
@@ -51,12 +63,18 @@ public class MonthlyFragment extends Fragment {
         return new MonthlyFragment();
     }
 
+    /**
+     * inflating the appropriate xml layout
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.monthly_fragment, container, false);
     }
 
+    /**
+     * creating the view with the calendar and filling in pre-existing data, if any
+     */
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -72,6 +90,7 @@ public class MonthlyFragment extends Fragment {
             updateTaskList(item);
         });
 
+        // creating toolbar, calendar, and fetching appropriate dates
         Toolbar actionBar = ((MainActivity) getActivity()).findViewById(R.id.toolbar);
         ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#EBC91E"));
         Calendar cal = Calendar.getInstance();
@@ -86,7 +105,7 @@ public class MonthlyFragment extends Fragment {
                 .findViewById(R.id.compactcalendar_view);
         compactCalendar.setUseThreeLetterAbbreviation(true);
 
-
+        // creating listener for the daily buttons to act when the user selects a specific date
         compactCalendar.setListener(new CompactCalendarView.CompactCalendarViewListener() {
             @Override
             public void onDayClick(Date dateClicked) {
@@ -107,7 +126,7 @@ public class MonthlyFragment extends Fragment {
                         dayTasks.add(currentTask);
                     }
                 }
-                //add textview's of tasks to bottom of relative layout
+                // adding textviews of tasks to bottom of relative layout
                 RelativeLayout rl=(RelativeLayout) getActivity().findViewById(R.id.relativeview);
                 LinearLayout ll = (LinearLayout) getActivity().findViewById(R.id.linear);
                 ll.removeAllViews();
@@ -141,6 +160,7 @@ public class MonthlyFragment extends Fragment {
                 rl.addView(sv);
             }
 
+            // updating the appropriate month for when the user scrolls through the calendar
             @Override
             public void onMonthScroll(Date firstDayOfNewMonth) {
                 actionBar.setTitle(dateFormatMonth.format(firstDayOfNewMonth));
@@ -150,6 +170,9 @@ public class MonthlyFragment extends Fragment {
 
     }
 
+    /**
+     * updating the current task list to display appropriate tasks
+     */
     public void updateTaskList(ArrayList<Task> arr) {
         allTasks = (ArrayList<Task>)arr.clone();
         for (int i=0; i < allTasks.size(); i++) {
@@ -171,6 +194,9 @@ public class MonthlyFragment extends Fragment {
             }
     }
 
+    /**
+     * method for converting the date into appropriate format
+     */
     public Long convertTime(String Date)
     {
         long timeInMilliseconds = 0;

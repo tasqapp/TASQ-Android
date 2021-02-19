@@ -1,3 +1,20 @@
+/**
+ * HANNAH BUZARD
+ * DAVID KIPNIS
+ * TYLER KJELDGAARD
+ * DANIEL SHTUNYUK
+ *
+ * WESTERN WASHINGTON UNIVERSITY
+ * CSCI 412 - WINTER 2021
+ *
+ * TASQ APPLICATION PROJECT
+ */
+
+/**
+ * Main Activity Class
+ * Class in charge of instantiating and starting the application's main activity
+ */
+
 package tasq.app;
 
 import android.os.Bundle;
@@ -24,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton micFab;
     private FloatingActionButton addFab;
 
+    /**
+     * Instantiating the app, and filling the navigation controller
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,14 +92,19 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * inflating the appropriate menu on the start of the app
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.options_menu, menu);
-
         return true;
     }
 
+    /**
+     * Method for tracking user navigation activity
+     */
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController =

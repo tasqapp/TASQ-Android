@@ -1,3 +1,15 @@
+/**
+ * HANNAH BUZARD
+ * DAVID KIPNIS
+ * TYLER KJELDGAARD
+ * DANIEL SHTUNYUK
+ *
+ * WESTERN WASHINGTON UNIVERSITY
+ * CSCI 412 - WINTER 2021
+ *
+ * TASQ APPLICATION PROJECT
+ */
+
 package tasq.app.ui;
 
 import android.content.SharedPreferences;
@@ -35,12 +47,18 @@ public class DisplayTask extends Fragment {
         return new DisplayTask();
     }
 
+    /**
+     * inflating the appropriate xml layout for the screen
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.display_task_fragment, container, false);
     }
 
+    /**
+     * creating references to the models and finding UI elements
+     */
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         Task oldTask;
@@ -68,9 +86,12 @@ public class DisplayTask extends Fragment {
         navController = Navigation.findNavController(getView());
         model = new ViewModelProvider(requireActivity()).get(AddEditViewModel.class);
 
+        // creating listener for the submit button once user is done updating task
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // updating task information
                 String oldDate = sp.getString("taskDate", "---");
                 String oldName = sp.getString("taskName", "---");
                 String oldColor = sp.getString("taskColor", "---");
@@ -103,6 +124,8 @@ public class DisplayTask extends Fragment {
                 } else {
                     Log.d("DISPLAY", "Null something ");
                 }
+
+                // setting new information, and returning to previous screen
                 model.updateTask(oldTask, newTask);
                 navController.navigateUp();
             }

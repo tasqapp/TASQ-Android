@@ -1,3 +1,21 @@
+/**
+ * HANNAH BUZARD
+ * DAVID KIPNIS
+ * TYLER KJELDGAARD
+ * DANIEL SHTUNYUK
+ *
+ * WESTERN WASHINGTON UNIVERSITY
+ * CSCI 412 - WINTER 2021
+ *
+ * TASQ APPLICATION PROJECT
+ */
+
+/**
+ * Task Class
+ * Object that keeps track of an individual task's attributes, such as
+ * the task name, due date, color tag, reminders, and subtasks
+ */
+
 package tasq.app;
 
 public class Task {

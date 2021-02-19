@@ -1,3 +1,15 @@
+/**
+ * HANNAH BUZARD
+ * DAVID KIPNIS
+ * TYLER KJELDGAARD
+ * DANIEL SHTUNYUK
+ *
+ * WESTERN WASHINGTON UNIVERSITY
+ * CSCI 412 - WINTER 2021
+ *
+ * TASQ APPLICATION PROJECT
+ */
+
 package tasq.app.ui.addedit;
 
 import android.os.Bundle;
@@ -22,6 +34,7 @@ import tasq.app.ui.monthly.MonthlyViewModel;
 
 public class AddEditFragment extends Fragment {
 
+    // constants for tracking UI elements
     RadioButton red;
     RadioButton blue;
     RadioButton green;
@@ -29,22 +42,29 @@ public class AddEditFragment extends Fragment {
     EditText date;
     EditText description;
     Button submit;
+
+    // constants for tracking models and controllers
     private AddEditViewModel mViewModel;
     private MonthlyViewModel model;
     private NavController navController;
 
+    //TODO: potentially delete
     public static AddEditFragment newInstance() {
         return new AddEditFragment();
     }
 
+    // inflating the respective add/edit screen
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.add_edit_fragment, container, false);
     }
 
+    // laying out and displaying the page appropriately
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+
+        // finding respective buttons from the .xml file
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(requireActivity()).get(AddEditViewModel.class);
         model = new ViewModelProvider(requireActivity()).get(MonthlyViewModel.class);
@@ -58,9 +78,12 @@ public class AddEditFragment extends Fragment {
         description = (EditText) this.getActivity().findViewById(R.id.task_name_label);
         navController = Navigation.findNavController(getView());
 
+        // setting the listener for the submission button
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // updating new task information and setting task
                 String selectedColor;
                 int color = radio.getCheckedRadioButtonId();
                 if (color == red.getId()) {

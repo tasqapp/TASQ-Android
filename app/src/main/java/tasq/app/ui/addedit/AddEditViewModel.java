@@ -1,3 +1,15 @@
+/**
+ * HANNAH BUZARD
+ * DAVID KIPNIS
+ * TYLER KJELDGAARD
+ * DANIEL SHTUNYUK
+ *
+ * WESTERN WASHINGTON UNIVERSITY
+ * CSCI 412 - WINTER 2021
+ *
+ * TASQ APPLICATION PROJECT
+ */
+
 package tasq.app.ui.addedit;
 
 import android.util.Log;
@@ -31,35 +43,37 @@ public class AddEditViewModel extends ViewModel {
         userTasks.setValue(newArr);
     }
 
+    // updating a task with new information
     public void updateTask(Task oldTask, Task newTask) {
-        ArrayList<Task> favourites = userTasks.getValue();
-        for (int i = 0; i < favourites.size(); i++) {
-            Task currentTask = favourites.get(i);
+        ArrayList<Task> favorites = userTasks.getValue();
+        for (int i = 0; i < favorites.size(); i++) {
+            Task currentTask = favorites.get(i);
             if (Task.getText(currentTask).equals(Task.getText(oldTask))
                     && Task.getDate(currentTask).equals(Task.getDate(oldTask))
                     && Task.getColor(currentTask).equals(Task.getColor(oldTask))) {
                 Log.d("ADDEDIT", "In if statement");
                 //Task task = new Task(Task.getColor(newTask), Task.getDate(newTask), Task.getText(newTask));
-                favourites.add(newTask);
-                favourites.remove(currentTask);
+                favorites.add(newTask);
+                favorites.remove(currentTask);
             }
         }
-        userTasks.setValue(favourites);
-        for (int i = 0; i < favourites.size(); i++) {
-            Task task = favourites.get(i);
+        userTasks.setValue(favorites);
+        for (int i = 0; i < favorites.size(); i++) {
+            Task task = favorites.get(i);
             Log.d("ARRAYLIST", "Item name:" + Task.getText(task));
         }
     }
 
+    // adding a new task to the list of tasks
     public ArrayList<Task> addNewTask(Task addition) {
-        ArrayList<Task> favourites = userTasks.getValue();
+        ArrayList<Task> favorites = userTasks.getValue();
         ArrayList<Task> clonedFavs;
-        if (favourites == null) {
+        if (favorites == null) {
             clonedFavs = new ArrayList<Task>();
         } else {
-            clonedFavs = new ArrayList<Task>(favourites.size());
-            for (int i = 0; i < favourites.size(); i++) {
-                clonedFavs.add(favourites.get(i));
+            clonedFavs = new ArrayList<Task>(favorites.size());
+            for (int i = 0; i < favorites.size(); i++) {
+                clonedFavs.add(favorites.get(i));
             }
         }
         clonedFavs.add(addition);

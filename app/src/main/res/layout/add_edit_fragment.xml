@@ -13,6 +13,7 @@
 
         <!--    Left side layout    -->
         <RelativeLayout
+            android:id="@+id/left_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1">
@@ -139,6 +140,7 @@
 
         <!--    Right side layout    -->
         <RelativeLayout
+            android:id="@+id/right_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1">

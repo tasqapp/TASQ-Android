@@ -1,3 +1,15 @@
+/**
+ * HANNAH BUZARD
+ * DAVID KIPNIS
+ * TYLER KJELDGAARD
+ * DANIEL SHTUNYUK
+ *
+ * WESTERN WASHINGTON UNIVERSITY
+ * CSCI 412 - WINTER 2021
+ *
+ * TASQ APPLICATION PROJECT
+ */
+
 package tasq.app.ui.daily;
 
 import android.content.SharedPreferences;
@@ -41,12 +53,19 @@ public class DailyFragment extends Fragment {
         return new DailyFragment();
     }
 
+    /**
+     * inflating the appropriate layout when screen is being accessed
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.daily_fragment, container, false);
     }
 
+    /**
+     * creating references to the appropriate models and navcontroller
+     * updating the screen with existing information
+     */
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -64,11 +83,16 @@ public class DailyFragment extends Fragment {
         dailyDate.setText(df.format(date));
     }
 
+    /**
+     * method for updating the screen with any new or updated information
+     */
     private void updateUI(ArrayList<Task> arr) {
         LinearLayout ll = getActivity().findViewById(R.id.daily_central_layout);
         ArrayList<Task> allTasks = new ArrayList<Task>();
         String currentDate = new SimpleDateFormat("MM.dd.yyyy").format(new Date());
         Date curDate = null;
+
+        // creating the reference to the current date
         for (int i = 0; i < arr.size(); i++) {
             Task curTask = arr.get(i);
             String date = Task.getDate(curTask);
@@ -84,6 +108,8 @@ public class DailyFragment extends Fragment {
                 allTasks.add(curTask);
             }
         }
+
+        // iterating through tasks and updating/adding them on the screen
         for (Task task : allTasks) {
             Button taskButton = new Button(getActivity());
             taskButton.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +128,7 @@ public class DailyFragment extends Fragment {
                     task.setColor(sharedPreferences.getString("taskColor", "---"));
                 }
             });
-            //TODO: finish button visuals
+            //TODO: add button checkbox and update the text to be crossed out
             taskButton.setAllCaps(false);
             taskButton.setText(Task.getText(task));
             taskButton.setTextColor(getResources().getColor(R.color.white));

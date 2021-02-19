@@ -1,3 +1,15 @@
+/**
+ * HANNAH BUZARD
+ * DAVID KIPNIS
+ * TYLER KJELDGAARD
+ * DANIEL SHTUNYUK
+ *
+ * WESTERN WASHINGTON UNIVERSITY
+ * CSCI 412 - WINTER 2021
+ *
+ * TASQ APPLICATION PROJECT
+ */
+
 package tasq.app.ui.sometime;
 
 import androidx.lifecycle.Observer;
@@ -36,12 +48,18 @@ public class SometimeFragment extends Fragment {
         return new SometimeFragment();
     }
 
+    /**
+     * inflating the appropriate xml layout for the screen
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.sometime_fragment, container, false);
     }
 
+    /**
+     * creating the view with and filling in pre-existing data, if any
+     */
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -54,6 +72,9 @@ public class SometimeFragment extends Fragment {
         });
     }
 
+    /**
+     * method for updating the visuals of the current screen
+     */
     private void updateUI(ArrayList<Task> list) {
         LinearLayout ll = getActivity().findViewById(R.id.sometime_scroll_view_linear_layout);
         ArrayList<Task> taskList = new ArrayList<>();
