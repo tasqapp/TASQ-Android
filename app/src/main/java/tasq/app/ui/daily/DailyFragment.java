@@ -122,9 +122,7 @@ public class DailyFragment extends Fragment {
         }
 
         // iterating through tasks and updating/adding them on the screen
-        int count = 0;
         for (Task task : allTasks) {
-            count++;
             Button taskButton = new Button(getActivity());
             taskButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -154,7 +152,6 @@ public class DailyFragment extends Fragment {
             taskButton.setBackgroundResource(R.drawable.task_plain);
             taskButton.setTextAlignment(Button.TEXT_ALIGNMENT_VIEW_START);
             taskButton.setTextSize(25);
-            taskButton.setId(count);
             taskButton.setPadding(70, 20, 70, 20);
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -176,7 +173,6 @@ public class DailyFragment extends Fragment {
                                 false);
                          ll.removeAllViews();
                         model.updateTask(task, newTask);
-                        return;
                     } else {
                         Task newTask = new Task(Task.getColor(task),
                                 Task.getDate(task),

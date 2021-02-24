@@ -14,6 +14,7 @@ package tasq.app.ui.monthly;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -150,6 +151,9 @@ public class MonthlyFragment extends Fragment {
                     Task task = dayTasks.get(i);
                     TextView b = new TextView(getActivity());
                     b.setText(Task.getText(task));
+                    if(task.isCompleted() == true) {
+                        b.setPaintFlags(b.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    }
                     b.setTextSize(30);
                     b.setTextColor(Color.parseColor("#EBC91E"));
                     ll.addView(b);
