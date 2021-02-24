@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp">
+    <TextView
+        android:id="@+id/register"
+        android:layout_marginTop = "50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register New User"
+        android:textSize="30dp"
+        android:textColor="@color/main_yellow"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/label_first"
+        android:layout_below="@+id/register"
+        android:layout_marginTop = "50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter Email"/>
+
+    <EditText
+        android:id="@+id/input_email"
+        android:layout_toRightOf="@+id/label_first"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/label_first"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="50dp" />
+
+    <TextView
+        android:id="@+id/label_last"
+        android:layout_marginTop = "50dp"
+        android:layout_below="@+id/label_first"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter Password"/>
+    <EditText
+        android:id="@+id/input_pass"
+        android:layout_toRightOf="@+id/label_last"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/label_last"
+        android:layout_marginLeft="50dp" />
+
+
+    <Button
+        android:id="@+id/button_reg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/label_last"
+        android:layout_marginTop="50dp"
+        android:onClick="register"
+        android:text="Register" />
+
+
+    <Button
+        android:id="@+id/loginPage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/button_reg"
+        android:layout_marginTop="50dp"
+        android:text="Have an Account? Log in" />
+
+</RelativeLayout>

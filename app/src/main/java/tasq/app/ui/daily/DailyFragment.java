@@ -13,18 +13,26 @@
 package tasq.app.ui.daily;
 
 import android.content.SharedPreferences;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -35,6 +43,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import tasq.app.Login;
 import tasq.app.R;
 import tasq.app.Task;
 import tasq.app.ui.addedit.AddEditViewModel;
@@ -46,6 +55,7 @@ public class DailyFragment extends Fragment {
     private TextView dailyDate;
     private Date curDate;
     private Date displayDate;
+    private boolean running = false;
 
     private NavController navController;
 
@@ -68,12 +78,14 @@ public class DailyFragment extends Fragment {
      */
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        Log.d("update", "In activity creation");
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(getActivity()).get(DailyViewModel.class);
         model = new ViewModelProvider(requireActivity()).get(AddEditViewModel.class);
         navController = Navigation.findNavController(getView());
         curDate = new Date();
         model.getTask().observe(getViewLifecycleOwner(), item -> {
+            Log.d("update", "In activity creation");
             updateUI(item);
         });
         dailyDate = getActivity().findViewById(R.id.daily_screen_date);
@@ -110,7 +122,9 @@ public class DailyFragment extends Fragment {
         }
 
         // iterating through tasks and updating/adding them on the screen
+        int count = 0;
         for (Task task : allTasks) {
+            count++;
             Button taskButton = new Button(getActivity());
             taskButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -128,21 +142,54 @@ public class DailyFragment extends Fragment {
                     task.setColor(sharedPreferences.getString("taskColor", "---"));
                 }
             });
-            //TODO: add button checkbox and update the text to be crossed out
             taskButton.setAllCaps(false);
             taskButton.setText(Task.getText(task));
+            CheckBox ch = new CheckBox(getActivity());
+            ch.setText("");
+            if(task.isCompleted() == true) {
+                ch.setChecked(true);
+                taskButton.setPaintFlags(taskButton.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            }
             taskButton.setTextColor(getResources().getColor(R.color.white));
             taskButton.setBackgroundResource(R.drawable.task_plain);
             taskButton.setTextAlignment(Button.TEXT_ALIGNMENT_VIEW_START);
             taskButton.setTextSize(25);
+            taskButton.setId(count);
             taskButton.setPadding(70, 20, 70, 20);
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
             );
-            lp.setMargins(30, 15, 140, 15);
+            lp.setMargins(30, 15, 30, 15);
             taskButton.setLayoutParams(lp);
-            ll.addView(taskButton);
+            LinearLayout linear = new LinearLayout(getActivity());
+            linear.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            linear.setOrientation(LinearLayout.HORIZONTAL);
+            ch.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //TODO: add sound when task is completed
+                    if(task.isCompleted() == true) {
+                        Task newTask = new Task(Task.getColor(task),
+                                Task.getDate(task),
+                               Task.getText(task),
+                                false);
+                         ll.removeAllViews();
+                        model.updateTask(task, newTask);
+                        return;
+                    } else {
+                        Task newTask = new Task(Task.getColor(task),
+                                Task.getDate(task),
+                                Task.getText(task),
+                                true);
+                        ll.removeAllViews();
+                        model.updateTask(task, newTask);
+                    }
+                }
+            });
+            linear.addView(ch);
+            linear.addView(taskButton);
+            ll.addView(linear);
         }
     }
 }

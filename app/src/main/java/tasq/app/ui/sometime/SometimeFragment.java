@@ -78,10 +78,10 @@ public class SometimeFragment extends Fragment {
     private void updateUI(ArrayList<Task> list) {
         LinearLayout ll = getActivity().findViewById(R.id.sometime_scroll_view_linear_layout);
         ArrayList<Task> taskList = new ArrayList<>();
-
         for (Task t : list) {
             // TODO: Decide how to determine a sometime task.
-            if (Task.getDate(t) == null) {
+            Log.d("SOMEDAY", "null task date: " + Task.getDate(t));
+            if (Task.getDate(t).compareTo("") == 0) {
                 taskList.add(t);
             }
         }
