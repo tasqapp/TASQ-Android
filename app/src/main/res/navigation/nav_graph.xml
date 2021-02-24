@@ -29,4 +29,9 @@
         android:name="tasq.app.ui.sometime.SometimeFragment"
         android:label="Sometime"
         tools:layout="@layout/sometime_fragment" />
+    <fragment
+        android:id="@+id/displayTask_page"
+        android:name="tasq.app.ui.DisplayTask"
+        android:label="DisplayTask"
+        tools:layout="@layout/display_task_fragment" />
 </navigation>

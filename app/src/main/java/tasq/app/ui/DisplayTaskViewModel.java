@@ -10,10 +10,10 @@
  * TASQ APPLICATION PROJECT
  */
 
-package tasq.app.ui.daily;
+package tasq.app.ui;
 
 import androidx.lifecycle.ViewModel;
 
-public class DailyViewModel extends ViewModel {
-
+public class DisplayTaskViewModel extends ViewModel {
+    // TODO: Implement the ViewModel
 }
