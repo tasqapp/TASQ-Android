@@ -1,3 +1,15 @@
+/**
+ * HANNAH BUZARD
+ * DAVID KIPNIS
+ * TYLER KJELDGAARD
+ * DANIEL SHTUNYUK
+ *
+ * WESTERN WASHINGTON UNIVERSITY
+ * CSCI 412 - WINTER 2021
+ *
+ * TASQ APPLICATION PROJECT
+ */
+
 package tasq.app.ui.monthly;
 
 import android.content.Context;
@@ -8,6 +20,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -36,7 +52,8 @@ import tasq.app.ui.addedit.AddEditViewModel;
 
 public class MonthlyFragment extends Fragment {
     CompactCalendarView compactCalendar;
-    private SimpleDateFormat dateFormatMonth = new SimpleDateFormat("MMMM- yyyy", Locale.getDefault());
+    private SimpleDateFormat dateFormatMonth =
+            new SimpleDateFormat("MMMM, yyyy", Locale.getDefault());
     private MonthlyViewModel mViewModel;
     private AddEditViewModel model;
     List<Event> allEvents = new ArrayList<Event>();
@@ -46,20 +63,25 @@ public class MonthlyFragment extends Fragment {
         return new MonthlyFragment();
     }
 
-
+    /**
+     * inflating the appropriate xml layout
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.monthly_fragment, container, false);
     }
 
+    /**
+     * creating the view with the calendar and filling in pre-existing data, if any
+     */
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         mViewModel = new ViewModelProvider(requireActivity()).get(MonthlyViewModel.class);
         mViewModel.getTask().observe(getViewLifecycleOwner(), item -> {
-           //do nothing currently
+           // do nothing currently
         });
 
         model = new ViewModelProvider(requireActivity()).get(AddEditViewModel.class);
@@ -68,6 +90,7 @@ public class MonthlyFragment extends Fragment {
             updateTaskList(item);
         });
 
+        // creating toolbar, calendar, and fetching appropriate dates
         Toolbar actionBar = ((MainActivity) getActivity()).findViewById(R.id.toolbar);
         ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#EBC91E"));
         Calendar cal = Calendar.getInstance();
@@ -76,18 +99,18 @@ public class MonthlyFragment extends Fragment {
         SimpleDateFormat formatNowYear = new SimpleDateFormat("yyyy");
         java.util.Date nowDate = new java.util.Date();
         String currentYear = formatNowYear.format(nowDate);
-        actionBar.setTitle(month_name + "- " + currentYear);
+        actionBar.setTitle(month_name + ", " + currentYear);
 
-        compactCalendar = (CompactCalendarView) getActivity().findViewById(R.id.compactcalendar_view);
+        compactCalendar = (CompactCalendarView) getActivity()
+                .findViewById(R.id.compactcalendar_view);
         compactCalendar.setUseThreeLetterAbbreviation(true);
 
-
+        // creating listener for the daily buttons to act when the user selects a specific date
         compactCalendar.setListener(new CompactCalendarView.CompactCalendarViewListener() {
             @Override
             public void onDayClick(Date dateClicked) {
                 Context context = getActivity().getApplicationContext();
-                String toastText = "";
-                int dateMatched = 0;
+                ArrayList<Task> dayTasks = new ArrayList<Task>();
                 for (int i=0; i < allTasks.size(); i++) {
                     Task currentTask = allTasks.get(i);
                     String date = Task.getDate(currentTask);
@@ -100,17 +123,44 @@ public class MonthlyFragment extends Fragment {
                         e.printStackTrace();
                     }
                     if (dateClicked.toString().compareTo(currentDate.toString()) == 0) {
-                        dateMatched++;
-                        if(dateMatched==1) {
-                            toastText = toastText + text;
-                        } else {
-                            toastText = toastText + ", " + text;
-                        }
+                        dayTasks.add(currentTask);
                     }
                 }
-                Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
+                // adding textviews of tasks to bottom of relative layout
+                RelativeLayout rl=(RelativeLayout) getActivity().findViewById(R.id.relativeview);
+                LinearLayout ll = (LinearLayout) getActivity().findViewById(R.id.linear);
+                ll.removeAllViews();
+                ScrollView sv = new ScrollView(context);
+                RelativeLayout.LayoutParams params =
+                        new RelativeLayout.LayoutParams(
+                                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                                RelativeLayout.LayoutParams.WRAP_CONTENT);
+                params.addRule(RelativeLayout.BELOW, R.id.compactcalendar_view);
+                sv.setLayoutParams(params);
+                if(ll.getParent() != null) {
+                    ((ViewGroup)ll.getParent()).removeView(ll);
+                }
+                sv.addView(ll);
+                TextView label = new TextView(getActivity());
+                label.setText("Your tasks for this day:");
+                label.setTextSize(30);
+                label.setTextColor(Color.parseColor("#EBC91E"));
+                ll.addView(label);
+                for (int i=0; i < dayTasks.size(); i++) {
+                    Task task = dayTasks.get(i);
+                    TextView b = new TextView(getActivity());
+                    b.setText(Task.getText(task));
+                    b.setTextSize(30);
+                    b.setTextColor(Color.parseColor("#EBC91E"));
+                    ll.addView(b);
+                }
+                if(sv.getParent() != null) {
+                    ((ViewGroup)sv.getParent()).removeView(sv);
+                }
+                rl.addView(sv);
             }
 
+            // updating the appropriate month for when the user scrolls through the calendar
             @Override
             public void onMonthScroll(Date firstDayOfNewMonth) {
                 actionBar.setTitle(dateFormatMonth.format(firstDayOfNewMonth));
@@ -120,6 +170,9 @@ public class MonthlyFragment extends Fragment {
 
     }
 
+    /**
+     * updating the current task list to display appropriate tasks
+     */
     public void updateTaskList(ArrayList<Task> arr) {
         allTasks = (ArrayList<Task>)arr.clone();
         for (int i=0; i < allTasks.size(); i++) {
@@ -139,27 +192,11 @@ public class MonthlyFragment extends Fragment {
             Event ev1 = new Event(eventColor, time, text);
             compactCalendar.addEvent(ev1);
             }
-        }
-      public void newEvent(String [] taskInfo) {
-        int eventColor;
-        String color = taskInfo[0];
-        String date = taskInfo[1];
-        String text = taskInfo[2];
-        if(color.equals("Red")) {
-            eventColor = Color.RED;
-        } else if (color.equals("Blue")) {
-            eventColor = Color.BLUE;
-        } else {
-            eventColor = Color.GREEN;
-        }
-        long time = convertTime(date);
-        Event ev1 = new Event(eventColor,time, text);
-        allEvents.add(ev1);
-        for (int i = 0; i < allEvents.size(); i++) {
-            compactCalendar.addEvent(allEvents.get(i));
-        }
     }
 
+    /**
+     * method for converting the date into appropriate format
+     */
     public Long convertTime(String Date)
     {
         long timeInMilliseconds = 0;

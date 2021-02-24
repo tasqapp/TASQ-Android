@@ -1,14 +1,34 @@
+/**
+ * HANNAH BUZARD
+ * DAVID KIPNIS
+ * TYLER KJELDGAARD
+ * DANIEL SHTUNYUK
+ *
+ * WESTERN WASHINGTON UNIVERSITY
+ * CSCI 412 - WINTER 2021
+ *
+ * TASQ APPLICATION PROJECT
+ */
+
+/**
+ * Task Class
+ * Object that keeps track of an individual task's attributes, such as
+ * the task name, due date, color tag, reminders, and subtasks
+ */
+
 package tasq.app;
 
 public class Task {
-    private String  taskText;
-    private String  dueDate;
+    private String taskText;
+    private String dueDate;
     private String color;
+    private boolean completed;
 
-    public Task(String newColor,String date,String text){
+    public Task(String newColor, String date, String text, boolean completed) {
         taskText = text;
         dueDate = date;
         color = newColor;
+        this.completed = completed;
     }
 
     public static String getText(Task task) {
@@ -21,5 +41,25 @@ public class Task {
 
     public static String getColor(Task task) {
         return task.color;
+    }
+
+    public void setText(String text) {
+        this.taskText = text;
+    }
+
+    public void setDate(String date) {
+        this.dueDate = date;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 }

@@ -1,3 +1,15 @@
+/**
+ * HANNAH BUZARD
+ * DAVID KIPNIS
+ * TYLER KJELDGAARD
+ * DANIEL SHTUNYUK
+ *
+ * WESTERN WASHINGTON UNIVERSITY
+ * CSCI 412 - WINTER 2021
+ *
+ * TASQ APPLICATION PROJECT
+ */
+
 package tasq.app.ui.weekly;
 
 import androidx.lifecycle.Observer;
@@ -30,12 +42,18 @@ public class WeeklyFragment extends Fragment {
         return new WeeklyFragment();
     }
 
+    /**
+     * inflating the appropriate xml layout for the screen
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.weekly_fragment, container, false);
     }
 
+    /**
+     * creating the view with and filling in pre-existing data, if any
+     */
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
