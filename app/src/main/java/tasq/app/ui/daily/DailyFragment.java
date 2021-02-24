@@ -108,16 +108,18 @@ public class DailyFragment extends Fragment {
         for (int i = 0; i < arr.size(); i++) {
             Task curTask = arr.get(i);
             String date = Task.getDate(curTask);
-            SimpleDateFormat formatter = new SimpleDateFormat("MM.dd.yyyy");
-            Date curTaskDate = null;
-            try {
-                curTaskDate = formatter.parse(date);
-                curDate = formatter.parse(currentDate);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            if (curDate.toString().compareTo(curTaskDate.toString()) == 0) {
-                allTasks.add(curTask);
+            if (date.compareTo("") != 0) {
+                SimpleDateFormat formatter = new SimpleDateFormat("MM.dd.yyyy");
+                Date curTaskDate = null;
+                try {
+                    curTaskDate = formatter.parse(date);
+                    curDate = formatter.parse(currentDate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                if (curDate.toString().compareTo(curTaskDate.toString()) == 0) {
+                    allTasks.add(curTask);
+                }
             }
         }
 
