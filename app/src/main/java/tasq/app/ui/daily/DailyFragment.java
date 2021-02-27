@@ -13,12 +13,16 @@
 package tasq.app.ui.daily;
 
 import android.content.SharedPreferences;
+import android.graphics.Paint;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -35,6 +39,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import tasq.app.MainActivity;
 import tasq.app.R;
 import tasq.app.Task;
 import tasq.app.ui.addedit.AddEditViewModel;
@@ -46,8 +51,12 @@ public class DailyFragment extends Fragment {
     private TextView dailyDate;
     private Date curDate;
     private Date displayDate;
+    private boolean running = false;
 
     private NavController navController;
+    SoundPool.Builder poolBuilder ;
+    SoundPool pool ;
+    private int taskFinishedSoundId ;
 
     public static DailyFragment newInstance() {
         return new DailyFragment();
@@ -68,12 +77,20 @@ public class DailyFragment extends Fragment {
      */
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        Log.d("update", "In activity creation");
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(getActivity()).get(DailyViewModel.class);
         model = new ViewModelProvider(requireActivity()).get(AddEditViewModel.class);
         navController = Navigation.findNavController(getView());
         curDate = new Date();
+
+        poolBuilder = new SoundPool.Builder() ;
+        poolBuilder.setMaxStreams(2) ;
+        pool = poolBuilder.build() ;
+        taskFinishedSoundId = pool.load(getActivity(), R.raw.taskfinishsound, 1) ;
+
         model.getTask().observe(getViewLifecycleOwner(), item -> {
+            Log.d("update", "In activity creation");
             updateUI(item);
         });
         dailyDate = getActivity().findViewById(R.id.daily_screen_date);
@@ -96,16 +113,18 @@ public class DailyFragment extends Fragment {
         for (int i = 0; i < arr.size(); i++) {
             Task curTask = arr.get(i);
             String date = Task.getDate(curTask);
-            SimpleDateFormat formatter = new SimpleDateFormat("MM.dd.yyyy");
-            Date curTaskDate = null;
-            try {
-                curTaskDate = formatter.parse(date);
-                curDate = formatter.parse(currentDate);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            if (curDate.toString().compareTo(curTaskDate.toString()) == 0) {
-                allTasks.add(curTask);
+            if (date.compareTo("") != 0) {
+                SimpleDateFormat formatter = new SimpleDateFormat("MM.dd.yyyy");
+                Date curTaskDate = null;
+                try {
+                    curTaskDate = formatter.parse(date);
+                    curDate = formatter.parse(currentDate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                if (curDate.toString().compareTo(curTaskDate.toString()) == 0) {
+                    allTasks.add(curTask);
+                }
             }
         }
 
@@ -128,21 +147,53 @@ public class DailyFragment extends Fragment {
                     task.setColor(sharedPreferences.getString("taskColor", "---"));
                 }
             });
-            //TODO: add button checkbox and update the text to be crossed out
             taskButton.setAllCaps(false);
             taskButton.setText(Task.getText(task));
+            CheckBox ch = new CheckBox(getActivity());
+            ch.setText("");
+            if(task.isCompleted() == true) {
+                ch.setChecked(true);
+                taskButton.setPaintFlags(taskButton.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            }
             taskButton.setTextColor(getResources().getColor(R.color.white));
             taskButton.setBackgroundResource(R.drawable.task_plain);
             taskButton.setTextAlignment(Button.TEXT_ALIGNMENT_VIEW_START);
             taskButton.setTextSize(25);
             taskButton.setPadding(70, 20, 70, 20);
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
             );
-            lp.setMargins(30, 15, 140, 15);
+            lp.setMargins(30, 15, 30, 15);
             taskButton.setLayoutParams(lp);
-            ll.addView(taskButton);
+            LinearLayout taskAndCheckbox = new LinearLayout(getActivity());
+            taskAndCheckbox.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            taskAndCheckbox.setOrientation(LinearLayout.HORIZONTAL);
+            ch.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Task newTask;
+                    if(task.isCompleted()) {
+                        newTask = new Task(Task.getColor(task),
+                                Task.getDate(task),
+                                Task.getText(task),
+                                false);
+                    } else {
+                        pool.play(taskFinishedSoundId, 2.0f, 2.0f, 1, 0, 1.0f) ;
+                        newTask = new Task(Task.getColor(task),
+                                Task.getDate(task),
+                                Task.getText(task),
+                                true);
+                    }
+                    ll.removeAllViews();
+                    model.updateTask(task, newTask);
+                }
+            });
+            ch.setScaleX((float) 1.4);
+            ch.setScaleY((float) 1.4);
+            taskAndCheckbox.addView(ch);
+            taskAndCheckbox.addView(taskButton);
+            ll.addView(taskAndCheckbox);
         }
     }
 }
