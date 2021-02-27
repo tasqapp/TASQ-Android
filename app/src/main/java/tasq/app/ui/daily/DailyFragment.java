@@ -14,25 +14,21 @@ package tasq.app.ui.daily;
 
 import android.content.SharedPreferences;
 import android.graphics.Paint;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -43,7 +39,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import tasq.app.Login;
+import tasq.app.MainActivity;
 import tasq.app.R;
 import tasq.app.Task;
 import tasq.app.ui.addedit.AddEditViewModel;
@@ -58,6 +54,9 @@ public class DailyFragment extends Fragment {
     private boolean running = false;
 
     private NavController navController;
+    SoundPool.Builder poolBuilder ;
+    SoundPool pool ;
+    private int taskFinishedSoundId ;
 
     public static DailyFragment newInstance() {
         return new DailyFragment();
@@ -84,6 +83,12 @@ public class DailyFragment extends Fragment {
         model = new ViewModelProvider(requireActivity()).get(AddEditViewModel.class);
         navController = Navigation.findNavController(getView());
         curDate = new Date();
+
+        poolBuilder = new SoundPool.Builder() ;
+        poolBuilder.setMaxStreams(2) ;
+        pool = poolBuilder.build() ;
+        taskFinishedSoundId = pool.load(getActivity(), R.raw.taskfinishsound, 1) ;
+
         model.getTask().observe(getViewLifecycleOwner(), item -> {
             Log.d("update", "In activity creation");
             updateUI(item);
@@ -161,33 +166,34 @@ public class DailyFragment extends Fragment {
             );
             lp.setMargins(30, 15, 30, 15);
             taskButton.setLayoutParams(lp);
-            LinearLayout linear = new LinearLayout(getActivity());
-            linear.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-            linear.setOrientation(LinearLayout.HORIZONTAL);
+            LinearLayout taskAndCheckbox = new LinearLayout(getActivity());
+            taskAndCheckbox.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            taskAndCheckbox.setOrientation(LinearLayout.HORIZONTAL);
             ch.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //TODO: add sound when task is completed
-                    if(task.isCompleted() == true) {
-                        Task newTask = new Task(Task.getColor(task),
+                    Task newTask;
+                    if(task.isCompleted()) {
+                        newTask = new Task(Task.getColor(task),
                                 Task.getDate(task),
-                               Task.getText(task),
+                                Task.getText(task),
                                 false);
-                         ll.removeAllViews();
-                        model.updateTask(task, newTask);
                     } else {
-                        Task newTask = new Task(Task.getColor(task),
+                        pool.play(taskFinishedSoundId, 2.0f, 2.0f, 1, 0, 1.0f) ;
+                        newTask = new Task(Task.getColor(task),
                                 Task.getDate(task),
                                 Task.getText(task),
                                 true);
-                        ll.removeAllViews();
-                        model.updateTask(task, newTask);
                     }
+                    ll.removeAllViews();
+                    model.updateTask(task, newTask);
                 }
             });
-            linear.addView(ch);
-            linear.addView(taskButton);
-            ll.addView(linear);
+            ch.setScaleX((float) 1.4);
+            ch.setScaleY((float) 1.4);
+            taskAndCheckbox.addView(ch);
+            taskAndCheckbox.addView(taskButton);
+            ll.addView(taskAndCheckbox);
         }
     }
 }
