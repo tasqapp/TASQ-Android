@@ -12,6 +12,7 @@
 
 package tasq.app.ui.addedit;
 
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,6 +49,10 @@ public class AddEditFragment extends Fragment {
     private MonthlyViewModel model;
     private NavController navController;
 
+    private SoundPool.Builder poolBuilder ;
+    private SoundPool pool ;
+    private int updateFinishedSoundId;
+
     //TODO: potentially delete
     public static AddEditFragment newInstance() {
         return new AddEditFragment();
@@ -78,6 +83,11 @@ public class AddEditFragment extends Fragment {
         description = (EditText) this.getActivity().findViewById(R.id.task_name_label);
         navController = Navigation.findNavController(getView());
 
+        poolBuilder = new SoundPool.Builder() ;
+        poolBuilder.setMaxStreams(1) ;
+        pool = poolBuilder.build() ;
+        updateFinishedSoundId = pool.load(getActivity(), R.raw.checkmarksound, 1) ;
+
         // setting the listener for the submission button
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,6 +111,8 @@ public class AddEditFragment extends Fragment {
                 //add to global arrayList of tasks (using add/edit model)
                 Task newTask = new Task(selectedColor, dueDate, taskDesc, false); //TODO: implement proper 'completed' field fetching/setting
                 mViewModel.setTask(newTask);
+                pool.play(updateFinishedSoundId, 0.2f, 0.2f, 1,0, 1.0f) ;
+
                 // Return to previous screen.
                 navController.navigateUp();
             }

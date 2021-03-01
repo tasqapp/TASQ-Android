@@ -13,6 +13,7 @@
 package tasq.app.ui;
 
 import android.content.SharedPreferences;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -42,6 +43,10 @@ public class DisplayTask extends Fragment {
     private DisplayTaskViewModel mViewModel;
     private NavController navController;
     private AddEditViewModel model;
+
+    private SoundPool.Builder poolBuilder ;
+    private SoundPool pool ;
+    private int updateFinishedSoundId;
 
     public static DisplayTask newInstance() {
         return new DisplayTask();
@@ -79,6 +84,11 @@ public class DisplayTask extends Fragment {
 
         date.setText(sp.getString("taskDate", "---"));
         name.setText(sp.getString("taskName", "---"));
+
+        poolBuilder = new SoundPool.Builder() ;
+        poolBuilder.setMaxStreams(1) ;
+        pool = poolBuilder.build() ;
+        updateFinishedSoundId = pool.load(getActivity(), R.raw.checkmarksound, 1) ;
 
 
         //TODO: fill in remaining attributes
@@ -126,6 +136,7 @@ public class DisplayTask extends Fragment {
                 }
 
                 // setting new information, and returning to previous screen
+                pool.play(updateFinishedSoundId, 0.2f, 0.2f, 1,0, 1.0f) ;
                 model.updateTask(oldTask, newTask);
                 navController.navigateUp();
             }
