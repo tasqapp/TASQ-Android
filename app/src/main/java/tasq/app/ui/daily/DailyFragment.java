@@ -57,8 +57,8 @@ public class DailyFragment extends Fragment {
     private boolean running = false;
 
     private NavController navController;
-    SoundPool.Builder poolBuilder ;
-    SoundPool pool ;
+    private SoundPool.Builder poolBuilder ;
+    private SoundPool pool ;
     private int taskFinishedSoundId ;
 
     public static DailyFragment newInstance() {
@@ -88,9 +88,9 @@ public class DailyFragment extends Fragment {
         curDate = new Date();
 
         poolBuilder = new SoundPool.Builder() ;
-        poolBuilder.setMaxStreams(2) ;
+        poolBuilder.setMaxStreams(1) ;
         pool = poolBuilder.build() ;
-        taskFinishedSoundId = pool.load(getActivity(), R.raw.taskfinishsound, 1) ;
+        taskFinishedSoundId = pool.load(getActivity(), R.raw.taskdonesound, 1) ;
 
         model.getTask().observe(getViewLifecycleOwner(), item -> {
             Log.d("update", "In activity creation");
@@ -161,7 +161,7 @@ public class DailyFragment extends Fragment {
             taskButton.setText(Task.getText(task));
             CheckBox ch = new CheckBox(getActivity());
             ch.setText("");
-            if(task.isCompleted()) {
+            if(task.isCompleted() == true) {
                 ch.setChecked(true);
                 taskButton.setPaintFlags(taskButton.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             }
@@ -190,7 +190,7 @@ public class DailyFragment extends Fragment {
                                 task.getPriority(),
                                 false);
                     } else {
-                        pool.play(taskFinishedSoundId, 2.0f, 2.0f, 1, 0, 1.0f) ;
+                        pool.play(taskFinishedSoundId, 1.0f, 1.0f, 1, 0, 1.0f) ;
                         newTask = new Task(Task.getColor(task),
                                 Task.getDate(task),
                                 Task.getText(task),
