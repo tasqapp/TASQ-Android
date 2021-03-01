@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,6 +29,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import tasq.app.Priority;
 import tasq.app.R;
 import tasq.app.Task;
 import tasq.app.ui.monthly.MonthlyViewModel;
@@ -42,6 +44,7 @@ public class AddEditFragment extends Fragment {
     EditText date;
     EditText description;
     Button submit;
+    Spinner prioritySpinner;
 
     // constants for tracking models and controllers
     private AddEditViewModel mViewModel;
@@ -69,6 +72,7 @@ public class AddEditFragment extends Fragment {
         mViewModel = new ViewModelProvider(requireActivity()).get(AddEditViewModel.class);
         model = new ViewModelProvider(requireActivity()).get(MonthlyViewModel.class);
         //find views and buttons by ID
+        prioritySpinner = this.getActivity().findViewById(R.id.priority_spinner);
         submit = (Button) this.getActivity().findViewById(R.id.submitbutton);
         red = (RadioButton) this.getActivity().findViewById(R.id.redbutton);
         blue = (RadioButton) this.getActivity().findViewById(R.id.bluebutton);
@@ -96,10 +100,12 @@ public class AddEditFragment extends Fragment {
                 String taskDesc = description.getText().toString();
                 String dueDate = date.getText().toString();
                 String[] arr = {selectedColor, dueDate, taskDesc};
+
+                Priority priority = Priority.getPriorityFromString((String) prioritySpinner.getSelectedItem());
                 //add to monthly calendar
                 model.setTask(arr);
                 //add to global arrayList of tasks (using add/edit model)
-                Task newTask = new Task(selectedColor, dueDate, taskDesc, false); //TODO: implement proper 'completed' field fetching/setting
+                Task newTask = new Task(selectedColor, dueDate, taskDesc, priority, false); //TODO: implement proper 'completed' field fetching/setting
                 mViewModel.setTask(newTask);
                 // Return to previous screen.
                 navController.navigateUp();
