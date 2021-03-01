@@ -42,6 +42,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -49,6 +50,7 @@ import java.util.Locale;
 import tasq.app.MainActivity;
 import tasq.app.R;
 import tasq.app.Task;
+import tasq.app.TaskPriorityComparator;
 import tasq.app.ui.addedit.AddEditViewModel;
 
 public class MonthlyFragment extends Fragment {
@@ -127,6 +129,9 @@ public class MonthlyFragment extends Fragment {
                         dayTasks.add(currentTask);
                     }
                 }
+                // Sort the listed tasks according to their priority
+                Collections.sort(dayTasks, new TaskPriorityComparator());
+
                 // adding textviews of tasks to bottom of relative layout
                 RelativeLayout rl=(RelativeLayout) getActivity().findViewById(R.id.relativeview);
                 LinearLayout ll = (LinearLayout) getActivity().findViewById(R.id.linear);

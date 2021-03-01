@@ -161,7 +161,7 @@ public class DailyFragment extends Fragment {
             taskButton.setText(Task.getText(task));
             CheckBox ch = new CheckBox(getActivity());
             ch.setText("");
-            if(task.isCompleted() == true) {
+            if(task.isCompleted()) {
                 ch.setChecked(true);
                 taskButton.setPaintFlags(taskButton.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             }
