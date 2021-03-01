@@ -57,8 +57,8 @@ public class DailyFragment extends Fragment {
     private boolean running = false;
 
     private NavController navController;
-    SoundPool.Builder poolBuilder ;
-    SoundPool pool ;
+    private SoundPool.Builder poolBuilder ;
+    private SoundPool pool ;
     private int taskFinishedSoundId ;
 
     public static DailyFragment newInstance() {
@@ -161,7 +161,7 @@ public class DailyFragment extends Fragment {
             taskButton.setText(Task.getText(task));
             CheckBox ch = new CheckBox(getActivity());
             ch.setText("");
-            if(task.isCompleted()) {
+            if(task.isCompleted() == true) {
                 ch.setChecked(true);
                 taskButton.setPaintFlags(taskButton.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             }
