@@ -37,10 +37,14 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
+import tasq.app.Priority;
+import tasq.app.MainActivity;
 import tasq.app.R;
 import tasq.app.Task;
+import tasq.app.TaskPriorityComparator;
 import tasq.app.ui.addedit.AddEditViewModel;
 
 public class DailyFragment extends Fragment {
@@ -53,8 +57,8 @@ public class DailyFragment extends Fragment {
     private boolean running = false;
 
     private NavController navController;
-    private SoundPool.Builder poolBuilder ;
-    private SoundPool pool ;
+    SoundPool.Builder poolBuilder ;
+    SoundPool pool ;
     private int taskFinishedSoundId ;
 
     public static DailyFragment newInstance() {
@@ -125,6 +129,9 @@ public class DailyFragment extends Fragment {
                     allTasks.add(curTask);
                 }
             }
+
+            // Sort the list of tasks according to their priority
+            Collections.sort(allTasks, new TaskPriorityComparator());
         }
 
         // iterating through tasks and updating/adding them on the screen
@@ -139,18 +146,22 @@ public class DailyFragment extends Fragment {
                     editor.putString("taskName", Task.getText(task));
                     editor.putString("taskDate", Task.getDate(task));
                     editor.putString("taskColor", Task.getColor(task));
+                    editor.putString("taskPriority",
+                            Priority.getCapaitalizedStringFromPriority(task.getPriority()));
                     editor.apply();
                     navController.navigate(R.id.displayTask_page);
                     task.setText(sharedPreferences.getString("taskName", "---"));
                     task.setDate(sharedPreferences.getString("taskDate", "---"));
                     task.setColor(sharedPreferences.getString("taskColor", "---"));
+                    task.setPriority(Priority.getPriorityFromString(
+                            sharedPreferences.getString("taskPriority", "Low")));
                 }
             });
             taskButton.setAllCaps(false);
             taskButton.setText(Task.getText(task));
             CheckBox ch = new CheckBox(getActivity());
             ch.setText("");
-            if(task.isCompleted()) {
+            if(task.isCompleted() == true) {
                 ch.setChecked(true);
                 taskButton.setPaintFlags(taskButton.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             }
@@ -176,12 +187,14 @@ public class DailyFragment extends Fragment {
                         newTask = new Task(Task.getColor(task),
                                 Task.getDate(task),
                                 Task.getText(task),
+                                task.getPriority(),
                                 false);
                     } else {
                         pool.play(taskFinishedSoundId, 1.0f, 1.0f, 1, 0, 1.0f) ;
                         newTask = new Task(Task.getColor(task),
                                 Task.getDate(task),
                                 Task.getText(task),
+                                task.getPriority(),
                                 true);
                     }
                     ll.removeAllViews();

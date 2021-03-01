@@ -32,6 +32,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import tasq.app.Priority;
 import tasq.app.R;
 import tasq.app.Task;
 import tasq.app.ui.monthly.MonthlyViewModel;
@@ -47,8 +48,8 @@ public class AddEditFragment extends Fragment {
     DatePicker date;
 
     EditText description;
-    Spinner priority;
     Button submit;
+    Spinner prioritySpinner;
 
     // constants for tracking models and controllers
     private AddEditViewModel mViewModel;
@@ -80,6 +81,7 @@ public class AddEditFragment extends Fragment {
         mViewModel = new ViewModelProvider(requireActivity()).get(AddEditViewModel.class);
         model = new ViewModelProvider(requireActivity()).get(MonthlyViewModel.class);
         //find views and buttons by ID
+        prioritySpinner = this.getActivity().findViewById(R.id.priority_spinner);
         submit = (Button) this.getActivity().findViewById(R.id.submitbutton);
         red = (RadioButton) this.getActivity().findViewById(R.id.redbutton);
         blue = (RadioButton) this.getActivity().findViewById(R.id.bluebutton);
@@ -87,7 +89,6 @@ public class AddEditFragment extends Fragment {
         radio = (RadioGroup) this.getActivity().findViewById(R.id.radiobuttons);
         description = (EditText) this.getActivity().findViewById(R.id.task_name_label);
         navController = Navigation.findNavController(getView());
-        priority = (Spinner) this.getActivity().findViewById(R.id.priority_spinner) ;
 
         date = (DatePicker) this.getActivity().findViewById(R.id.add_date_picker) ;
 
@@ -115,10 +116,12 @@ public class AddEditFragment extends Fragment {
                 Log.d("Date ", dueDate) ;
 
                 String[] arr = {selectedColor, dueDate, taskDesc};
+
+                Priority priority = Priority.getPriorityFromString((String) prioritySpinner.getSelectedItem());
                 //add to monthly calendar
                 model.setTask(arr);
                 //add to global arrayList of tasks (using add/edit model)
-                Task newTask = new Task(selectedColor, dueDate, taskDesc, false, priority.getSelectedItem().toString());
+                Task newTask = new Task(selectedColor, dueDate, taskDesc, priority, false); //TODO: implement proper 'completed' field fetching/setting
                 mViewModel.setTask(newTask);
                 pool.play(updateFinishedSoundId, 0.2f, 0.2f, 1,0, 1.0f) ;
                 // Return to previous screen.

@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -36,6 +37,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import tasq.app.MainActivity;
+import tasq.app.Priority;
 import tasq.app.R;
 import tasq.app.Task;
 import tasq.app.ui.addedit.AddEditViewModel;
@@ -89,22 +91,9 @@ public class DisplayTask extends Fragment {
         String[] setDate = sp.getString("taskDate", "---").split("\\.") ;
         date.init(Integer.parseInt(setDate[2]), Integer.parseInt(setDate[0]) - 1, Integer.parseInt(setDate[1]), null);
         name.setText(sp.getString("taskName", "---"));
+        priority.setSelection(((ArrayAdapter)priority.getAdapter())
+                .getPosition(sp.getString("taskPriority", "Low")));
 
-        String curPriority = sp.getString("taskPriority", "Low") ;
-        switch(curPriority) {
-            case "Low":
-                priority.setSelection(0);
-                break ;
-            case "Medium":
-                priority.setSelection(1);
-                break ;
-            case "High":
-                priority.setSelection(2);
-                break ;
-            case "Extreme":
-                priority.setSelection(3);
-                break ;
-        }
 
         poolBuilder = new SoundPool.Builder() ;
         poolBuilder.setMaxStreams(1) ;
@@ -124,8 +113,9 @@ public class DisplayTask extends Fragment {
                 String oldDate = sp.getString("taskDate", "---");
                 String oldName = sp.getString("taskName", "---");
                 String oldColor = sp.getString("taskColor", "---");
-                String oldPriority = sp.getString("taskPriority", "Low") ;
-                Task oldTask = new Task(oldColor, oldDate, oldName, false, oldPriority);
+                String oldPriority = sp.getString("taskPriority", "Low");
+                Priority oldPri = Priority.getPriorityFromString(oldPriority);
+                Task oldTask = new Task(oldColor, oldDate, oldName, oldPri, false); //TODO: implement proper 'completed' field fetching/setting
                 SharedPreferences sharedPreferences =
                         PreferenceManager.getDefaultSharedPreferences(getActivity());
                 SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -151,8 +141,8 @@ public class DisplayTask extends Fragment {
                 Task newTask = new Task(taskColor,
                         updatedDate,
                         name.getText().toString(),
-                        false,
-                        priority.getSelectedItem().toString());
+                        Priority.getPriorityFromString(priority.getSelectedItem().toString()),
+                        false); //TODO: implement proper 'completed' field fetching/setting
                 if (newTask != null && oldTask != null) {
                     Log.d("DISPLAY", "Task text: " + taskColor);
                     Log.d("DISPLAY", "Task text: " + Task.getColor(oldTask));

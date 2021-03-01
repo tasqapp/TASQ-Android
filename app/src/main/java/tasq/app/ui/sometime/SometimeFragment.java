@@ -35,9 +35,12 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
+import tasq.app.Priority;
 import tasq.app.R;
 import tasq.app.Task;
+import tasq.app.TaskPriorityComparator;
 import tasq.app.ui.addedit.AddEditViewModel;
 
 public class SometimeFragment extends Fragment {
@@ -80,12 +83,15 @@ public class SometimeFragment extends Fragment {
     private void updateUI(ArrayList<Task> list) {
         LinearLayout ll = getActivity().findViewById(R.id.sometime_scroll_view_linear_layout);
         ArrayList<Task> taskList = new ArrayList<>();
+
         for (Task t : list) {
-            // TODO: Decide how to determine a sometime task.
             Log.d("SOMEDAY", "null task date: " + Task.getDate(t));
             if (Task.getDate(t).compareTo("") == 0) {
                 taskList.add(t);
             }
+
+            // Sort sometime tasks by priority
+            Collections.sort(taskList, new TaskPriorityComparator());
         }
         for (Task task : taskList) {
             Button taskButton = new Button(getActivity());
@@ -98,18 +104,22 @@ public class SometimeFragment extends Fragment {
                     editor.putString("taskName", Task.getText(task));
                     editor.putString("taskDate", Task.getDate(task));
                     editor.putString("taskColor", Task.getColor(task));
+                    editor.putString("taskPriority",
+                            Priority.getCapaitalizedStringFromPriority(task.getPriority()));
                     editor.apply();
                     navController.navigate(R.id.displayTask_page);
                     task.setText(sharedPreferences.getString("taskName", "---"));
                     task.setDate(sharedPreferences.getString("taskDate", "---"));
                     task.setColor(sharedPreferences.getString("taskColor", "---"));
+                    task.setPriority(Priority.getPriorityFromString(
+                            sharedPreferences.getString("taskPriority", "Low")));
                 }
             });
             taskButton.setAllCaps(false);
             taskButton.setText(Task.getText(task));
             CheckBox ch = new CheckBox(getActivity());
             ch.setText("");
-            if(task.isCompleted() == true) {
+            if(task.isCompleted()) {
                 ch.setChecked(true);
                 taskButton.setPaintFlags(taskButton.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             }
@@ -131,10 +141,11 @@ public class SometimeFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     //TODO: add sound when task is completed
-                    if(task.isCompleted() == true) {
+                    if(task.isCompleted()) {
                         Task newTask = new Task(Task.getColor(task),
                                 Task.getDate(task),
                                 Task.getText(task),
+                                task.getPriority(),
                                 false);
                         ll.removeAllViews();
                         model.updateTask(task, newTask);
@@ -142,6 +153,7 @@ public class SometimeFragment extends Fragment {
                         Task newTask = new Task(Task.getColor(task),
                                 Task.getDate(task),
                                 Task.getText(task),
+                                task.getPriority(),
                                 true);
                         ll.removeAllViews();
                         model.updateTask(task, newTask);
