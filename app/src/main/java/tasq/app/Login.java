@@ -36,11 +36,19 @@ public class Login extends AppCompatActivity {
         });
     }
     public void login() {
-        mAuth = FirebaseAuth.getInstance();
         EditText emailAdd = findViewById(R.id.input_email);
         EditText pass = findViewById(R.id.input_pass);
         String email = emailAdd.getText().toString();
         String password = pass.getText().toString();
+        if (email.matches("")) {
+            Toast.makeText(this, "You must enter an email to login.", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if (password.matches("")) {
+            Toast.makeText(this, "You must enter a password to login", Toast.LENGTH_LONG).show();
+            return;
+        }
+        mAuth = FirebaseAuth.getInstance();
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -54,7 +62,7 @@ public class Login extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("Login", "signInWithEmail:failure", task.getException());
-                            Toast.makeText(Login.this, "Authentication failed.",
+                            Toast.makeText(Login.this, task.getException().getMessage(),
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
