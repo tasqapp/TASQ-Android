@@ -56,8 +56,6 @@ public class WeeklyFragment extends Fragment {
     private AddEditViewModel model;
     private ScrollView mScrollView;
     private NavController navController;
-    private String weekOfString;
-    private TextView headerWeekOf;
 
     public static WeeklyFragment newInstance() {
         return new WeeklyFragment();
@@ -83,8 +81,8 @@ public class WeeklyFragment extends Fragment {
         navController = Navigation.findNavController(getView());
 
         // Show the current week
-        weekOfString = getFirstWeekDay() + " to " + getLastWeekDay();
-        headerWeekOf = getActivity().findViewById(R.id.weekly_text_weekOf);
+        String weekOfString = getFirstWeekDay() + " to " + getLastWeekDay();
+        TextView headerWeekOf = getActivity().findViewById(R.id.weekly_text_weekOf);
         headerWeekOf.setText(getString(R.string.weekly_week_of) + " " + weekOfString);
 
         model.getTask().observe(getViewLifecycleOwner(), item -> {
