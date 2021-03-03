@@ -23,12 +23,21 @@ public class Task {
     private String dueDate;
     private String color;
     private boolean completed;
+    private String priority = "Low";
 
     public Task(String newColor, String date, String text, boolean completed) {
-        taskText = text;
-        dueDate = date;
-        color = newColor;
+        this.taskText = text;
+        this.dueDate = date;
+        this.color = newColor;
         this.completed = completed;
+    }
+
+    public Task(String newColor, String date, String text, boolean completed, String priority) {
+        this.taskText = text;
+        this.dueDate = date;
+        this.color = newColor;
+        this.completed = completed;
+        this.priority = priority ;
     }
 
     public static String getText(Task task) {
@@ -62,4 +71,8 @@ public class Task {
     public void setCompleted(boolean completed) {
         this.completed = completed;
     }
+
+    public String getPriority() { return priority; }
+
+    public void setPriority(String priority) { this.priority = priority; }
 }
