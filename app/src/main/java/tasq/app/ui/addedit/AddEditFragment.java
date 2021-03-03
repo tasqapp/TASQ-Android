@@ -87,7 +87,6 @@ public class AddEditFragment extends Fragment {
         blue = (RadioButton) this.getActivity().findViewById(R.id.bluebutton);
         green = (RadioButton) this.getActivity().findViewById(R.id.greenbutton);
         radio = (RadioGroup) this.getActivity().findViewById(R.id.radiobuttons);
-        date = (EditText) this.getActivity().findViewById(R.id.due_date);
         description = (EditText) this.getActivity().findViewById(R.id.task_name_label);
         navController = Navigation.findNavController(getView());
 
