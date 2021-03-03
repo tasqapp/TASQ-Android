@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -49,7 +50,7 @@ public class DisplayTask extends Fragment {
 
     private SoundPool.Builder poolBuilder ;
     private SoundPool pool ;
-    private int updateFinishedSoundId;
+    private int updateFinishedSoundId ;
 
     public static DisplayTask newInstance() {
         return new DisplayTask();
@@ -77,16 +78,18 @@ public class DisplayTask extends Fragment {
         actionBar.setTitle("Edit Task");
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
-        Button submit = getActivity().findViewById(R.id.submitbutton);
-        EditText date = getActivity().findViewById(R.id.due_date);
-        EditText name = getActivity().findViewById(R.id.task_name_label);
-        Spinner priority = getActivity().findViewById(R.id.priority_spinner);
+        Button submit = getActivity().findViewById(R.id.edit_submitbutton);
+        DatePicker date = getActivity().findViewById(R.id.edit_date_picker);
+        EditText name = getActivity().findViewById(R.id.edit_task_name_label);
 
-        RadioButton red = getActivity().findViewById(R.id.redbutton);
-        RadioButton blue = getActivity().findViewById(R.id.bluebutton);
-        RadioGroup buttons = getActivity().findViewById(R.id.radiobuttons);
+        RadioButton red = getActivity().findViewById(R.id.edit_redbutton);
+        RadioButton blue = getActivity().findViewById(R.id.edit_bluebutton);
+        RadioGroup buttons = getActivity().findViewById(R.id.edit_radiobuttons);
 
-        date.setText(sp.getString("taskDate", "---"));
+        Spinner priority = getActivity().findViewById(R.id.edit_priority_spinner);
+
+        String[] setDate = sp.getString("taskDate", "---").split("\\.") ;
+        date.init(Integer.parseInt(setDate[2]), Integer.parseInt(setDate[0]) - 1, Integer.parseInt(setDate[1]), null);
         name.setText(sp.getString("taskName", "---"));
         priority.setSelection(((ArrayAdapter)priority.getAdapter())
                 .getPosition(sp.getString("taskPriority", "Low")));
@@ -96,8 +99,7 @@ public class DisplayTask extends Fragment {
         pool = poolBuilder.build() ;
         updateFinishedSoundId = pool.load(getActivity(), R.raw.checkmarksound, 1) ;
 
-
-        //TODO: fill in remaining attributes
+        //TODO: fill in remaining attributes (subtasks, files, etc.)
 
         navController = Navigation.findNavController(getView());
         model = new ViewModelProvider(requireActivity()).get(AddEditViewModel.class);
@@ -106,7 +108,6 @@ public class DisplayTask extends Fragment {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 // updating task information
                 String oldDate = sp.getString("taskDate", "---");
                 String oldName = sp.getString("taskName", "---");
@@ -118,7 +119,11 @@ public class DisplayTask extends Fragment {
                         PreferenceManager.getDefaultSharedPreferences(getActivity());
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("taskName", name.getText().toString());
-                editor.putString("taskDate", date.getText().toString());
+
+                String updatedDate = (date.getMonth()+1) + "." + date.getDayOfMonth() + "." + date.getYear() ;
+                editor.putString("taskDate", updatedDate);
+
+                editor.putString("taskPriority", priority.getSelectedItem().toString());
                 int selectedId = buttons.getCheckedRadioButtonId();
                 String taskColor;
                 if (selectedId == red.getId()) {
@@ -131,10 +136,9 @@ public class DisplayTask extends Fragment {
                     taskColor = "Green";
                     editor.putString("taskColor", "Green");
                 }
-                editor.putString("taskPriority", priority.getSelectedItem().toString());
                 editor.apply();
                 Task newTask = new Task(taskColor,
-                        date.getText().toString(),
+                        updatedDate,
                         name.getText().toString(),
                         Priority.getPriorityFromString(priority.getSelectedItem().toString()),
                         false); //TODO: implement proper 'completed' field fetching/setting

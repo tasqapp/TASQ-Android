@@ -14,10 +14,12 @@ package tasq.app.ui.addedit;
 
 import android.media.SoundPool;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -42,7 +44,9 @@ public class AddEditFragment extends Fragment {
     RadioButton blue;
     RadioButton green;
     RadioGroup radio;
-    EditText date;
+
+    DatePicker date;
+
     EditText description;
     Button submit;
     Spinner prioritySpinner;
@@ -83,9 +87,10 @@ public class AddEditFragment extends Fragment {
         blue = (RadioButton) this.getActivity().findViewById(R.id.bluebutton);
         green = (RadioButton) this.getActivity().findViewById(R.id.greenbutton);
         radio = (RadioGroup) this.getActivity().findViewById(R.id.radiobuttons);
-        date = (EditText) this.getActivity().findViewById(R.id.due_date);
         description = (EditText) this.getActivity().findViewById(R.id.task_name_label);
         navController = Navigation.findNavController(getView());
+
+        date = (DatePicker) this.getActivity().findViewById(R.id.add_date_picker) ;
 
         poolBuilder = new SoundPool.Builder() ;
         poolBuilder.setMaxStreams(1) ;
@@ -96,7 +101,6 @@ public class AddEditFragment extends Fragment {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 // updating new task information and setting task
                 String selectedColor;
                 int color = radio.getCheckedRadioButtonId();
@@ -108,7 +112,9 @@ public class AddEditFragment extends Fragment {
                     selectedColor = "Green";
                 }
                 String taskDesc = description.getText().toString();
-                String dueDate = date.getText().toString();
+                String dueDate = (date.getMonth()+1) + "." + date.getDayOfMonth() + "." + date.getYear();
+                Log.d("Date ", dueDate) ;
+
                 String[] arr = {selectedColor, dueDate, taskDesc};
 
                 Priority priority = Priority.getPriorityFromString((String) prioritySpinner.getSelectedItem());
@@ -118,7 +124,6 @@ public class AddEditFragment extends Fragment {
                 Task newTask = new Task(selectedColor, dueDate, taskDesc, priority, false); //TODO: implement proper 'completed' field fetching/setting
                 mViewModel.setTask(newTask);
                 pool.play(updateFinishedSoundId, 0.2f, 0.2f, 1,0, 1.0f) ;
-
                 // Return to previous screen.
                 navController.navigateUp();
             }
