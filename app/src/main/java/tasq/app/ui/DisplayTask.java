@@ -94,7 +94,6 @@ public class DisplayTask extends Fragment {
         priority.setSelection(((ArrayAdapter)priority.getAdapter())
                 .getPosition(sp.getString("taskPriority", "Low")));
 
-
         poolBuilder = new SoundPool.Builder() ;
         poolBuilder.setMaxStreams(1) ;
         pool = poolBuilder.build() ;

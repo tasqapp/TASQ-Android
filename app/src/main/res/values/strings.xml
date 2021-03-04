@@ -2,7 +2,6 @@
     <string name="app_name">TASQ-app</string>
 
     <string name="priority_prompt">Priority</string>
-    <string name="weekly_week_of">Week of:</string>
     <string name="submit_button">SUBMIT</string>
     <string name="add_subtask_text">+ add subtask</string>
     <string name="color_tags_text">Color Tags</string>
