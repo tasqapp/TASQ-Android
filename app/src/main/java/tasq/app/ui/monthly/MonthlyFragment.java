@@ -83,9 +83,13 @@ public class MonthlyFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         mViewModel = new ViewModelProvider(requireActivity()).get(MonthlyViewModel.class);
-        mViewModel.getTask().observe(getViewLifecycleOwner(), item -> {
-           // do nothing currently
-        });
+
+        // TODO: Remove, redundant code and calling the same observe object.
+        // java.lang.IllegalArgumentException: Cannot add the same observer with
+        // different lifecycles
+//        mViewModel.getTask().observe(getViewLifecycleOwner(), item -> {
+//           // do nothing currently
+//        });
 
         model = new ViewModelProvider(requireActivity()).get(AddEditViewModel.class);
         model.getTask().observe(getViewLifecycleOwner(), item -> {

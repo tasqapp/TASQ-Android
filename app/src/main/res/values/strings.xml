@@ -7,6 +7,7 @@
     <string name="color_tags_text">Color Tags</string>
     <string name="add_task_submit">Add Task</string>
     <string name="edit_task_submit">SUBMIT</string>
+    <string name="weekly_week_of">Week of:</string>
 
     <string-array name="priority_list">
         <item>Low</item>
