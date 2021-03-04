@@ -194,12 +194,14 @@ public class WeeklyFragment extends Fragment {
                         newTask = new Task(Task.getColor(task),
                                 Task.getDate(task),
                                 Task.getText(task),
+                                task.getPriority(),
                                 false);
                     } else {
                         // pool.play(taskFinishedSoundId, 2.0f, 2.0f, 1, 0, 1.0f);
                         newTask = new Task(Task.getColor(task),
                                 Task.getDate(task),
                                 Task.getText(task),
+                                task.getPriority(),
                                 true);
                     }
                     layout.removeAllViews();
