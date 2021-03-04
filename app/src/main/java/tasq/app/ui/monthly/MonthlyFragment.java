@@ -14,6 +14,7 @@ package tasq.app.ui.monthly;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -41,6 +42,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -48,6 +50,7 @@ import java.util.Locale;
 import tasq.app.MainActivity;
 import tasq.app.R;
 import tasq.app.Task;
+import tasq.app.TaskPriorityComparator;
 import tasq.app.ui.addedit.AddEditViewModel;
 
 public class MonthlyFragment extends Fragment {
@@ -126,6 +129,9 @@ public class MonthlyFragment extends Fragment {
                         dayTasks.add(currentTask);
                     }
                 }
+                // Sort the listed tasks according to their priority
+                Collections.sort(dayTasks, new TaskPriorityComparator());
+
                 // adding textviews of tasks to bottom of relative layout
                 RelativeLayout rl=(RelativeLayout) getActivity().findViewById(R.id.relativeview);
                 LinearLayout ll = (LinearLayout) getActivity().findViewById(R.id.linear);
@@ -150,6 +156,9 @@ public class MonthlyFragment extends Fragment {
                     Task task = dayTasks.get(i);
                     TextView b = new TextView(getActivity());
                     b.setText(Task.getText(task));
+                    if(task.isCompleted() == true) {
+                        b.setPaintFlags(b.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    }
                     b.setTextSize(30);
                     b.setTextColor(Color.parseColor("#EBC91E"));
                     ll.addView(b);

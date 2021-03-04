@@ -53,8 +53,7 @@ public class AddEditViewModel extends ViewModel {
                     && Task.getColor(currentTask).equals(Task.getColor(oldTask))) {
                 Log.d("ADDEDIT", "In if statement");
                 //Task task = new Task(Task.getColor(newTask), Task.getDate(newTask), Task.getText(newTask));
-                favorites.add(newTask);
-                favorites.remove(currentTask);
+                favorites.set(i,newTask);
             }
         }
         userTasks.setValue(favorites);

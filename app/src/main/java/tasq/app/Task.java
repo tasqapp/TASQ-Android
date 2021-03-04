@@ -22,12 +22,14 @@ public class Task {
     private String taskText;
     private String dueDate;
     private String color;
+    private Priority priority;
     private boolean completed;
 
-    public Task(String newColor, String date, String text, boolean completed) {
+    public Task(String newColor, String date, String text, Priority priority, boolean completed) {
         taskText = text;
         dueDate = date;
         color = newColor;
+        this.priority = priority;
         this.completed = completed;
     }
 
@@ -43,6 +45,10 @@ public class Task {
         return task.color;
     }
 
+    public Priority getPriority() {
+        return this.priority;
+    }
+
     public void setText(String text) {
         this.taskText = text;
     }
@@ -53,6 +59,10 @@ public class Task {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public void setPriority(Priority priority) {
+        this.priority = priority;
     }
 
     public boolean isCompleted() {
