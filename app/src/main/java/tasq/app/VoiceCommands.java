@@ -33,8 +33,7 @@ public class VoiceCommands {
                 Log.d("LOCATION", locations);
                 Log.d("WORD", word);
                 if(word.toLowerCase().contains(locations.toLowerCase())) {
-                    Log.d("FOUNDWORD", word);
-                    Log.d("FOUNDWORD", locations);
+                    Log.d("FOUNDWORD", locations.toLowerCase());
                     return locations.toLowerCase();
                 }
             }
