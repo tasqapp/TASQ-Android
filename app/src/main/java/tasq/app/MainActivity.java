@@ -136,8 +136,28 @@ public class MainActivity extends AppCompatActivity {
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                Toast.makeText(MainActivity.this, "Hello", Toast.LENGTH_SHORT).show();
-                return false;
+                String selectedDest = menuItem.toString() ;
+                String curDest = navController.getCurrentDestination().getLabel().toString() ;
+                if(!selectedDest.equals(curDest)) {
+                    int navId = 0;
+                    switch (selectedDest) {
+                        case "Daily":
+                            navId = R.id.daily_page ;
+                            break;
+                        case "Monthly":
+                            navId = R.id.monthly_page ;
+                            break;
+                        case "Weekly":
+                            navId = R.id.weekly_page ;
+                            break;
+                        case "Sometime":
+                            navId = R.id.sometime_page ;
+                            break;
+                    }
+                    navController.navigate(navId) ;
+                }
+                drawer.close();
+                return false ;
             }
         });
     }
@@ -150,12 +170,12 @@ public class MainActivity extends AppCompatActivity {
     private void listen( ) {
         micFab.setEnabled( false );
         Intent listenIntent =
-                new Intent( RecognizerIntent.ACTION_RECOGNIZE_SPEECH );
-        listenIntent.putExtra( RecognizerIntent.EXTRA_PROMPT, "Where can I add a task for you?" );
+                new Intent( RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        listenIntent.putExtra( RecognizerIntent.EXTRA_PROMPT, "Where can I add a task for you?");
         listenIntent.putExtra( RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM );
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         listenIntent.putExtra( RecognizerIntent.EXTRA_MAX_RESULTS, 5 );
-        startActivityForResult( listenIntent, PAGE_REQUEST );
+        startActivityForResult( listenIntent, PAGE_REQUEST);
     }
 
 
