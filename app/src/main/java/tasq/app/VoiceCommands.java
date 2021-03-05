@@ -30,8 +30,12 @@ public class VoiceCommands {
             String word = words.get( i );
             for (int j =0; j <fragments.size(); j++) {
                 String locations = fragments.get(j);
-                if(word.equalsIgnoreCase(locations) ) {
-                    return word;
+                Log.d("LOCATION", locations);
+                Log.d("WORD", word);
+                if(word.toLowerCase().contains(locations.toLowerCase())) {
+                    Log.d("FOUNDWORD", word);
+                    Log.d("FOUNDWORD", locations);
+                    return locations.toLowerCase();
                 }
             }
         }
