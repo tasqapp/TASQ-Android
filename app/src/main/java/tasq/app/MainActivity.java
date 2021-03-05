@@ -213,25 +213,37 @@ public class MainActivity extends AppCompatActivity {
             String firstMatch =
                     pages.firstMatchWithMinConfidence( returnedWords, scores );
             // Create Intent for map
+            String curDest = navController.getCurrentDestination().getLabel().toString() ;
             switch(firstMatch)
             {
-                case "Daily Page":
-                    navController.navigate(R.id.daily_page);
+                case "weekly page":
+                    if(!curDest.equals("Weekly")) {
+                        navController.navigate(R.id.weekly_page);
+                    }
                     break;
-                case "Weekly Page":
-                    navController.navigate(R.id.weekly_page);
+                case "monthly page":
+                    if(!curDest.equals("Monthly")) {
+                        navController.navigate(R.id.monthly_page);
+                    }
                     break;
-                case "Monthly Page":
-                    navController.navigate(R.id.monthly_page);
+                case "someday page":
+                    if(!curDest.equals("Sometime")) {
+                        navController.navigate(R.id.sometime_page);
+                    }
                     break;
-                case "Someday Page":
-                    navController.navigate(R.id.sometime_page);
+                case "add task":
+                    if(!curDest.equals("Add Task")) {
+                        navController.navigate(R.id.add_edit_task);
+                    }
                     break;
-                case "Add Task":
-                    navController.navigate(R.id.add_edit_task);
+                case "daily page":
+                    if(!curDest.equals("Daily")) {
+                        navController.navigate(R.id.daily_page);
+                    }
                     break;
                 default:
-                    navController.navigate(R.id.daily_page);
+                    Toast.makeText(MainActivity.this, "Sorry, I did not understand" +
+                            "that. Please try again.", Toast.LENGTH_LONG).show();
             }
         }
         micFab.setEnabled( true );
