@@ -87,47 +87,6 @@
                 android:layout_alignLeft="@id/task_priority_label" />
 
             <TextView
-                android:id="@+id/attachments_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/edit_priority_spinner"
-                android:layout_marginLeft="50dp"
-                android:layout_marginTop="50dp"
-                android:text="Attachments"
-                android:textColor="@color/text_black"/>
-
-            <Button
-                android:id="@+id/attachments_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_below="@id/attachments_label"
-                android:layout_alignLeft="@id/attachments_label"
-                android:backgroundTint="@color/button_orange"
-                android:text="+ add files"
-                android:textColor="@color/white"/>
-
-            <TextView
-                android:id="@+id/subtasks_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/radiobuttons"
-                android:layout_alignStart="@+id/color_tags_label"
-                android:layout_alignBaseline="@+id/attachments_label"
-                android:text="Subtasks"
-                android:textColor="@color/text_black"/>
-
-            <EditText
-                android:id="@+id/edit_subtask"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/subtasks_label"
-                android:layout_alignBaseline="@+id/attachments_button"
-                android:layout_alignStart="@id/subtasks_label"
-                android:text="@string/add_subtask_text"
-                android:textColor="@color/text_grey"/>
-
-            <TextView
                 android:id="@+id/color_tags_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

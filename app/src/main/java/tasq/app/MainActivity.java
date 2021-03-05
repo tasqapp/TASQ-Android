@@ -84,14 +84,13 @@ public class MainActivity extends AppCompatActivity {
 
         //Mic button logic for voice commands
 
-       ArrayList<String> fragments = new ArrayList<>();
+        ArrayList<String> fragments = new ArrayList<>();
         fragments.add("Daily page");
         fragments.add( "Weekly page");
-        fragments.add( "Monthly page" );
-        fragments.add( "Someday page" );
-        fragments.add( "Add Task" );
+        fragments.add( "Monthly page");
+        fragments.add( "Someday page");
+        fragments.add( "Add Task");
         pages = new VoiceCommands(fragments);
-
 
         micFab = findViewById(R.id.micFab);
         micFab.setOnClickListener(new View.OnClickListener() {
@@ -110,8 +109,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-
 
         addFab = findViewById(R.id.addFab);
         addFab.setOnClickListener(new View.OnClickListener() {
