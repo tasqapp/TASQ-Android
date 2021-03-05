@@ -132,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
