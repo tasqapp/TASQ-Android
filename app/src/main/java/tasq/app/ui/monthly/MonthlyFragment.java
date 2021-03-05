@@ -13,14 +13,17 @@
 package tasq.app.ui.monthly;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -33,6 +36,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 //import androidx.lifecycle.ViewModelProviders;
 
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
@@ -42,7 +47,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -50,7 +54,6 @@ import java.util.Locale;
 import tasq.app.MainActivity;
 import tasq.app.R;
 import tasq.app.Task;
-import tasq.app.TaskPriorityComparator;
 import tasq.app.ui.addedit.AddEditViewModel;
 
 public class MonthlyFragment extends Fragment {
@@ -58,6 +61,7 @@ public class MonthlyFragment extends Fragment {
     private SimpleDateFormat dateFormatMonth =
             new SimpleDateFormat("MMMM, yyyy", Locale.getDefault());
     private MonthlyViewModel mViewModel;
+    private NavController navController;
     private AddEditViewModel model;
     List<Event> allEvents = new ArrayList<Event>();
     ArrayList<Task> allTasks = new ArrayList<Task>();
@@ -72,31 +76,19 @@ public class MonthlyFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        Log.d("DEBUG", "onCreateView of LoginFragment");
         return inflater.inflate(R.layout.monthly_fragment, container, false);
     }
 
     /**
      * creating the view with the calendar and filling in pre-existing data, if any
      */
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        mViewModel = new ViewModelProvider(requireActivity()).get(MonthlyViewModel.class);
-
-        // TODO: Remove, redundant code and calling the same observe object.
-        // java.lang.IllegalArgumentException: Cannot add the same observer with
-        // different lifecycles
-//        mViewModel.getTask().observe(getViewLifecycleOwner(), item -> {
-//           // do nothing currently
-//        });
-
-        model = new ViewModelProvider(requireActivity()).get(AddEditViewModel.class);
-        model.getTask().observe(getViewLifecycleOwner(), item -> {
-            Log.d("MONTHLY", "Got event");
-            updateTaskList(item);
-        });
-
+        Log.d("DEBUG", "onActivityCreated of LoginFragment");
+        navController = Navigation.findNavController(getView());
         // creating toolbar, calendar, and fetching appropriate dates
         Toolbar actionBar = ((MainActivity) getActivity()).findViewById(R.id.toolbar);
         ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#EBC91E"));
@@ -107,7 +99,10 @@ public class MonthlyFragment extends Fragment {
         java.util.Date nowDate = new java.util.Date();
         String currentYear = formatNowYear.format(nowDate);
         actionBar.setTitle(month_name + ", " + currentYear);
-
+        model = new ViewModelProvider(requireActivity()).get(AddEditViewModel.class);
+        model.getTask().observe(getViewLifecycleOwner(), item -> {
+            updateTaskList(item);
+        });
         compactCalendar = (CompactCalendarView) getActivity()
                 .findViewById(R.id.compactcalendar_view);
         compactCalendar.setUseThreeLetterAbbreviation(true);
@@ -133,9 +128,6 @@ public class MonthlyFragment extends Fragment {
                         dayTasks.add(currentTask);
                     }
                 }
-                // Sort the listed tasks according to their priority
-                Collections.sort(dayTasks, new TaskPriorityComparator());
-
                 // adding textviews of tasks to bottom of relative layout
                 RelativeLayout rl=(RelativeLayout) getActivity().findViewById(R.id.relativeview);
                 LinearLayout ll = (LinearLayout) getActivity().findViewById(R.id.linear);
@@ -156,6 +148,23 @@ public class MonthlyFragment extends Fragment {
                 label.setTextSize(30);
                 label.setTextColor(Color.parseColor("#EBC91E"));
                 ll.addView(label);
+                Button dailyButton = new Button(getActivity());
+                dailyButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        SharedPreferences sharedPreferences =
+                                PreferenceManager.getDefaultSharedPreferences(getActivity());
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("dateSent", dateClicked.toString());
+
+                        editor.apply();
+                        String test = sharedPreferences.getString("dateSent", "nope");
+                        Log.d("INMONTHLY", test);
+                        navController.navigate(R.id.daily_page);
+                    }
+                });
+                dailyButton.setText("View on Daily Page");
+                ll.addView(dailyButton);
                 for (int i=0; i < dayTasks.size(); i++) {
                     Task task = dayTasks.get(i);
                     TextView b = new TextView(getActivity());
