@@ -243,7 +243,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 default:
                     Toast.makeText(MainActivity.this, "Sorry, I did not understand" +
-                            "that. Please try again.", Toast.LENGTH_LONG).show();
+                            " that. Please try again.", Toast.LENGTH_LONG).show();
             }
         }
         micFab.setEnabled( true );
