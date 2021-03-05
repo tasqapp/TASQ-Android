@@ -1,5 +1,7 @@
 package tasq.app;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -28,8 +30,9 @@ public class VoiceCommands {
             String word = words.get( i );
             for (int j =0; j <fragments.size(); j++) {
                 String locations = fragments.get(j);
-                if( word.equalsIgnoreCase( locations ) )
+                if(word.equalsIgnoreCase(locations) ) {
                     return word;
+                }
             }
         }
         return DEFAULT_STRING;
