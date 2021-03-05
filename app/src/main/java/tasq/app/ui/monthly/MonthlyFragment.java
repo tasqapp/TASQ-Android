@@ -76,19 +76,18 @@ public class MonthlyFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        Log.d("DEBUG", "onCreateView of LoginFragment");
         return inflater.inflate(R.layout.monthly_fragment, container, false);
     }
 
     /**
      * creating the view with the calendar and filling in pre-existing data, if any
      */
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        model = new ViewModelProvider(requireActivity()).get(AddEditViewModel.class);
-        model.getTask().observe(getViewLifecycleOwner(), item -> {
-            updateTaskList(item);
-        });
+        Log.d("DEBUG", "onActivityCreated of LoginFragment");
         navController = Navigation.findNavController(getView());
         // creating toolbar, calendar, and fetching appropriate dates
         Toolbar actionBar = ((MainActivity) getActivity()).findViewById(R.id.toolbar);
@@ -100,7 +99,10 @@ public class MonthlyFragment extends Fragment {
         java.util.Date nowDate = new java.util.Date();
         String currentYear = formatNowYear.format(nowDate);
         actionBar.setTitle(month_name + ", " + currentYear);
-
+        model = new ViewModelProvider(requireActivity()).get(AddEditViewModel.class);
+        model.getTask().observe(getViewLifecycleOwner(), item -> {
+            updateTaskList(item);
+        });
         compactCalendar = (CompactCalendarView) getActivity()
                 .findViewById(R.id.compactcalendar_view);
         compactCalendar.setUseThreeLetterAbbreviation(true);
