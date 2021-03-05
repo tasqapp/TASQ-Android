@@ -27,6 +27,7 @@ import android.speech.RecognizerIntent;
 import android.speech.tts.Voice;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int PAGE_REQUEST = 1;
     public static VoiceCommands pages;
     private NavController navController;
+    public NavigationView navView;
 
     /**
      * Instantiating the app, and filling the navigation controller
@@ -128,6 +130,13 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     addFab.show();
                 }
+            }
+        });
+        navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                Toast.makeText(MainActivity.this, "Hello", Toast.LENGTH_SHORT).show();
+                return false;
             }
         });
     }
