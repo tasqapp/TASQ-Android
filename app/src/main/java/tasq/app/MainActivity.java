@@ -87,11 +87,11 @@ public class MainActivity extends AppCompatActivity {
         //Mic button logic for voice commands
 
         ArrayList<String> fragments = new ArrayList<>();
-        fragments.add("Daily page");
-        fragments.add( "Weekly page");
-        fragments.add( "Monthly page");
-        fragments.add( "Someday page");
-        fragments.add( "Add Task");
+        fragments.add("Daily");
+        fragments.add( "Weekly");
+        fragments.add( "Monthly");
+        fragments.add( "Someday");
+        fragments.add( "Add");
         pages = new VoiceCommands(fragments);
 
         micFab = findViewById(R.id.micFab);
@@ -216,27 +216,27 @@ public class MainActivity extends AppCompatActivity {
             String curDest = navController.getCurrentDestination().getLabel().toString() ;
             switch(firstMatch)
             {
-                case "weekly page":
+                case "weekly":
                     if(!curDest.equals("Weekly")) {
                         navController.navigate(R.id.weekly_page);
                     }
                     break;
-                case "monthly page":
+                case "monthly":
                     if(!curDest.equals("Monthly")) {
                         navController.navigate(R.id.monthly_page);
                     }
                     break;
-                case "someday page":
+                case "someday":
                     if(!curDest.equals("Sometime")) {
                         navController.navigate(R.id.sometime_page);
                     }
                     break;
-                case "add task":
+                case "add":
                     if(!curDest.equals("Add Task")) {
                         navController.navigate(R.id.add_edit_task);
                     }
                     break;
-                case "daily page":
+                case "daily":
                     if(!curDest.equals("Daily")) {
                         navController.navigate(R.id.daily_page);
                     }
