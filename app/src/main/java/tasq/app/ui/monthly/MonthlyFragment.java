@@ -13,14 +13,17 @@
 package tasq.app.ui.monthly;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -33,6 +36,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 //import androidx.lifecycle.ViewModelProviders;
 
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
@@ -56,6 +61,7 @@ public class MonthlyFragment extends Fragment {
     private SimpleDateFormat dateFormatMonth =
             new SimpleDateFormat("MMMM, yyyy", Locale.getDefault());
     private MonthlyViewModel mViewModel;
+    private NavController navController;
     private AddEditViewModel model;
     List<Event> allEvents = new ArrayList<Event>();
     ArrayList<Task> allTasks = new ArrayList<Task>();
@@ -79,18 +85,11 @@ public class MonthlyFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        mViewModel = new ViewModelProvider(requireActivity()).get(MonthlyViewModel.class);
-        mViewModel.getTask().observe(getViewLifecycleOwner(), item -> {
-           // do nothing currently
-        });
-
         model = new ViewModelProvider(requireActivity()).get(AddEditViewModel.class);
         model.getTask().observe(getViewLifecycleOwner(), item -> {
-            Log.d("MONTHLY", "Got event");
             updateTaskList(item);
         });
-
+        navController = Navigation.findNavController(getView());
         // creating toolbar, calendar, and fetching appropriate dates
         Toolbar actionBar = ((MainActivity) getActivity()).findViewById(R.id.toolbar);
         ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#EBC91E"));
@@ -147,6 +146,23 @@ public class MonthlyFragment extends Fragment {
                 label.setTextSize(30);
                 label.setTextColor(Color.parseColor("#EBC91E"));
                 ll.addView(label);
+                Button dailyButton = new Button(getActivity());
+                dailyButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        SharedPreferences sharedPreferences =
+                                PreferenceManager.getDefaultSharedPreferences(getActivity());
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("dateSent", dateClicked.toString());
+
+                        editor.apply();
+                        String test = sharedPreferences.getString("dateSent", "nope");
+                        Log.d("INMONTHLY", test);
+                        navController.navigate(R.id.daily_page);
+                    }
+                });
+                dailyButton.setText("View on Daily Page");
+                ll.addView(dailyButton);
                 for (int i=0; i < dayTasks.size(); i++) {
                     Task task = dayTasks.get(i);
                     TextView b = new TextView(getActivity());

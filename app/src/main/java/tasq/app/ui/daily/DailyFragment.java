@@ -38,6 +38,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 import tasq.app.R;
 import tasq.app.Task;
@@ -50,7 +51,8 @@ public class DailyFragment extends Fragment {
     private TextView dailyDate;
     private Date curDate;
     private Date displayDate;
-    private boolean running = false;
+    private boolean checked;
+    private String monthlyDate;
 
     private NavController navController;
     private SoundPool.Builder poolBuilder ;
@@ -76,7 +78,6 @@ public class DailyFragment extends Fragment {
      */
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        Log.d("update", "In activity creation");
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(getActivity()).get(DailyViewModel.class);
         model = new ViewModelProvider(requireActivity()).get(AddEditViewModel.class);
@@ -94,9 +95,31 @@ public class DailyFragment extends Fragment {
         });
         dailyDate = getActivity().findViewById(R.id.daily_screen_date);
         //reformat date for display
-        Date date = new Date();
+        SharedPreferences sharedPreferences =
+                PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String monthDate = sharedPreferences.getString("dateSent", "---");
         DateFormat df = new SimpleDateFormat("EEE MMM dd");
-        dailyDate.setText(df.format(date));
+        String formatted = "";
+        if(monthDate.compareTo("---") != 0) {
+            monthlyDate = monthDate;
+            SimpleDateFormat oldFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+            DateFormat newFormat = new SimpleDateFormat("EEE MMM dd");
+            try {
+                formatted = newFormat.format(oldFormat.parse(monthDate));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            dailyDate.setText(formatted);
+            sharedPreferences =
+                    PreferenceManager.getDefaultSharedPreferences(getActivity());
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("dateSent", "---");
+            editor.apply();
+        } else {
+            monthlyDate = null;
+            Date date = new Date();
+            dailyDate.setText(df.format(date));
+        }
     }
 
     /**
@@ -106,14 +129,25 @@ public class DailyFragment extends Fragment {
         LinearLayout ll = getActivity().findViewById(R.id.daily_central_layout);
         ArrayList<Task> allTasks = new ArrayList<Task>();
         String currentDate = new SimpleDateFormat("MM.dd.yyyy").format(new Date());
+        SimpleDateFormat formatter = new SimpleDateFormat("MM.dd.yyyy");
         Date curDate = null;
-
+        Date monthDate = null;
+        String monthString = null;
+        if(monthlyDate != null) {
+            SimpleDateFormat oldFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+            SimpleDateFormat newFormat = new SimpleDateFormat("MM.dd.yyyy");
+            try {
+                monthString = newFormat.format(oldFormat.parse(monthlyDate));
+                monthDate = formatter.parse(monthString);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
         // creating the reference to the current date
         for (int i = 0; i < arr.size(); i++) {
             Task curTask = arr.get(i);
             String date = Task.getDate(curTask);
             if (date.compareTo("") != 0) {
-                SimpleDateFormat formatter = new SimpleDateFormat("MM.dd.yyyy");
                 Date curTaskDate = null;
                 try {
                     curTaskDate = formatter.parse(date);
@@ -121,8 +155,14 @@ public class DailyFragment extends Fragment {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                if (curDate.toString().compareTo(curTaskDate.toString()) == 0) {
-                    allTasks.add(curTask);
+                if (monthlyDate != null) {
+                    if (monthDate.toString().compareTo(curTaskDate.toString()) == 0) {
+                        allTasks.add(curTask);
+                    }
+                } else {
+                    if (curDate.toString().compareTo(curTaskDate.toString()) == 0) {
+                        allTasks.add(curTask);
+                    }
                 }
             }
         }
@@ -171,6 +211,7 @@ public class DailyFragment extends Fragment {
             ch.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    checked = true;
                     Task newTask;
                     if(task.isCompleted()) {
                         newTask = new Task(Task.getColor(task),
