@@ -44,7 +44,6 @@ import tasq.app.ui.addedit.AddEditViewModel;
 
 public class DisplayTask extends Fragment {
 
-    private DisplayTaskViewModel mViewModel;
     private NavController navController;
     private AddEditViewModel model;
 
@@ -70,10 +69,7 @@ public class DisplayTask extends Fragment {
      */
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        Task oldTask;
-        Task newTask;
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(DisplayTaskViewModel.class);
         Toolbar actionBar = ((MainActivity) getActivity()).findViewById(R.id.toolbar);
         actionBar.setTitle("Edit Task");
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());

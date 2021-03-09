@@ -28,6 +28,7 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
         log = (Button) findViewById(R.id.button_login);
+        //set onclick listener for user login (call function to authorize login)
         log.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -35,11 +36,19 @@ public class Login extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * Method for authorizing user login (checks to see whether entered credentials exist in the database)
+     * Upon successful registration, user is navigated to task pages. If unsuccessful, error messages are
+     * displayed.
+     */
     public void login() {
         EditText emailAdd = findViewById(R.id.input_email);
         EditText pass = findViewById(R.id.input_pass);
         String email = emailAdd.getText().toString();
         String password = pass.getText().toString();
+        //if user does not enter a username or password, display error message because authenticate
+        //cannot be performed
         if (email.matches("")) {
             Toast.makeText(this, "You must enter an email to login.", Toast.LENGTH_LONG).show();
             return;
@@ -48,6 +57,7 @@ public class Login extends AppCompatActivity {
             Toast.makeText(this, "You must enter a password to login", Toast.LENGTH_LONG).show();
             return;
         }
+        //use firebase database built-in to attempt to find user in database and compare credentials
         mAuth = FirebaseAuth.getInstance();
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -55,13 +65,11 @@ public class Login extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d("Login", "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             Intent intent = new Intent(Login.this, MainActivity.class);
                             startActivity(intent);
                         } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w("Login", "signInWithEmail:failure", task.getException());
+                            // If sign in fails, display error message to the user.
                             Toast.makeText(Login.this, task.getException().getMessage(),
                                     Toast.LENGTH_SHORT).show();
                         }

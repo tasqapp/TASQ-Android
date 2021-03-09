@@ -31,6 +31,7 @@ public class Register extends AppCompatActivity {
         setContentView(R.layout.register);
         back = (Button) findViewById(R.id.loginPage);
         reg = (Button) findViewById(R.id.button_reg);
+        //if login button pressed, navigate to user login page
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -38,6 +39,7 @@ public class Register extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        //if register button is clicked, call function to authorize/perform user registration
         reg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,11 +48,16 @@ public class Register extends AppCompatActivity {
         });
     }
 
+    /**
+     * Method for verifying user registration is done correctly
+     * and navigation to task pages on successful registration
+     */
     public void register() {
         EditText emailAdd = findViewById(R.id.input_email);
         EditText pass = findViewById(R.id.input_pass);
         String email = emailAdd.getText().toString();
         String password = pass.getText().toString();
+        //if user leaves email or password blank, display error message
         if (email.matches("")) {
             Toast.makeText(this, "You must enter an email to register.", Toast.LENGTH_LONG).show();
             return;
@@ -59,6 +66,7 @@ public class Register extends AppCompatActivity {
             Toast.makeText(this, "You must enter a password to register", Toast.LENGTH_LONG).show();
             return;
         }
+        //use firebase database built-in to attempt to add user to database (register)
         mAuth = FirebaseAuth.getInstance();
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -66,13 +74,10 @@ public class Register extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d("Register", "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
                             Intent intent = new Intent(Register.this, MainActivity.class);
                             startActivity(intent);
                         } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w("Register", "createUserWithEmail:failure", task.getException());
+                            // If sign in fails, display error message to the user.
                             Toast.makeText(Register.this, task.getException().getMessage(),
                                     Toast.LENGTH_SHORT).show();
                         }

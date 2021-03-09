@@ -35,7 +35,6 @@ import androidx.navigation.Navigation;
 import tasq.app.Priority;
 import tasq.app.R;
 import tasq.app.Task;
-import tasq.app.ui.monthly.MonthlyViewModel;
 
 public class AddEditFragment extends Fragment {
 
@@ -53,7 +52,6 @@ public class AddEditFragment extends Fragment {
 
     // constants for tracking models and controllers
     private AddEditViewModel mViewModel;
-    private MonthlyViewModel model;
     private NavController navController;
 
     private SoundPool.Builder poolBuilder ;
@@ -79,7 +77,6 @@ public class AddEditFragment extends Fragment {
         // finding respective buttons from the .xml file
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(requireActivity()).get(AddEditViewModel.class);
-        model = new ViewModelProvider(requireActivity()).get(MonthlyViewModel.class);
         //find views and buttons by ID
         prioritySpinner = this.getActivity().findViewById(R.id.priority_spinner);
         submit = (Button) this.getActivity().findViewById(R.id.submitbutton);
@@ -118,8 +115,6 @@ public class AddEditFragment extends Fragment {
                 String[] arr = {selectedColor, dueDate, taskDesc};
 
                 Priority priority = Priority.getPriorityFromString((String) prioritySpinner.getSelectedItem());
-                //add to monthly calendar
-                model.setTask(arr);
                 //add to global arrayList of tasks (using add/edit model)
                 Task newTask = new Task(selectedColor, dueDate, taskDesc, priority, false); //TODO: implement proper 'completed' field fetching/setting
                 mViewModel.setTask(newTask);

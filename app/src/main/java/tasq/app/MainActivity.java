@@ -49,6 +49,8 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
+import tasq.app.ui.addedit.AddEditViewModel;
+
 public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private FloatingActionButton micFab;
@@ -57,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     public static VoiceCommands pages;
     private NavController navController;
     public NavigationView navView;
+    private AddEditViewModel model;
 
     /**
      * Instantiating the app, and filling the navigation controller
@@ -84,8 +87,8 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        //Mic button logic for voice commands
-
+        //Array List containing possible matches for what the user gives via voice commands
+        //each option is a page option to navigate to
         ArrayList<String> fragments = new ArrayList<>();
         fragments.add("Daily");
         fragments.add( "Weekly");
@@ -94,6 +97,10 @@ public class MainActivity extends AppCompatActivity {
         fragments.add( "Add");
         pages = new VoiceCommands(fragments);
 
+        /**
+         * Check if user's device supports speech recoginition and set onClick listener for
+         * every page's mic button
+         */
         micFab = findViewById(R.id.micFab);
         micFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,6 +119,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * Set on click listener for the "add task" button on every screen. If it is pressed, navigate to
+         * the add/edit task page.
+         */
         addFab = findViewById(R.id.addFab);
         addFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //if the screen is the add/edit task screen, hide the add task button
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
             public void onDestinationChanged(@NonNull NavController controller,
@@ -132,6 +144,11 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        /**
+         * Set up listener for destination selection via the slide out menu. Navigate to screen
+         * selected by user, unless the user is already on that screen, then just close the menu (drawer).
+         */
         navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -162,11 +179,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    //Methods for voice command functionality
-    public void startSpeaking( View v ) {
-        listen( );
-    }
-
+    /**
+     * Display intent that prompts user for a screen to navigate to and listens for user
+     * voice input
+     */
     private void listen( ) {
         micFab.setEnabled( false );
         Intent listenIntent =
@@ -205,15 +221,18 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult( requestCode, resultCode, data );
         NavController navController =
                 Navigation.findNavController(this, R.id.nav_host_fragment);
+        //get list of possible words given by user input
         if( requestCode == PAGE_REQUEST && resultCode == RESULT_OK ) {
             ArrayList<String> returnedWords =
                     data.getStringArrayListExtra( RecognizerIntent.EXTRA_RESULTS );
             float [] scores = data.getFloatArrayExtra(
                     RecognizerIntent.EXTRA_CONFIDENCE_SCORES );
+            //return matched word with highest confidence score (from list of possible phrases)
             String firstMatch =
                     pages.firstMatchWithMinConfidence( returnedWords, scores );
             // Create Intent for map
             String curDest = navController.getCurrentDestination().getLabel().toString() ;
+            //navigate to page that user stated via voice command (unless already on that screen)
             switch(firstMatch)
             {
                 case "weekly":

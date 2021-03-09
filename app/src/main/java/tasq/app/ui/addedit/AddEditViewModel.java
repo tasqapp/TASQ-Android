@@ -12,6 +12,11 @@
 
 package tasq.app.ui.addedit;
 
+import android.app.Activity;
+import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -38,7 +43,6 @@ public class AddEditViewModel extends ViewModel {
     }
 
     public void setTask(Task addition) {
-        Log.d("MODEL", "In model");
         ArrayList<Task> newArr = addNewTask(addition);
         userTasks.setValue(newArr);
     }
@@ -51,15 +55,12 @@ public class AddEditViewModel extends ViewModel {
             if (Task.getText(currentTask).equals(Task.getText(oldTask))
                     && Task.getDate(currentTask).equals(Task.getDate(oldTask))
                     && Task.getColor(currentTask).equals(Task.getColor(oldTask))) {
-                Log.d("ADDEDIT", "In if statement");
-                //Task task = new Task(Task.getColor(newTask), Task.getDate(newTask), Task.getText(newTask));
                 favorites.set(i,newTask);
             }
         }
         userTasks.setValue(favorites);
         for (int i = 0; i < favorites.size(); i++) {
             Task task = favorites.get(i);
-            Log.d("ARRAYLIST", "Item name:" + Task.getText(task));
         }
     }
 
@@ -78,7 +79,6 @@ public class AddEditViewModel extends ViewModel {
         clonedFavs.add(addition);
         int arrsize = clonedFavs.size();
         String size = String.valueOf(arrsize);
-        Log.d("MODEL", "size equals " + size);
         return clonedFavs;
     }
 }

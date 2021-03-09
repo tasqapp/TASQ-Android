@@ -45,7 +45,6 @@ import tasq.app.ui.addedit.AddEditViewModel;
 
 public class SometimeFragment extends Fragment {
 
-    private SometimeViewModel mViewModel;
     private AddEditViewModel model;
     private NavController navController;
 
@@ -68,7 +67,6 @@ public class SometimeFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(SometimeViewModel.class);
         model = new ViewModelProvider(requireActivity()).get(AddEditViewModel.class);
         navController = Navigation.findNavController(getView());
         model.getTask().observe(getViewLifecycleOwner(), item -> {

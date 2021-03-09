@@ -50,7 +50,6 @@ import tasq.app.ui.addedit.AddEditViewModel;
 
 public class DailyFragment extends Fragment {
 
-    private DailyViewModel mViewModel;
     private AddEditViewModel model;
     private TextView dailyDate;
     private Date curDate;
@@ -83,7 +82,6 @@ public class DailyFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(getActivity()).get(DailyViewModel.class);
         model = new ViewModelProvider(requireActivity()).get(AddEditViewModel.class);
         navController = Navigation.findNavController(getView());
         curDate = new Date();
@@ -92,18 +90,18 @@ public class DailyFragment extends Fragment {
         poolBuilder.setMaxStreams(1) ;
         pool = poolBuilder.build() ;
         taskFinishedSoundId = pool.load(getActivity(), R.raw.taskdonesound, 1) ;
-
+        //observer that listens for changes in Task list and updates UI every time task list changes
         model.getTask().observe(getViewLifecycleOwner(), item -> {
-            Log.d("update", "In activity creation");
             updateUI(item);
         });
-        dailyDate = getActivity().findViewById(R.id.daily_screen_date);
         //reformat date for display
         SharedPreferences sharedPreferences =
                 PreferenceManager.getDefaultSharedPreferences(getActivity());
         String monthDate = sharedPreferences.getString("dateSent", "---");
         DateFormat df = new SimpleDateFormat("EEE MMM dd");
         String formatted = "";
+        //if date was sent from monthly screen, display date is this date, otherwise display date
+        //is current day (set textView for date display to date)
         if(monthDate.compareTo("---") != 0) {
             monthlyDate = monthDate;
             SimpleDateFormat oldFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
@@ -113,6 +111,7 @@ public class DailyFragment extends Fragment {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+            dailyDate = getActivity().findViewById(R.id.daily_screen_date);
             dailyDate.setText(formatted);
             sharedPreferences =
                     PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -131,12 +130,13 @@ public class DailyFragment extends Fragment {
      */
     private void updateUI(ArrayList<Task> arr) {
         LinearLayout ll = getActivity().findViewById(R.id.daily_central_layout);
-        ArrayList<Task> allTasks = new ArrayList<Task>();
+        ArrayList<Task> allTasks = new ArrayList<Task>(); //list of all user tasks
         String currentDate = new SimpleDateFormat("MM.dd.yyyy").format(new Date());
         SimpleDateFormat formatter = new SimpleDateFormat("MM.dd.yyyy");
         Date curDate = null;
         Date monthDate = null;
-        String monthString = null;
+        String monthString;
+        //format monthly date for display if it is not null (not null if date sent from monthly page)
         if(monthlyDate != null) {
             SimpleDateFormat oldFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
             SimpleDateFormat newFormat = new SimpleDateFormat("MM.dd.yyyy");
@@ -147,7 +147,7 @@ public class DailyFragment extends Fragment {
                 e.printStackTrace();
             }
         }
-        // creating the reference to the current date
+        // generate list of tasks with date equal to dailyDate
         for (int i = 0; i < arr.size(); i++) {
             Task curTask = arr.get(i);
             String date = Task.getDate(curTask);
@@ -177,12 +177,14 @@ public class DailyFragment extends Fragment {
         // iterating through tasks and updating/adding them on the screen
         for (Task task : allTasks) {
             Button taskButton = new Button(getActivity());
+            //on click listener that directs to display task screen when clicked
             taskButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     SharedPreferences sharedPreferences =
                             PreferenceManager.getDefaultSharedPreferences(getActivity());
                     SharedPreferences.Editor editor = sharedPreferences.edit();
+                    //used to give task information to Display screen
                     editor.putString("taskName", Task.getText(task));
                     editor.putString("taskDate", Task.getDate(task));
                     editor.putString("taskColor", Task.getColor(task));
@@ -190,6 +192,7 @@ public class DailyFragment extends Fragment {
                             Priority.getCapaitalizedStringFromPriority(task.getPriority()));
                     editor.apply();
                     navController.navigate(R.id.displayTask_page);
+                    //set task properties to updated properties from display task page
                     task.setText(sharedPreferences.getString("taskName", "---"));
                     task.setDate(sharedPreferences.getString("taskDate", "---"));
                     task.setColor(sharedPreferences.getString("taskColor", "---"));
@@ -197,10 +200,12 @@ public class DailyFragment extends Fragment {
                             sharedPreferences.getString("taskPriority", "Low")));
                 }
             });
+            //formatting for task button
             taskButton.setAllCaps(false);
             taskButton.setText(Task.getText(task));
             CheckBox ch = new CheckBox(getActivity());
             ch.setText("");
+            //if task is completed, then cross out text
             if(task.isCompleted() == true) {
                 ch.setChecked(true);
                 taskButton.setPaintFlags(taskButton.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -219,6 +224,8 @@ public class DailyFragment extends Fragment {
             LinearLayout taskAndCheckbox = new LinearLayout(getActivity());
             taskAndCheckbox.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             taskAndCheckbox.setOrientation(LinearLayout.HORIZONTAL);
+            //checkbox listener (crosses out text for task if box not already checked)
+            //un-crosses text if task box already clicked
             ch.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -238,7 +245,9 @@ public class DailyFragment extends Fragment {
                                 task.getPriority(),
                                 true);
                     }
+                    //re-set views in scrollview to account for update
                     ll.removeAllViews();
+                    //send updated tasks to model (to notify other screens of the update also)
                     model.updateTask(task, newTask);
                 }
             });
