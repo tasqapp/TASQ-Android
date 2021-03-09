@@ -125,6 +125,8 @@
 
             </RadioGroup>
             <!--      TODO: add radio button functionality      -->
+<!--     TODO: add an address TextView label, and an address TextEdit field       -->
+
             <Button
                 android:id="@+id/edit_submitbutton"
                 android:layout_width="wrap_content"

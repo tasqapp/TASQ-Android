@@ -47,6 +47,8 @@ public class AddEditFragment extends Fragment {
 
     DatePicker date;
 
+    EditText address;
+
     EditText description;
     Button submit;
     Spinner prioritySpinner;
@@ -92,6 +94,8 @@ public class AddEditFragment extends Fragment {
 
         date = (DatePicker) this.getActivity().findViewById(R.id.add_date_picker) ;
 
+        address = (EditText) this.getActivity().findViewById(R.id.address_input);
+
         poolBuilder = new SoundPool.Builder() ;
         poolBuilder.setMaxStreams(1) ;
         pool = poolBuilder.build() ;
@@ -112,6 +116,7 @@ public class AddEditFragment extends Fragment {
                     selectedColor = "Green";
                 }
                 String taskDesc = description.getText().toString();
+                String userAddress = address.getText().toString();
                 String dueDate = (date.getMonth()+1) + "." + date.getDayOfMonth() + "." + date.getYear();
                 Log.d("Date ", dueDate) ;
 
@@ -121,7 +126,7 @@ public class AddEditFragment extends Fragment {
                 //add to monthly calendar
                 model.setTask(arr);
                 //add to global arrayList of tasks (using add/edit model)
-                Task newTask = new Task(selectedColor, dueDate, taskDesc, priority, false); //TODO: implement proper 'completed' field fetching/setting
+                Task newTask = new Task(selectedColor, dueDate, taskDesc, priority, false, userAddress); //TODO: implement proper 'completed' field fetching/setting
                 mViewModel.setTask(newTask);
                 pool.play(updateFinishedSoundId, 0.2f, 0.2f, 1,0, 1.0f) ;
                 // Return to previous screen.

@@ -99,7 +99,7 @@ public class DisplayTask extends Fragment {
         pool = poolBuilder.build() ;
         updateFinishedSoundId = pool.load(getActivity(), R.raw.checkmarksound, 1) ;
 
-        //TODO: fill in remaining attributes (subtasks, files, etc.)
+        //TODO: fill in remaining attributes (Address text field)
 
         navController = Navigation.findNavController(getView());
         model = new ViewModelProvider(requireActivity()).get(AddEditViewModel.class);

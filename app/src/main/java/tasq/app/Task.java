@@ -37,6 +37,26 @@ public class Task {
         this.completed = completed;
     }
 
+    public Task(String newColor, String date, String text, Priority priority, boolean completed, String address) {
+        taskText = text;
+        dueDate = date;
+        color = newColor;
+        this.priority = priority;
+        this.completed = completed;
+        this.address = address;
+        this.location = null;
+    }
+
+    public Task(String newColor, String date, String text, Priority priority, boolean completed, String address, LatLng location) {
+        taskText = text;
+        dueDate = date;
+        color = newColor;
+        this.priority = priority;
+        this.completed = completed;
+        this.address = address;
+        this.location = location;
+    }
+
     public static String getText(Task task) {
         return task.taskText;
     }
