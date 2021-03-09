@@ -17,6 +17,9 @@
         <item
             android:id="@+id/sometime_page"
             android:title="Sometime" />
+        <item
+            android:id="@+id/map_page"
+            android:title="Map" />
     </group>
 
 </menu>

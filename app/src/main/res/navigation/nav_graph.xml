@@ -30,6 +30,11 @@
         android:label="Sometime"
         tools:layout="@layout/sometime_fragment" />
     <fragment
+        android:id="@+id/map_page"
+        android:name="tasq.app.ui.maps.MapsFragment"
+        android:label="Map"
+        tools:layout="@layout/fragment_maps" />
+    <fragment
         android:id="@+id/displayTask_page"
         android:name="tasq.app.ui.DisplayTask"
         android:label="DisplayTask"

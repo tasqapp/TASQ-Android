@@ -76,7 +76,8 @@ public class MainActivity extends AppCompatActivity {
                 R.id.daily_page,
                 R.id.weekly_page,
                 R.id.monthly_page,
-                R.id.sometime_page)
+                R.id.sometime_page,
+                R.id.map_page)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController =
@@ -152,6 +153,9 @@ public class MainActivity extends AppCompatActivity {
                             break;
                         case "Sometime":
                             navId = R.id.sometime_page ;
+                            break;
+                        case "Map":
+                            navId = R.id.map_page;
                             break;
                     }
                     navController.navigate(navId) ;
