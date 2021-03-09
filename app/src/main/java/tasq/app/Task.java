@@ -18,11 +18,15 @@
 
 package tasq.app;
 
+import com.google.android.gms.maps.model.LatLng;
+
 public class Task {
     private String taskText;
     private String dueDate;
     private String color;
     private Priority priority;
+    private String address;
+    private LatLng location;
     private boolean completed;
 
     public Task(String newColor, String date, String text, Priority priority, boolean completed) {
@@ -48,6 +52,14 @@ public class Task {
     public Priority getPriority() {
         return this.priority;
     }
+    
+    public String getAddress() {
+        return address;
+    }
+
+    public LatLng getLocation() {
+        return location;
+    }
 
     public void setText(String text) {
         this.taskText = text;
@@ -63,6 +75,14 @@ public class Task {
 
     public void setPriority(Priority priority) {
         this.priority = priority;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setLocation(LatLng location) {
+        this.location = location;
     }
 
     public boolean isCompleted() {
