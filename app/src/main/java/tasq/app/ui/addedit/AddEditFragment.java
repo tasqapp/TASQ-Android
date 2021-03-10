@@ -1,4 +1,4 @@
-/**
+/*
  * HANNAH BUZARD
  * DAVID KIPNIS
  * TYLER KJELDGAARD
@@ -138,7 +138,7 @@ public class AddEditFragment extends Fragment {
                     Address address = addressParser.parseAddress(getContext(), userAddress);
                     if (address != null) {
                         latLng = new LatLng(address.getLatitude(), address.getLongitude());
-                        newTask = new Task(selectedColor, dueDate, taskDesc, priority, false, userAddress, latLng);
+                        newTask = new Task(selectedColor, dueDate, taskDesc, priority, false, userAddress, latLng, address);
                     } else {
                         newTask = new Task(selectedColor, dueDate, taskDesc, priority, false, userAddress);
                     }

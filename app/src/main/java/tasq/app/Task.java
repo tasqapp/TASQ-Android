@@ -1,4 +1,4 @@
-/**
+/*
  * HANNAH BUZARD
  * DAVID KIPNIS
  * TYLER KJELDGAARD
@@ -18,6 +18,8 @@
 
 package tasq.app;
 
+import android.location.Address;
+
 import com.google.android.gms.maps.model.LatLng;
 
 public class Task {
@@ -26,6 +28,7 @@ public class Task {
     private String color;
     private Priority priority;
     private String address;
+    private Address addressObj;
     private LatLng location;
     private boolean completed;
 
@@ -45,9 +48,10 @@ public class Task {
         this.completed = completed;
         this.address = address;
         this.location = null;
+        addressObj = null;
     }
 
-    public Task(String newColor, String date, String text, Priority priority, boolean completed, String address, LatLng location) {
+    public Task(String newColor, String date, String text, Priority priority, boolean completed, String address, LatLng location, Address addressObj) {
         taskText = text;
         dueDate = date;
         color = newColor;
@@ -55,6 +59,7 @@ public class Task {
         this.completed = completed;
         this.address = address;
         this.location = location;
+        this.addressObj = addressObj;
     }
 
     public static String getText(Task task) {
@@ -111,5 +116,9 @@ public class Task {
 
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+
+    public Address getAddressObj() {
+        return addressObj;
     }
 }
