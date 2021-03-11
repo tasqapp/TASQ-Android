@@ -61,6 +61,9 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        LatLng Bellingham = new LatLng(48.752, -122.478);
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Bellingham, 8));
+
         // When you long click on marker info window open google maps app.
         googleMap.setOnInfoWindowLongClickListener(new GoogleMap.OnInfoWindowLongClickListener() {
             @Override
@@ -86,15 +89,13 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
         // Setup location request for
         locationRequest = new LocationRequest();
-        locationRequest.setNumUpdates(1);
-        locationRequest.setPriority(LocationRequest.PRIORITY_LOW_POWER);
+        locationRequest.setNumUpdates(2);
+        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        locationRequest.setInterval(500);
 
         if (mLastLocation != null) {
             LatLng latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
-        } else {
-            LatLng Bellingham = new LatLng(48.752, 122.478);
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Bellingham, 10));
         }
 
         // Check if we have the proper permissions. If we do try to get current location. If not request them.
@@ -109,6 +110,10 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         MY_PERMISSIONS_REQUEST_LOCATION);
             }
+        } else {
+            googleMap.setMyLocationEnabled(true);
+            fusedLocationClient.requestLocationUpdates(locationRequest,
+                    locationCallback, Looper.myLooper());
         }
     }
 
