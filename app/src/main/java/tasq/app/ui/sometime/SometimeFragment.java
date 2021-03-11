@@ -106,6 +106,7 @@ public class SometimeFragment extends Fragment {
                     editor.putString("taskColor", Task.getColor(task));
                     editor.putString("taskPriority",
                             Priority.getCapaitalizedStringFromPriority(task.getPriority()));
+                    editor.putString("taskAddress", task.getAddress());
                     editor.apply();
                     navController.navigate(R.id.displayTask_page);
                     task.setText(sharedPreferences.getString("taskName", "---"));
@@ -113,6 +114,7 @@ public class SometimeFragment extends Fragment {
                     task.setColor(sharedPreferences.getString("taskColor", "---"));
                     task.setPriority(Priority.getPriorityFromString(
                             sharedPreferences.getString("taskPriority", "Low")));
+                    task.setAddress(sharedPreferences.getString("taskAddress", ""));
                 }
             });
             taskButton.setAllCaps(false);

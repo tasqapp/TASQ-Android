@@ -42,7 +42,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import tasq.app.Priority;
-import tasq.app.MainActivity;
 import tasq.app.R;
 import tasq.app.Task;
 import tasq.app.TaskPriorityComparator;
@@ -55,7 +54,6 @@ public class DailyFragment extends Fragment {
     private TextView dailyDate;
     private Date curDate;
     private Date displayDate;
-    private boolean checked;
     private String monthlyDate;
 
     private NavController navController;
@@ -188,6 +186,7 @@ public class DailyFragment extends Fragment {
                     editor.putString("taskColor", Task.getColor(task));
                     editor.putString("taskPriority",
                             Priority.getCapaitalizedStringFromPriority(task.getPriority()));
+                    editor.putString("taskAddress", task.getAddress());
                     editor.apply();
                     navController.navigate(R.id.displayTask_page);
                     task.setText(sharedPreferences.getString("taskName", "---"));
@@ -195,6 +194,7 @@ public class DailyFragment extends Fragment {
                     task.setColor(sharedPreferences.getString("taskColor", "---"));
                     task.setPriority(Priority.getPriorityFromString(
                             sharedPreferences.getString("taskPriority", "Low")));
+                    task.setAddress(sharedPreferences.getString("taskAddress", ""));
                 }
             });
             taskButton.setAllCaps(false);
@@ -222,7 +222,6 @@ public class DailyFragment extends Fragment {
             ch.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    checked = true;
                     Task newTask;
                     if(task.isCompleted()) {
                         newTask = new Task(Task.getColor(task),

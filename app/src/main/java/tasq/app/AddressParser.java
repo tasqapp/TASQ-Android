@@ -19,6 +19,7 @@ public class AddressParser {
 
         } catch (IOException e) {
             // No network connection
+            // TODO: Add a Toast to warn the user that no Address was found???
             return null;
         }
 
