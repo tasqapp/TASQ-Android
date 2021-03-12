@@ -83,7 +83,7 @@ public class WeeklyFragment extends Fragment {
         model = new ViewModelProvider(requireActivity()).get(AddEditViewModel.class);
         navController = Navigation.findNavController(getView());
 
-
+        // Adds sound builder for when a task is completed
         poolBuilder = new SoundPool.Builder() ;
         poolBuilder.setMaxStreams(1) ;
         pool = poolBuilder.build() ;
@@ -176,7 +176,7 @@ public class WeeklyFragment extends Fragment {
             CheckBox ch = new CheckBox(getActivity());
             ch.setText("");
 
-            //
+            // Strike-through the text of the task for completed tasks, and check the checkbox
             if(task.isCompleted()) {
                 ch.setChecked(true);
                 taskButton.setPaintFlags(taskButton.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -232,7 +232,7 @@ public class WeeklyFragment extends Fragment {
         }
     }
 
-    // TODO: TEST & DOC returns the first day of the week (Sunday) in the current week in format "MM-dd"
+    // returns the first day of the week (Sunday) in the current week in format "MM-dd"
     private String getLastWeekDay() {
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
@@ -241,7 +241,7 @@ public class WeeklyFragment extends Fragment {
         return sdf.format(cal.getTime());
     }
 
-    // TODO: TEST & DOC returns the last day of the week (Saturday) in the current week in format "MM-dd"
+    // returns the last day of the week (Saturday) in the current week in format "MM-dd"
     private String getFirstWeekDay() {
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
