@@ -263,39 +263,18 @@ NOTE: <br>
         var intromodal = document.getElementById("appIntro");
         var introbutton = document.getElementById("intro");
         var evobutton = document.getElementById("evolution");
-        if(evobutton == null) {
-          console.log("button is null");
-        }
         var evomodal = document.getElementById("evolutionmodal");
         var featuresmodal = document.getElementById("finalFeatures");
         var featuresbutton = document.getElementById("features");
         var futuremodal = document.getElementById("futureWork");
         var futurebutton = document.getElementById("future");
-        featuresbutton.onclick = function() {
-            featuresmodal.style.display = "block";
-            evomodal.style.display = "none";
-            futuremodal.style.display = "none";
-            intromodal.style.display = "none";
-        }
-        futurebutton.onclick = function() {
-            featuresmodal.style.display = "none";
-            evomodal.style.display = "none";
-            futuremodal.style.display = "block";
-            intromodal.style.display = "none";
-        }
-        introbutton.onclick = function() {
-           console.log("button clicked");
-            featuresmodal.display = "none";
-            evomodal.display = "none";
-            futuremodal.display = "none";
-            intromodal.display = "block";
-        }
-        evobutton.onclick = function() {
-            featuresmodal.style.display = "none";
-            evomodal.style.display = "block";
-            futuremodal.style.display = "none";
-            intromodal.style.display = "none";
-        }
+        $("#intro").click(function(){
+             $("#appIntro").css("display","block");
+             $("#evolutionmodal").css("display","none");
+              $("#finalFeatures").css("display","none");
+               $("#futureWork").css("display","none");
+                         });
+
         window.onclick = function(event) {
           if (event.target == intromodal) {
               intromodal.style.display = "none";
