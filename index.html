@@ -80,17 +80,20 @@ ul li::before {
  </div>
 <div id = "appIntro" class="modal">
   <div class = "modal-content">
+    <h3>Tasq Purpose</h3>
     <p>TASQ is designed to provide its users with a digitized to-do list - a list that allows the addition, management, and deletion of tasks that the users <br>
     want to keep track of. When it comes to managing tasks, the app emphasizes both agility and simplicity, while also providing users with the option to <br>
     customize and edit their tasks more extensively. TASQ provides the users with a convenient user interface that lets an individual view all their tasks <br>
     for the current day, week, and even month, with each individual view having its own distinct layout. </p>
 
+    <h3>Tasq Features</h3>
     <p>TASQ comes with several features that range over a wide span of categories. First, the application features multiple screens (fragments) - ones <br>
     for displaying current data, as well as screens for data creation and modification. Next, a navigation menu which allows the user to easily move <br>
     between the different parts of the app. TASQ also comes with database and remote server support for maintaining user logins and keeping track of <br>
     the application’s users. Alongside its core features, TASQ supports voice commands for the purpose of task addition and page navigation, as well <br>
     as Google Maps for geographically tracking tasks. Finally, the application has sounds incorporated into some of its different parts. </p>
 
+    <h3>Similar Applications</h3>
     <a href = "https://play.google.com/store/apps/details?id=com.microsoft.todos&hl=en_US&gl=US">Microsoft To Do </a> <br>
     <a href="https://appadvice.com/app/do-simple-to-do-list/421819675">Do! By Simplerion </a><br>
     <a href="https://play.google.com/store/apps/details?id=com.todoist">Todoist</a><br>
@@ -100,7 +103,7 @@ ul li::before {
     <a href = "https://play.google.com/store/apps/details?id=com.getitdone.best">Get it Done</a> <br>
     <a href = "https://ticktick.com/?language=en_US">Tick Tick</a> </p>
 
-    <p>Summary of app analysis:</p>
+    <h3>Summary of app analysis:</h3>
     <p>In general, we noticed a few deficiencies that similar apps have in common. Those apps are often too complicated in their approach to customizability,
     making it difficult to create or manage tasks at a fast pace. Some, on the other hand, do not give users the option to customize their tasks enough,
     which we found to be inconvenient in many cases. TASQ aims to work around those issues, and provide the user with a balance between simplicity and
@@ -195,7 +198,7 @@ ul li::before {
      all the UI logic of the application, and controllers act as a communication path between Model and View components to process all the logic, <br>
       manipulate data if needed,interact with the Views to render the final output. Click the button below to see our MVC Design for TASQ. <br>
     </p>
-  <button  id = "mvc" type="button" class="buttonStyle">FMVC Design</button>
+  <button  id = "mvc" type="button" class="buttonStyle">MVC Design</button>
   </div>
   <div id="mvcModal" class="modal">
     <div class = "modal-content">
@@ -318,6 +321,8 @@ ul li::before {
     var btn4 = document.getElementById("features");
     var modal5= document.getElementById("gitmodal");
     var btn5 = document.getElementById("git");
+    var modal6= document.getElementById("mvcModal");
+    var btn6 = document.getElementById("mvc");
 
     // When the user clicks the button, open the modal
     btn1.onclick = function() {
