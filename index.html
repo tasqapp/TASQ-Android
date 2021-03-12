@@ -214,7 +214,8 @@ ul li::before {
     var btn2 = document.getElementById("future");
     var modal3= document.getElementById("evolutionmodal");
     var btn3 = document.getElementById("evolution");
-
+    var modal4= document.getElementById("finalFeatures");
+    var btn4 = document.getElementById("features");
 
     // When the user clicks the button, open the modal
     btn1.onclick = function() {
@@ -226,7 +227,23 @@ ul li::before {
     btn3.onclick = function() {
       modal3.style.display = "block";
     }
-
+    btn4.onclick = function() {
+      modal4.style.display = "block";
+    }
+    window.onclick = function(event) {
+        if (event.target == modal1) {
+            modal1.style.display = "none";
+        }
+        if (event.target == modal2) {
+            modal2.style.display = "none";
+        }
+        if (event.target == modal3) {
+            modal3.style.display = "none";
+        }
+        if (event.target == modal4) {
+            modal4.style.display = "none";
+        }
+    }
     </script>
 </body>
 </html>
