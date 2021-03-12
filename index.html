@@ -275,10 +275,18 @@ NOTE: <br>
             featuresmodal.style.display = "block";
         }
         window.onclick = function(event) {
-            intromodal.style.display = "none";
-            evomodal.style.display = "none";
-            featuresmodal.style.display = "none";
-            futuremodal.style.display = "none";
+          if (event.target == intromodal) {
+              intromodal.style.display = "none";
+          }
+          if (event.target == evomodal) {
+              evomodal.style.display = "none";
+          }
+          if (event.target == featuresmodal) {
+              featuresmodal.style.display = "none";
+          }
+          if (event.target == futuremodal) {
+              futuremodal.style.display = "none";
+          }
         }
     </script>
 </body>
