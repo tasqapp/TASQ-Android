@@ -101,7 +101,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@+id/no_due_date_check"
-                android:layout_toRightOf="@+id/add_date_picker"
+                android:layout_toRightOf="@+id/edit_date_picker"
                 android:layout_marginEnd="75dp"
                 android:layout_marginTop="20dp"
                 android:text="@string/color_tags_text"
