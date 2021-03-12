@@ -73,7 +73,9 @@ ul li::before {
 <header>
 </header>
 <h1><center>TASQ App</center></h1>
+<div>
 <button type="button" id = "intro" class="buttonStyle">About our App</button>
+</div>
 <div id = "appIntro" class="modal">
 <div class = "modal-content">
   <p>TASQ is designed to provide its users with a digitized to-do list - a list that allows the addition, management, and deletion of tasks that the users <br>
@@ -103,7 +105,9 @@ ul li::before {
   thoroughness when it comes to managing one’s tasks. </p>
 </div>
 </div>
+<div>
 <button type="button" id = "evolution" class="buttonStyle">Evolution of our App</button>
+</div>
 <div id= “evolutionmodal” class="modal">
   <div class = "modal-content">
     <h2>Evolution of App:</h2>
@@ -132,7 +136,9 @@ ul li::before {
         smaller portions of the application to finalize its performance for the current version. <p>
     </div>
 </div>
+<div>
 <button type="button" id = "features" class="buttonStyle">Features of our finished App</button>
+</div>
 <div id=”finalFeatures” class="modal">
   <div class = "modal-content">
 <h2>Current MVC Architecture:</h2>
@@ -222,8 +228,9 @@ NOTE: <br>
 2. The LOG statements in the code are only used to show that the data is being transferred correctly between screens. </p>
 </div>
 </div>
-
+<div>
 <button type="button" id = "future" class="buttonStyle">Future TASQ work</button>
+</div>
 <div id="futureWork" class="modal">
   <div class = "modal-content">
     <h2>Future Work</h2>
@@ -262,12 +269,6 @@ NOTE: <br>
         var featuresbutton = document.getElementById("features");
         var futuremodal = document.getElementById("futureWork");
         var futurebutton = document.getElementById("future");
-        introbutton.onclick = function() {
-            intromodal.style.display = "block";
-        }
-        evobutton.onclick = function() {
-            evomodal.style.display = "block";
-        }
         featuresbutton.onclick = function() {
             featuresmodal.style.display = "block";
         }
