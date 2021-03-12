@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -88,6 +89,7 @@ public class DisplayTask extends Fragment {
         RadioGroup buttons = getActivity().findViewById(R.id.edit_radiobuttons);
         EditText address = getActivity().findViewById(R.id.address_input);
         Spinner priority = getActivity().findViewById(R.id.edit_priority_spinner);
+        CheckBox dateCheck = (CheckBox) getActivity().findViewById(R.id.no_due_date_check);
 
         String[] setDate = sp.getString("taskDate", "---").split("\\.") ;
         date.init(Integer.parseInt(setDate[2]), Integer.parseInt(setDate[0]) - 1, Integer.parseInt(setDate[1]), null);
@@ -157,6 +159,9 @@ public class DisplayTask extends Fragment {
 
                 //TODO: implement proper 'completed' field fetching/setting
                 Task newTask;
+                if(dateCheck.isChecked()) {
+                    updatedDate = "";
+                }
                 if (!userAddress.equals("")) {
                     Address address = addressParser.parseAddress(getContext(), userAddress);
                     if (address != null) {

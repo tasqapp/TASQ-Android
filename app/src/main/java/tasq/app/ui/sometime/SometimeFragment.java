@@ -83,7 +83,6 @@ public class SometimeFragment extends Fragment {
         ArrayList<Task> taskList = new ArrayList<>();
 
         for (Task t : list) {
-            Log.d("SOMEDAY", "null task date: " + Task.getDate(t));
             if (Task.getDate(t).compareTo("") == 0) {
                 taskList.add(t);
             }

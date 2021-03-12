@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -64,6 +65,7 @@ public class AddEditFragment extends Fragment {
     private SoundPool.Builder poolBuilder;
     private SoundPool pool;
     private int updateFinishedSoundId;
+    private CheckBox checkDate;
 
     //TODO: potentially delete
     public static AddEditFragment newInstance() {
@@ -102,6 +104,7 @@ public class AddEditFragment extends Fragment {
         poolBuilder.setMaxStreams(1);
         pool = poolBuilder.build();
         updateFinishedSoundId = pool.load(getActivity(), R.raw.checkmarksound, 1);
+        checkDate = (CheckBox) this.getActivity().findViewById(R.id.no_due_date_check);
 
         // setting the listener for the submission button
         submit.setOnClickListener(new View.OnClickListener() {
@@ -129,6 +132,9 @@ public class AddEditFragment extends Fragment {
                 Priority priority = Priority.getPriorityFromString((String) prioritySpinner.getSelectedItem());
                 //add to global arrayList of tasks (using add/edit model)
                 Task newTask;
+                if(checkDate.isChecked()) {
+                    dueDate = "";
+                }
                 if (!userAddress.equals("")) {
                     Address address = addressParser.parseAddress(getContext(), userAddress);
                     if (address != null) {

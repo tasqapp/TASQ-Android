@@ -128,8 +128,10 @@ public class MonthlyFragment extends Fragment {
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-                    if (dateClicked.toString().compareTo(currentDate.toString()) == 0) {
-                        dayTasks.add(currentTask);
+                    if(date.compareTo("") != 0) {
+                        if (dateClicked.toString().compareTo(currentDate.toString()) == 0) {
+                            dayTasks.add(currentTask);
+                        }
                     }
                 }
                 // sort tasks based on priority
