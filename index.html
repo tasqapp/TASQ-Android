@@ -20,25 +20,10 @@
 .modal-content {
   background-color: #fefefe;
   margin: auto;
-  padding: 20px;
-  border: 1px solid #888;
+  padding: 5px;
   overflow-y: scroll;
+  border: 1px solid #888;
   width: 80%;
-}
-
-/* The Close Button */
-.close {
-  color: #aaaaaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
 }
 
 .buttonStyle {
@@ -96,17 +81,20 @@ ul li::before {
  </div>
 <div id = "appIntro" class="modal">
   <div class = "modal-content">
+    <h3>Tasq Purpose</h3>
     <p>TASQ is designed to provide its users with a digitized to-do list - a list that allows the addition, management, and deletion of tasks that the users <br>
     want to keep track of. When it comes to managing tasks, the app emphasizes both agility and simplicity, while also providing users with the option to <br>
     customize and edit their tasks more extensively. TASQ provides the users with a convenient user interface that lets an individual view all their tasks <br>
     for the current day, week, and even month, with each individual view having its own distinct layout. </p>
 
+    <h3>Tasq Features</h3>
     <p>TASQ comes with several features that range over a wide span of categories. First, the application features multiple screens (fragments) - ones <br>
     for displaying current data, as well as screens for data creation and modification. Next, a navigation menu which allows the user to easily move <br>
     between the different parts of the app. TASQ also comes with database and remote server support for maintaining user logins and keeping track of <br>
     the application’s users. Alongside its core features, TASQ supports voice commands for the purpose of task addition and page navigation, as well <br>
     as Google Maps for geographically tracking tasks. Finally, the application has sounds incorporated into some of its different parts. </p>
 
+    <h3>Similar Applications</h3>
     <a href = "https://play.google.com/store/apps/details?id=com.microsoft.todos&hl=en_US&gl=US">Microsoft To Do </a> <br>
     <a href="https://appadvice.com/app/do-simple-to-do-list/421819675">Do! By Simplerion </a><br>
     <a href="https://play.google.com/store/apps/details?id=com.todoist">Todoist</a><br>
@@ -116,21 +104,20 @@ ul li::before {
     <a href = "https://play.google.com/store/apps/details?id=com.getitdone.best">Get it Done</a> <br>
     <a href = "https://ticktick.com/?language=en_US">Tick Tick</a> </p>
 
-    <p>Summary of app analysis:</p>
+    <h3>Summary of app analysis:</h3>
     <p>In general, we noticed a few deficiencies that similar apps have in common. Those apps are often too complicated in their approach to customizability,
     making it difficult to create or manage tasks at a fast pace. Some, on the other hand, do not give users the option to customize their tasks enough,
     which we found to be inconvenient in many cases. TASQ aims to work around those issues, and provide the user with a balance between simplicity and
     thoroughness when it comes to managing one’s tasks. </p>
   </div>
   </div>
-
 <div>
   <p> Our app was built over the course of a month and a half and was broken up into five development checkpoints. Before we started implementing <br>
   TASQ, we planned out what we would like to have completed at each stage of development in order to stay on track for deployment. Click the button <br>
   below to see a complete breakdown of what we were able to accomplish in each "checkpoint"!</p>
 <button id = "evolution" type="button" class="buttonStyle">Evolution of our App</button>
 </div>
-<div id= “evolutionmodal” class="modal">
+<div id="evolutionmodal" class="modal">
   <div class = "modal-content">
     <h2>Evolution of App:</h2>
     <h3>Checkpoint 1:</h3>
@@ -156,7 +143,7 @@ ul li::before {
         commands and ask the app to navigate its menus with voice commands. Additionally, we added Google Maps support to the application, which allows the user to <br>
         associate tasks with locations by adding addresses to a task that the user is creating/modifying. Alongside the big implementations, we touched up and fixed <br>
         smaller portions of the application to finalize its performance for the current version. </p>
-    </div>
+</div>
 </div>
 <div>
   <p>Our finished app has a large list of features to help our users be capable of easily organizing their tasks. Each feature was decided upon prior to beginning <br>
@@ -164,93 +151,128 @@ ul li::before {
   are simply to make the user's life easier! Click the button below to see all of our finalized features! </p>
 <button id = "features" type="button" class="buttonStyle">Features of our finished App</button>
 </div>
-<div id=”finalFeatures” class="modal">
+<div id="finalFeatures" class="modal">
   <div class = "modal-content">
-<h2>Current MVC Architecture:</h2>
-<p>Model:</p>
-<ul>
-<li>AddEditFragment.java - the file contains all the functionality for creating a new task. All task attributes are modified or added through this class.</li>
-<li>DailyFragment.java - the file contains all the functionality for the daily screen. All individual task fetching and storage, as well as addition are done <br>
-    through this class.</li>
-<li>MonthlyFragment.java - the file contains all the functionality for the monthly screen. The class creates and stores the calendar, as well as any <br>
-    modifications that happen to the screen are done through this file.</li>
-<li>SometimeFragment.java -  the file contains all the functionality for the ‘Sometime’ screen. The functionality is the same as DailyFragment.java, <br>
-    however it contains all tasks without a specific date. </li>
-<li>WeeklyFragment.java - the file contains all the functionality for the weekly screen. Any tasks found within the week are managed and modified through this <br>
-    class. This class also stores all information for the specific week. </li>
-<li>Task.java: The file contains the necessary variables for a single task, which consists of Task Text, Due Date, Color, and a Completed Flag. We will still <br>
-    add more functionality to the Task class to cover </li>
-<li>Login.java: This file connects to the Firebase “Users” table and processes input from the user to search the database for a corresponding email and password. <br>
-    If a match is found, the user is then logged in and directed to the “Daily” screen.</li>
-<li>Registration.java: This file connects to the Firebase “Users” table and processes input from the user to add to the database. The user’s email and password is <br>
-    saved in the database so that the user can login again. After a successful addition to the database, the user is then logged in and directed to the “Daily” page.</li>
-<li>AddressParser.java: Checks the user-inputted address with the GeoCoder and returns an Address </li>
-<li>VoiceCommands.java: This java file is called by MainActivity to get the best match between the list generated by the computer for what the user <br>
-    might have said via voice input and the list we created of options for the user to say (which is a list of screens to navigate to). </li>
-</ul>
-<p>View:</p>
-<ul>
-<li> *ViewModel.java classes - all such classes found in their respective folders (associated with a specific screen) are view classes. These classes aid <br>
-    the app with screen rotations and general UI support. </li>
-<li>*.xml files in package ‘layout’ - all files in the layout folder are the general visual layouts for each respective screen. These are the files that are <br>
-    displayed visually to the user, thus they are the View portion of our model. </li>
-</ul>
-<p>Controller:</p>
-<ul>
-<li>MainActivity.java - currently, this is our controller file. It connects the View files with our Model files, and instantiates the communication between the user <br>
-    and the inner workings of the application.</li>
-</ul>
+    <h2>Final Features:</h2>
+    <ul>
+    <li>Login and Registration capability: <br>
+    The user is prompted to either login or register when they first open the app. We are using Google Firebase to add users to a database on register and also <br>
+        search the database to find user credentials on login. After a successful login or registration, the user is taken to the Daily Screen.</li>
+    <li>View Tasks on Daily Screen: <br>
+    Users tasks are shown on the daily screen for the current day. Only the description of the task is shown, however, if the user clicks on the task, all of the task <br>
+        information will be displayed and able to be edited. Each task has a checkbox that can be checked when the task is completed, if a task is completed, the text <br>
+        becomes crossed out.</li>
+    <li>View Tasks on Weekly Screen: <br>
+    Users tasks are displayed on the weekly screen for the current week (from Monday-Sunday) ordered by day. Like the daily screen, tasks can be clicked on to be edited or <br>
+        to display task information and tasks can be completed by checking the checkbox next to it. </li>
+    <li>View Tasks on Monthly Screen: <br>
+    The monthly screen displays user tasks on a calendar with colored dots corresponding to the “color” of the task. When a user clicks a day, all of the tasks for that day <br>
+        are displayed at the bottom of the screen. A user can also choose to view these tasks on the daily screen (day set to clicked day) so that they can be edited. The <br>
+        user can scroll through months to see tasks as far in the past and future as they would like.</li>
+    <li>View Tasks on Someday Screen: <br>
+    When adding a task, a user can choose to not enter a due date, meaning that they just hope to complete the task “someday”. These tasks are displayed on the someday <br>
+        screen. On the someday screen, tasks can be clicked on to be displayed and edited and can be checked to be marked as completed. Tasks are ordered by priority. </li>
+    <li>Add Tasks: <br>
+    The Add Task screen is displayed when a user clicks the “+” button on any screen. On the add task screen, a user can create a task with the following fields: Description, <br>
+        Color, Priority, Location, and Due Date. Upon submitting the new task, the task is then added to the users’ list of tasks and can be displayed on its corresponding screens. </li>
+    <li>Edit Tasks: <br>
+    The Edit Task screen can be viewed by clicking on any task on the Daily, Weekly, or Someday screens. On the edit task page, all of the information about the clicked <br>
+        task is displayed and the user has the option to edit any field. The fields they can edit are: Description, Color, Priority, Location, and Due Date. Once the <br>
+    changes are submitted, the view for this task on every screen is updated. </li>
+    <li>Complete Tasks: <br>
+    As explained above, tasks can be completed using the checkboxes associated with each task on every screen (besides monthly). Once a task is completed, it is still <br>
+        displayed but its text is crossed out. A user can also uncheck a checked task to mark it as not completed again.</li>
+    <li>View Tasks on a Map: <br>
+    If a user chooses to input a location associated with a task, these tasks can now be viewed on a Maps page using google maps. The Maps page is centered around <br>
+        where the user lives (and is adding tasks) and each task shows up as its own marker.</li>
+    <li>Voice Command capability: <br>
+     If the user presses the microphone button on any screen, they are then prompted to speak the name of a page that they wish to navigate to (for example, if they want <br>
+        to view their daily page they would say “Daily”). The device then listens for input and directs the user to whichever screen they have said.</li>
+    </ul>
+  </div>
+  </div>
 
-<h2>Final Features:</h2>
-<ul>
-<li>Login and Registration capability: <br>
-The user is prompted to either login or register when they first open the app. We are using Google Firebase to add users to a database on register and also <br>
-    search the database to find user credentials on login. After a successful login or registration, the user is taken to the Daily Screen.</li>
-<li>View Tasks on Daily Screen: <br>
-Users tasks are shown on the daily screen for the current day. Only the description of the task is shown, however, if the user clicks on the task, all of the task <br>
-    information will be displayed and able to be edited. Each task has a checkbox that can be checked when the task is completed, if a task is completed, the text <br>
-    becomes crossed out.</li>
-<li>View Tasks on Weekly Screen: <br>
-Users tasks are displayed on the weekly screen for the current week (from Monday-Sunday) ordered by day. Like the daily screen, tasks can be clicked on to be edited or <br>
-    to display task information and tasks can be completed by checking the checkbox next to it. </li>
-<li>View Tasks on Monthly Screen: <br>
-The monthly screen displays user tasks on a calendar with colored dots corresponding to the “color” of the task. When a user clicks a day, all of the tasks for that day <br>
-    are displayed at the bottom of the screen. A user can also choose to view these tasks on the daily screen (day set to clicked day) so that they can be edited. The <br>
-    user can scroll through months to see tasks as far in the past and future as they would like.</li>
-<li>View Tasks on Someday Screen: <br>
-When adding a task, a user can choose to not enter a due date, meaning that they just hope to complete the task “someday”. These tasks are displayed on the someday <br>
-    screen. On the someday screen, tasks can be clicked on to be displayed and edited and can be checked to be marked as completed. Tasks are ordered by priority. </li>
-<li>Add Tasks: <br>
-The Add Task screen is displayed when a user clicks the “+” button on any screen. On the add task screen, a user can create a task with the following fields: Description, <br>
-    Color, Priority, Location, and Due Date. Upon submitting the new task, the task is then added to the users’ list of tasks and can be displayed on its corresponding screens. </li>
-<li>Edit Tasks: <br>
-The Edit Task screen can be viewed by clicking on any task on the Daily, Weekly, or Someday screens. On the edit task page, all of the information about the clicked <br>
-    task is displayed and the user has the option to edit any field. The fields they can edit are: Description, Color, Priority, Location, and Due Date. Once the <br>
-changes are submitted, the view for this task on every screen is updated. </li>
-<li>Complete Tasks: <br>
-As explained above, tasks can be completed using the checkboxes associated with each task on every screen (besides monthly). Once a task is completed, it is still <br>
-    displayed but its text is crossed out. A user can also uncheck a checked task to mark it as not completed again.</li>
-<li>View Tasks on a Map: <br>
-If a user chooses to input a location associated with a task, these tasks can now be viewed on a Maps page using google maps. The Maps page is centered around <br>
-    where the user lives (and is adding tasks) and each task shows up as its own marker.</li>
-<li>Voice Command capability: <br>
- If the user presses the microphone button on any screen, they are then prompted to speak the name of a page that they wish to navigate to (for example, if they want <br>
-    to view their daily page they would say “Daily”). The device then listens for input and directs the user to whichever screen they have said.</li>
-</ul>
+  <div>
+    <p> This was a class project for our App Development course at WWU, and as part of the course we were required to use MVC Architecture <br>
+    with the app that we built. MVC Architecture is a commonly used design pattern that seperates a project into three components: Model, View, <br>
+     and Controller. The Model component corresponds to all the data-related logic that the user works with, the View component is used for <br>
+     all the UI logic of the application, and controllers act as a communication path between Model and View components to process all the logic, <br>
+      manipulate data if needed,interact with the Views to render the final output. Click the button below to see our MVC Design for TASQ. <br>
+    </p>
+  <button  id = "mvc" type="button" class="buttonStyle">MVC Design</button>
+  </div>
+  <div id="mvcModal" class="modal">
+    <div class = "modal-content">
+      <h2>Current MVC Architecture:</h2>
+      <p>Model:</p>
+      <ul>
+      <li>AddEditFragment.java: <br>
+      The file contains all the functionality for creating a new task. All task attributes are modified or added through this class.</li>
+      <li>DailyFragment.java: <br>
+      The file contains all the functionality for the daily screen. All individual task fetching and storage, as well as addition are done <br>
+          through this class.</li>
+      <li>MonthlyFragment.java: <br>
+      The file contains all the functionality for the monthly screen. The class creates and stores the calendar, as well as any <br>
+          modifications that happen to the screen are done through this file.</li>
+      <li>SometimeFragment.java: <br>
+      The file contains all the functionality for the ‘Sometime’ screen. The functionality is the same as DailyFragment.java, <br>
+          however it contains all tasks without a specific date. </li>
+      <li>WeeklyFragment.java: <br>
+      The file contains all the functionality for the weekly screen. Any tasks found within the week are managed and modified through this <br>
+          class. This class also stores all information for the specific week. </li>
+      <li>Task.java: <br>
+      The file contains the necessary variables for a single task, which consists of Task Text, Due Date, Color, and a Completed Flag. We will still <br>
+          add more functionality to the Task class to cover </li>
+      <li>Login.java: <br>
+      This file connects to the Firebase “Users” table and processes input from the user to search the database for a corresponding email and password. <br>
+          If a match is found, the user is then logged in and directed to the “Daily” screen.</li>
+      <li>Registration.java: <br>
+      This file connects to the Firebase “Users” table and processes input from the user to add to the database. The user’s email and password is <br>
+          saved in the database so that the user can login again. After a successful addition to the database, the user is then logged in and directed to the “Daily” page.</li>
+      <li>AddressParser.java: <br>
+      Checks the user-inputted address with the GeoCoder and returns an Address </li>
+      <li>VoiceCommands.java: <br>
+      This java file is called by MainActivity to get the best match between the list generated by the computer for what the user <br>
+          might have said via voice input and the list we created of options for the user to say (which is a list of screens to navigate to). </li>
+      </ul>
+      <p>View:</p>
+      <ul>
+      <li> *ViewModel.java classes: <br>
+      All such classes found in their respective folders (associated with a specific screen) are view classes. These classes aid <br>
+          the app with screen rotations and general UI support. </li>
+      <li>*.xml files in package ‘layout’: <br>
+      All files in the layout folder are the general visual layouts for each respective screen. These are the files that are <br>
+          displayed visually to the user, thus they are the View portion of our model. </li>
+      </ul>
+      <p>Controller:</p>
+      <ul>
+      <li>MainActivity.java: <br>
+      Currently, this is our controller file. It connects the View files with our Model files, and instantiates the communication between the user <br>
+          and the inner workings of the application.</li>
+      </ul>
+    </div>
+  </div>
 
-<h2>GitHub Repository:</h2>
-<a href="https://github.com/tasqapp/TASQ-Android">TASQ GitHub</a>
+  <div>
+    <p>Click on the button below if you wish to view our GitHub repository for TASQ. The ReadMe is also attached so that you can <br>
+    download and run our project if you wish! </p>
+  <button id = "git" type="button" class="buttonStyle">GitHub Links</button>
+  </div>
+  <div id="gitmodal" class="modal">
+    <div class = "modal-content">
+    <h2>GitHub Repository:</h2>
+    <a href="https://github.com/tasqapp/TASQ-Android">TASQ GitHub</a>
 
-<h2>GitHub ReadMe:</h2>
-<p>Run instructions <br>
+    <h2>GitHub ReadMe:</h2>
+    <p>Run instructions <br>
 
-1. Download Group5-TASQ-Checkpoint1.apk on the Android device you wish to run the application on <br>
-2. Once downloaded, select the file and open it. When prompted, select 'yes' <br>
-3. The application will begin installing on your device. Once the installation is complete, select the application, or simply click 'OPEN' on the installation screen. <br>
+    1. Download Group5-TASQ-Checkpoint1.apk on the Android device you wish to run the application on <br>
+    2. Once downloaded, select the file and open it. When prompted, select 'yes' <br>
+    3. The application will begin installing on your device. Once the installation is complete, select the application, or simply click 'OPEN' on the installation screen. <br>
 
-NOTE: <br>
-1. To add a task, the date must be in the following format: MM.DD.YYYY <br>
-2. The LOG statements in the code are only used to show that the data is being transferred correctly between screens. </p>
+    NOTE: <br>
+    1. To add a task, the date must be in the following format: MM.DD.YYYY <br>
+    2. The LOG statements in the code are only used to show that the data is being transferred correctly between screens. </p>
 </div>
 </div>
 <div>
@@ -272,19 +294,19 @@ NOTE: <br>
         <h3>Meet the Developers:</h3>
         <center>
         <div class="contributor">
-            <p class="name">Hannah Buzard</p>
+            <p class="name"><b>Hannah Buzard</b></p>
             <p class="email">buzardh@wwu.edu</p>
         </div>
         <div class="contributor">
-            <p class="name">David Kipnis</p>
+            <p class="name"><b>David Kipnis</b></p>
             <p class="email">kipnisd@wwu.edu</p>
         </div>
         <div class="contributor">
-            <p class="name">Tyler Kjeldgaard</p>
+            <p class="name"><b>Tyler Kjeldgaard</b></p>
             <p class="email">kjeldgt@wwu.edu</p>
         </div>
         <div class="contributor">
-            <p class="name">Daniel Shtunyuk</p>
+            <p class="name"><b>Daniel Shtunyuk</b></p>
             <p class="email">shtunyd@wwu.edu</p>
         </div>
       </center>
@@ -294,9 +316,14 @@ NOTE: <br>
     var btn1 = document.getElementById("intro");
     var modal2= document.getElementById("futureWork");
     var btn2 = document.getElementById("future");
-    var modal3= document.getElementById("finalFeatures");
-    var btn3 = document.getElementById("features");
-
+    var modal3= document.getElementById("evolutionmodal");
+    var btn3 = document.getElementById("evolution");
+    var modal4= document.getElementById("finalFeatures");
+    var btn4 = document.getElementById("features");
+    var modal5= document.getElementById("gitmodal");
+    var btn5 = document.getElementById("git");
+    var modal6= document.getElementById("mvcModal");
+    var btn6 = document.getElementById("mvc");
 
     // When the user clicks the button, open the modal
     btn1.onclick = function() {
@@ -305,7 +332,32 @@ NOTE: <br>
     btn2.onclick = function() {
       modal2.style.display = "block";
     }
-
+    btn3.onclick = function() {
+      modal3.style.display = "block";
+    }
+    btn4.onclick = function() {
+      modal4.style.display = "block";
+    }
+    btn5.onclick = function() {
+      modal5.style.display = "block";
+    }
+    window.onclick = function(event) {
+        if (event.target == modal1) {
+            modal1.style.display = "none";
+        }
+        if (event.target == modal2) {
+            modal2.style.display = "none";
+        }
+        if (event.target == modal3) {
+            modal3.style.display = "none";
+        }
+        if (event.target == modal4) {
+            modal4.style.display = "none";
+        }
+        if (event.target == modal5) {
+            modal5.style.display = "none";
+        }
+    }
     </script>
 </body>
 </html>
