@@ -42,6 +42,7 @@ public class AddEditViewModel extends ViewModel {
         return userTasks;
     }
 
+    //this method updates the value of the LiveData object
     public void setTask(Task addition) {
         ArrayList<Task> newArr = addNewTask(addition);
         userTasks.setValue(newArr);
@@ -49,36 +50,34 @@ public class AddEditViewModel extends ViewModel {
 
     // updating a task with new information
     public void updateTask(Task oldTask, Task newTask) {
-        ArrayList<Task> favorites = userTasks.getValue();
-        for (int i = 0; i < favorites.size(); i++) {
-            Task currentTask = favorites.get(i);
+        ArrayList<Task> tasklist = userTasks.getValue();
+        for (int i = 0; i < tasklist.size(); i++) {
+            Task currentTask = tasklist.get(i);
             if (Task.getText(currentTask).equals(Task.getText(oldTask))
                     && Task.getDate(currentTask).equals(Task.getDate(oldTask))
                     && Task.getColor(currentTask).equals(Task.getColor(oldTask))) {
-                favorites.set(i,newTask);
+                tasklist.set(i,newTask);
             }
         }
-        userTasks.setValue(favorites);
-        for (int i = 0; i < favorites.size(); i++) {
-            Task task = favorites.get(i);
+        userTasks.setValue(tasklist);
+        for (int i = 0; i < tasklist.size(); i++) {
+            Task task = tasklist.get(i);
         }
     }
 
     // adding a new task to the list of tasks
     public ArrayList<Task> addNewTask(Task addition) {
-        ArrayList<Task> favorites = userTasks.getValue();
-        ArrayList<Task> clonedFavs;
-        if (favorites == null) {
-            clonedFavs = new ArrayList<Task>();
+        ArrayList<Task> oldarr = userTasks.getValue();
+        ArrayList<Task> copyarr;
+        if (oldarr == null) {
+            copyarr = new ArrayList<Task>();
         } else {
-            clonedFavs = new ArrayList<Task>(favorites.size());
-            for (int i = 0; i < favorites.size(); i++) {
-                clonedFavs.add(favorites.get(i));
+            copyarr = new ArrayList<Task>(oldarr.size());
+            for (int i = 0; i < oldarr.size(); i++) {
+                copyarr.add(oldarr.get(i));
             }
         }
-        clonedFavs.add(addition);
-        int arrsize = clonedFavs.size();
-        String size = String.valueOf(arrsize);
-        return clonedFavs;
+        copyarr.add(addition);
+        return copyarr;
     }
 }
