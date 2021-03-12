@@ -49,40 +49,43 @@ ul li::before {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The TASQ App</title>
 </head>
-<body>
+<body onload="startPage();">
 <header>
 </header>
 <h1><center>TASQ App</center></h1>
-<button type="button" class="buttonStyle">About our App</button>
-<div id = "appIntro">
-<p>TASQ is designed to provide its users with a digitized to-do list - a list that allows the addition, management, and deletion of tasks that the users <br>
-want to keep track of. When it comes to managing tasks, the app emphasizes both agility and simplicity, while also providing users with the option to <br>
-customize and edit their tasks more extensively. TASQ provides the users with a convenient user interface that lets an individual view all their tasks <br>
-for the current day, week, and even month, with each individual view having its own distinct layout. </p>
+<button type="button" id = "intro" class="buttonStyle">About our App</button>
+<div id = "appIntro" class="modal">
+<div class = "modal-content">
+  <p>TASQ is designed to provide its users with a digitized to-do list - a list that allows the addition, management, and deletion of tasks that the users <br>
+  want to keep track of. When it comes to managing tasks, the app emphasizes both agility and simplicity, while also providing users with the option to <br>
+  customize and edit their tasks more extensively. TASQ provides the users with a convenient user interface that lets an individual view all their tasks <br>
+  for the current day, week, and even month, with each individual view having its own distinct layout. </p>
 
-<p>TASQ comes with several features that range over a wide span of categories. First, the application features multiple screens (fragments) - ones <br>
-for displaying current data, as well as screens for data creation and modification. Next, a navigation menu which allows the user to easily move <br>
-between the different parts of the app. TASQ also comes with database and remote server support for maintaining user logins and keeping track of <br>
-the application’s users. Alongside its core features, TASQ supports voice commands for the purpose of task addition and page navigation, as well <br>
-as Google Maps for geographically tracking tasks. Finally, the application has sounds incorporated into some of its different parts. </p>
+  <p>TASQ comes with several features that range over a wide span of categories. First, the application features multiple screens (fragments) - ones <br>
+  for displaying current data, as well as screens for data creation and modification. Next, a navigation menu which allows the user to easily move <br>
+  between the different parts of the app. TASQ also comes with database and remote server support for maintaining user logins and keeping track of <br>
+  the application’s users. Alongside its core features, TASQ supports voice commands for the purpose of task addition and page navigation, as well <br>
+  as Google Maps for geographically tracking tasks. Finally, the application has sounds incorporated into some of its different parts. </p>
 
-<p>Microsoft To Do https://play.google.com/store/apps/details?id=com.microsoft.todos&hl=en_US&gl=US <br>
-<a href="https://appadvice.com/app/do-simple-to-do-list/421819675">Do! By Simplerion </a><br>
-<a href="https://play.google.com/store/apps/details?id=com.todoist">Todoist</a><br>
-<a href= "https://play.google.com/store/apps/details?id=com.google.android.apps.tasks&hl=en_US&gl=US">Google Tasks</a> <br>
-<a href = "https://apps.apple.com/us/app/focus-to-do-focus-timer-tasks/id966057213">Focus To-Do</a> <br>
-<a href = "https://tweek.so/">Tweek</a> <br>
-<a href = "https://play.google.com/store/apps/details?id=com.getitdone.best">Get it Done</a> <br>
-<a href = "https://ticktick.com/?language=en_US">Tick Tick</a> </p>
+  <p>Microsoft To Do https://play.google.com/store/apps/details?id=com.microsoft.todos&hl=en_US&gl=US <br>
+  <a href="https://appadvice.com/app/do-simple-to-do-list/421819675">Do! By Simplerion </a><br>
+  <a href="https://play.google.com/store/apps/details?id=com.todoist">Todoist</a><br>
+  <a href= "https://play.google.com/store/apps/details?id=com.google.android.apps.tasks&hl=en_US&gl=US">Google Tasks</a> <br>
+  <a href = "https://apps.apple.com/us/app/focus-to-do-focus-timer-tasks/id966057213">Focus To-Do</a> <br>
+  <a href = "https://tweek.so/">Tweek</a> <br>
+  <a href = "https://play.google.com/store/apps/details?id=com.getitdone.best">Get it Done</a> <br>
+  <a href = "https://ticktick.com/?language=en_US">Tick Tick</a> </p>
 
-<p>Summary of app analysis:</p>
-<p>In general, we noticed a few deficiencies that similar apps have in common. Those apps are often too complicated in their approach to customizability,
-making it difficult to create or manage tasks at a fast pace. Some, on the other hand, do not give users the option to customize their tasks enough,
-which we found to be inconvenient in many cases. TASQ aims to work around those issues, and provide the user with a balance between simplicity and
-thoroughness when it comes to managing one’s tasks. </p>
+  <p>Summary of app analysis:</p>
+  <p>In general, we noticed a few deficiencies that similar apps have in common. Those apps are often too complicated in their approach to customizability,
+  making it difficult to create or manage tasks at a fast pace. Some, on the other hand, do not give users the option to customize their tasks enough,
+  which we found to be inconvenient in many cases. TASQ aims to work around those issues, and provide the user with a balance between simplicity and
+  thoroughness when it comes to managing one’s tasks. </p>
+</div>
 </div>
 
-<div id= “evolution”>
+<div id= “evolution” class="modal">
+  <div class = "modal-content">
     <h2>Evolution of App:</h2>
     <h3>Checkpoint 1:</h3>
     <p>For the 1st checkpoint we designed all of the screens for the app in xml and set up proper navigation between all screens. We designed <br>
@@ -107,9 +110,11 @@ thoroughness when it comes to managing one’s tasks. </p>
         commands and ask the app to navigate its menus with voice commands. Additionally, we added Google Maps support to the application, which allows the user to <br>
         associate tasks with locations by adding addresses to a task that the user is creating/modifying. Alongside the big implementations, we touched up and fixed <br>
         smaller portions of the application to finalize its performance for the current version. <p>
+    </div>
 </div>
 
-<div id=”finalFeatures”>
+<div id=”finalFeatures” class="modal">
+  <div class = "modal-content">
 <h2>Current MVC Architecture:</h2>
 <p>Model:</p>
 <ul>
@@ -196,13 +201,16 @@ NOTE: <br>
 1. To add a task, the date must be in the following format: MM.DD.YYYY <br>
 2. The LOG statements in the code are only used to show that the data is being transferred correctly between screens. </p>
 </div>
+</div>
 
-<div id="futureWork">
+<div id="futureWork" class="modal">
+  <div class = "modal-content">
     <h2>Future Work</h2>
     <p>
         By continuing to work on TASQ we could continue to refine the UI and features that we have. One improvement we could make is implementing full task <br>
         syncing across devices, expanding on our use of a database. By doing so we could improve the user experience when using the app.
     </p>
+  </div>
 </div>
 
     <div id="team">
@@ -224,6 +232,22 @@ NOTE: <br>
             <p class="email">shtunyd@wwu.edu</p>
         </div>
     </div>
+    <script>
+        function startPage() {
+            var modal = document.getElementById("appIntro");
+            modal.style.display = "none";
+        }
+        var modal = document.getElementById("appIntro");
+        var button = document.getElementById("intro");
 
+        button.onclick = function() {
+            modal.style.display = "block";
+        }
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
 </body>
 </html>
