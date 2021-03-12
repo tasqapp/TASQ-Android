@@ -100,6 +100,7 @@ public class DailyFragment extends Fragment {
         String formatted = "";
         //if date was sent from monthly screen, display date is this date, otherwise display date
         //is current day (set textView for date display to date)
+        dailyDate = getActivity().findViewById(R.id.daily_screen_date);
         if(monthDate.compareTo("---") != 0) {
             monthlyDate = monthDate;
             SimpleDateFormat oldFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
@@ -109,7 +110,6 @@ public class DailyFragment extends Fragment {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            dailyDate = getActivity().findViewById(R.id.daily_screen_date);
             dailyDate.setText(formatted);
             sharedPreferences =
                     PreferenceManager.getDefaultSharedPreferences(getActivity());

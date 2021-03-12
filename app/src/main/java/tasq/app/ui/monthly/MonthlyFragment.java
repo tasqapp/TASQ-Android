@@ -24,6 +24,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -53,6 +54,7 @@ import java.util.List;
 import java.util.Locale;
 
 import tasq.app.MainActivity;
+import tasq.app.Priority;
 import tasq.app.R;
 import tasq.app.Task;
 import tasq.app.TaskPriorityComparator;
@@ -153,33 +155,40 @@ public class MonthlyFragment extends Fragment {
                 label.setTextSize(30);
                 label.setTextColor(Color.parseColor("#EBC91E"));
                 ll.addView(label);
-                Button dailyButton = new Button(getActivity());
-                //if button is clicked, redirect to daily page using date selected
-                dailyButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        SharedPreferences sharedPreferences =
-                                PreferenceManager.getDefaultSharedPreferences(getActivity());
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("dateSent", dateClicked.toString());
-
-                        editor.apply();
-                        String test = sharedPreferences.getString("dateSent", "nope");
-                        navController.navigate(R.id.daily_page);
-                    }
-                });
-                dailyButton.setText("View on Daily Page");
-                ll.addView(dailyButton);
                 for (int i=0; i < dayTasks.size(); i++) {
                     Task task = dayTasks.get(i);
-                    TextView b = new TextView(getActivity());
-                    b.setText(Task.getText(task));
+                    Button taskButton = new Button(getActivity());
+                    //on click listener that directs to display task screen when clicked
+                    taskButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            SharedPreferences sharedPreferences =
+                                    PreferenceManager.getDefaultSharedPreferences(getActivity());
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("dateSent", dateClicked.toString());
+
+                            editor.apply();
+                            navController.navigate(R.id.daily_page);
+                        }
+                    });
+                    //formatting for task button
+                    taskButton.setAllCaps(false);
+                    taskButton.setText(Task.getText(task));
+                    taskButton.setTextColor(getResources().getColor(R.color.white));
+                    taskButton.setBackgroundResource(R.drawable.task_plain);
+                    taskButton.setTextAlignment(Button.TEXT_ALIGNMENT_VIEW_START);
+                    taskButton.setTextSize(25);
+                    taskButton.setPadding(70, 20, 70, 20);
+                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT
+                    );
+                    lp.setMargins(30, 15, 30, 15);
+                    taskButton.setLayoutParams(lp);
                     if(task.isCompleted() == true) {
-                        b.setPaintFlags(b.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                        taskButton.setPaintFlags(taskButton.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                     }
-                    b.setTextSize(30);
-                    b.setTextColor(Color.parseColor("#EBC91E"));
-                    ll.addView(b);
+                    ll.addView(taskButton);
                 }
                 if(sv.getParent() != null) {
                     ((ViewGroup)sv.getParent()).removeView(sv);
