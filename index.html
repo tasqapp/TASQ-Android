@@ -25,21 +25,6 @@
   width: 80%;
 }
 
-/* The Close Button */
-.close {
-  color: #aaaaaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
-}
-
 .buttonStyle {
   color: white;
   margin-left: 40px;
@@ -204,13 +189,13 @@ ul li::before {
   </div>
 
   <div>
-    <p> This was a class project for our App Development course at WWU, and as part of course we were required to use MVC Architecture <br>
-    with the app that we built. MVC Architecture is a commonly used design pattern that seperates a project into three components: Model, View, and Controller. <br>
-    The Model component corresponds to all the data-related logic that the user works with, the View component is used for all the UI logic <br>
-    of the application, and controllers act as a communication path between Model and View components to process all the logic, manipulate
-    data if needed,interact with the Views to render the final output. Click the button below to see our MVC Design for TASQ. <br>
+    <p> This was a class project for our App Development course at WWU, and as part of the course we were required to use MVC Architecture <br>
+    with the app that we built. MVC Architecture is a commonly used design pattern that seperates a project into three components: Model, View, <br>
+     and Controller. The Model component corresponds to all the data-related logic that the user works with, the View component is used for <br>
+     all the UI logic of the application, and controllers act as a communication path between Model and View components to process all the logic, <br>
+      manipulate data if needed,interact with the Views to render the final output. Click the button below to see our MVC Design for TASQ. <br>
     </p>
-  <button  id = "mvc" type="button" class="buttonStyle">Future TASQ work</button>
+  <button  id = "mvc" type="button" class="buttonStyle">FMVC Design</button>
   </div>
   <div id="mvcModal" class="modal">
     <div class = "modal-content">
@@ -333,8 +318,6 @@ ul li::before {
     var btn4 = document.getElementById("features");
     var modal5= document.getElementById("gitmodal");
     var btn5 = document.getElementById("git");
-    var modal6= document.getElementById("mvcModal");
-    var btn6 = document.getElementById("mvc");
 
     // When the user clicks the button, open the modal
     btn1.onclick = function() {
@@ -352,10 +335,6 @@ ul li::before {
     btn5.onclick = function() {
       modal5.style.display = "block";
     }
-      
-    btn6.onclick = function() {
-      modal6.style.display = "block";
-    }
     window.onclick = function(event) {
         if (event.target == modal1) {
             modal1.style.display = "none";
@@ -371,10 +350,6 @@ ul li::before {
         }
         if (event.target == modal5) {
             modal5.style.display = "none";
-        }
-      
-        if (event.target == modal6) {
-            modal6.style.display = "none";
         }
     }
     </script>
