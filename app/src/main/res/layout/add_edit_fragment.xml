@@ -90,6 +90,7 @@
                 android:id="@+id/no_due_date_check"
                 android:layout_below="@id/no_due_date_label"
                 android:layout_toRightOf="@id/add_date_picker"
+                android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
