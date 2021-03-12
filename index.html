@@ -1,70 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<style>
-body {
-  font-family: Georgia, serif;
-}
-.buttonStyle {
-  color: white;
-  margin-left: 40px;
-  border-radius: 10px;
-  padding: 0.5rem;
-  margin: 0.25rem;
-  background-color: #F2994A;
-  box-shadow: 0 3px #D3D3D3; }
-
-h1 {
-  color: #F2994A;
-}
-
-h2 {
-  text-align: center;
-  color: #F2994A;
-}
-
-h3 {
-  color: #EBC91E;
-  text-align: center;
-}
-
-ul {
-  list-style: none; /* Remove default bullets */
-}
-
-ul li::before {
-  content: "\2022";  /* Add content: \2022 is the CSS Code/unicode for a bullet */
-  color: #EBC91E; /* Change the color */
-  font-weight: bold; /* If you want it to be bold */
-  display: inline-block; /* Needed to add space between the bullet and the text */
-  width: 1em; /* Also needed for space (tweak if needed) */
-  margin-left: -1em; /* Also needed for space (tweak if needed) */
-}
-
-.modal-content {
-  background-color: #f5f5f5;
-  margin: 15% auto;
-  padding: 20px;
-  box-shadow: 0 0 10px #333;
-  border-radius: 5px;
-  width: 35%; }
-
-  .modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: black;
-    background-color: rgba(0, 0, 0, 0.4); }
-
-
-</style>
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The TASQ App</title>
 </head>
@@ -268,13 +205,31 @@ NOTE: <br>
         var featuresbutton = document.getElementById("features");
         var futuremodal = document.getElementById("futureWork");
         var futurebutton = document.getElementById("future");
-        $("#intro").click(function(){
-             $("#appIntro").css("display","block");
-             $("#evolutionmodal").css("display","none");
-              $("#finalFeatures").css("display","none");
-               $("#futureWork").css("display","none");
-                         });
-
+        featuresbutton.onclick = function() {
+            featuresmodal.style.display = "block";
+            evomodal.style.display = "none";
+            futuremodal.style.display = "none";
+            intromodal.style.display = "none";
+        }
+        futurebutton.onclick = function() {
+            featuresmodal.style.display = "none";
+            evomodal.style.display = "none";
+            futuremodal.style.display = "block";
+            intromodal.style.display = "none";
+        }
+        introbutton.onclick = function() {
+           console.log("button clicked");
+            featuresmodal.style.display = "none";
+            evomodal.style.display = "none";
+            futuremodal.style.display = "none";
+            intromodal.style.display = "block";
+        }
+        evobutton.onclick = function() {
+            featuresmodal.style.display = "none";
+            evomodal.style.display = "block";
+            futuremodal.style.display = "none";
+            intromodal.style.display = "none";
+        }
         window.onclick = function(event) {
           if (event.target == intromodal) {
               intromodal.style.display = "none";
