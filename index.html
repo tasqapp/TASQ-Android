@@ -262,7 +262,10 @@ NOTE: <br>
     <script>
         var intromodal = document.getElementById("appIntro");
         var introbutton = document.getElementById("intro");
-        var evobutton = document.getElementById("intro");
+        var evobutton = document.getElementById("evolution");
+        if(evobutton == null) {
+          console.log("button is null");
+        }
         var evomodal = document.getElementById("evolutionmodal");
         var featuresmodal = document.getElementById("finalFeatures");
         var featuresbutton = document.getElementById("features");
