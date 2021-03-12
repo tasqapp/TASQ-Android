@@ -47,6 +47,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -54,13 +55,13 @@ import java.util.Locale;
 import tasq.app.MainActivity;
 import tasq.app.R;
 import tasq.app.Task;
+import tasq.app.TaskPriorityComparator;
 import tasq.app.ui.addedit.AddEditViewModel;
 
 public class MonthlyFragment extends Fragment {
     CompactCalendarView compactCalendar;
     private SimpleDateFormat dateFormatMonth =
             new SimpleDateFormat("MMMM, yyyy", Locale.getDefault());
-    private MonthlyViewModel mViewModel;
     private NavController navController;
     private AddEditViewModel model;
     List<Event> allEvents = new ArrayList<Event>();
@@ -76,7 +77,6 @@ public class MonthlyFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        Log.d("DEBUG", "onCreateView of LoginFragment");
         return inflater.inflate(R.layout.monthly_fragment, container, false);
     }
 
@@ -87,8 +87,8 @@ public class MonthlyFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Log.d("DEBUG", "onActivityCreated of LoginFragment");
         navController = Navigation.findNavController(getView());
+
         // creating toolbar, calendar, and fetching appropriate dates
         Toolbar actionBar = ((MainActivity) getActivity()).findViewById(R.id.toolbar);
         ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#EBC91E"));
@@ -99,6 +99,7 @@ public class MonthlyFragment extends Fragment {
         java.util.Date nowDate = new java.util.Date();
         String currentYear = formatNowYear.format(nowDate);
         actionBar.setTitle(month_name + ", " + currentYear);
+        //observer that gets the monthly screen the updated Task list & calls method to update UI
         model = new ViewModelProvider(requireActivity()).get(AddEditViewModel.class);
         model.getTask().observe(getViewLifecycleOwner(), item -> {
             updateTaskList(item);
@@ -113,6 +114,7 @@ public class MonthlyFragment extends Fragment {
             public void onDayClick(Date dateClicked) {
                 Context context = getActivity().getApplicationContext();
                 ArrayList<Task> dayTasks = new ArrayList<Task>();
+                //get list of tasks that match the clicked date
                 for (int i=0; i < allTasks.size(); i++) {
                     Task currentTask = allTasks.get(i);
                     String date = Task.getDate(currentTask);
@@ -128,7 +130,10 @@ public class MonthlyFragment extends Fragment {
                         dayTasks.add(currentTask);
                     }
                 }
-                // adding textviews of tasks to bottom of relative layout
+                // sort tasks based on priority
+                Collections.sort(allTasks, new TaskPriorityComparator());
+
+                //add list of tasks to the layout and display them
                 RelativeLayout rl=(RelativeLayout) getActivity().findViewById(R.id.relativeview);
                 LinearLayout ll = (LinearLayout) getActivity().findViewById(R.id.linear);
                 ll.removeAllViews();
@@ -149,6 +154,7 @@ public class MonthlyFragment extends Fragment {
                 label.setTextColor(Color.parseColor("#EBC91E"));
                 ll.addView(label);
                 Button dailyButton = new Button(getActivity());
+                //if button is clicked, redirect to daily page using date selected
                 dailyButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -159,7 +165,6 @@ public class MonthlyFragment extends Fragment {
 
                         editor.apply();
                         String test = sharedPreferences.getString("dateSent", "nope");
-                        Log.d("INMONTHLY", test);
                         navController.navigate(R.id.daily_page);
                     }
                 });

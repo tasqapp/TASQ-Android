@@ -14,7 +14,6 @@
 
 package tasq.app.ui.weekly;
 
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.SharedPreferences;
@@ -44,13 +43,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 import tasq.app.Priority;
 import tasq.app.R;
 import tasq.app.Task;
 import tasq.app.ui.addedit.AddEditViewModel;
-import tasq.app.ui.monthly.MonthlyViewModel;
 
 public class WeeklyFragment extends Fragment {
 
