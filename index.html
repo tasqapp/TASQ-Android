@@ -87,7 +87,7 @@ ul li::before {
   the application’s users. Alongside its core features, TASQ supports voice commands for the purpose of task addition and page navigation, as well <br>
   as Google Maps for geographically tracking tasks. Finally, the application has sounds incorporated into some of its different parts. </p>
 
-  <p>Microsoft To Do https://play.google.com/store/apps/details?id=com.microsoft.todos&hl=en_US&gl=US <br>
+  <a href = "https://play.google.com/store/apps/details?id=com.microsoft.todos&hl=en_US&gl=US">Microsoft To Do </a> <br>
   <a href="https://appadvice.com/app/do-simple-to-do-list/421819675">Do! By Simplerion </a><br>
   <a href="https://play.google.com/store/apps/details?id=com.todoist">Todoist</a><br>
   <a href= "https://play.google.com/store/apps/details?id=com.google.android.apps.tasks&hl=en_US&gl=US">Google Tasks</a> <br>
@@ -103,8 +103,8 @@ ul li::before {
   thoroughness when it comes to managing one’s tasks. </p>
 </div>
 </div>
-
-<div id= “evolution” class="modal">
+<button type="button" id = "evolution" class="buttonStyle">Evolution of our App</button>
+<div id= “evolutionmodal” class="modal">
   <div class = "modal-content">
     <h2>Evolution of App:</h2>
     <h3>Checkpoint 1:</h3>
@@ -132,7 +132,7 @@ ul li::before {
         smaller portions of the application to finalize its performance for the current version. <p>
     </div>
 </div>
-
+<button type="button" id = "features" class="buttonStyle">Features of our finished App</button>
 <div id=”finalFeatures” class="modal">
   <div class = "modal-content">
 <h2>Current MVC Architecture:</h2>
@@ -223,6 +223,7 @@ NOTE: <br>
 </div>
 </div>
 
+<button type="button" id = "future" class="buttonStyle">Future TASQ work</button>
 <div id="futureWork" class="modal">
   <div class = "modal-content">
     <h2>Future Work</h2>
@@ -253,20 +254,31 @@ NOTE: <br>
         </div>
     </div>
     <script>
-        function startPage() {
-            var modal = document.getElementById("appIntro");
-            modal.style.display = "none";
+        var intromodal = document.getElementById("appIntro");
+        var introbutton = document.getElementById("intro");
+        var evobutton = document.getElementById("intro");
+        var evomodal = document.getElementById("evolutionmodal");
+        var featuresmodal = document.getElementById("finalFeatures");
+        var featuresbutton = document.getElementById("features");
+        var futuremodal = document.getElementById("futureWork");
+        var futurebutton = document.getElementById("future");
+        introbutton.onclick = function() {
+            intromodal.style.display = "block";
         }
-        var modal = document.getElementById("appIntro");
-        var button = document.getElementById("intro");
-
-        button.onclick = function() {
-            modal.style.display = "block";
+        futurebutton.onclick = function() {
+            futuremodal.style.display = "block";
+        }
+        evobutton.onclick = function() {
+            evomodal.style.display = "block";
+        }
+        featuresbutton.onclick = function() {
+            featuresmodal.style.display = "block";
         }
         window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
+            intromodal.style.display = "none";
+            evomodal.style.display = "none";
+            featuresmodal.style.display = "none";
+            futuremodal.style.display = "none";
         }
     </script>
 </body>
