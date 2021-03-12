@@ -48,6 +48,7 @@
         <activity
             android:name=".MainActivity"
             android:label="TASQ"
+            android:windowSoftInputMode="adjustPan"
             android:theme="@style/Theme.TASQapp.NoActionBar"></activity>
     </application>
 
