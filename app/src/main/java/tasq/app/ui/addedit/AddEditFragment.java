@@ -1,17 +1,18 @@
-/**
+/*
  * HANNAH BUZARD
  * DAVID KIPNIS
  * TYLER KJELDGAARD
  * DANIEL SHTUNYUK
- *
+ * <p>
  * WESTERN WASHINGTON UNIVERSITY
  * CSCI 412 - WINTER 2021
- *
+ * <p>
  * TASQ APPLICATION PROJECT
  */
 
 package tasq.app.ui.addedit;
 
+import android.location.Address;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,6 +33,10 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.google.android.gms.maps.model.LatLng;
+
+import kotlin.LateinitKt;
+import tasq.app.AddressParser;
 import tasq.app.Priority;
 import tasq.app.R;
 import tasq.app.Task;
@@ -47,6 +52,8 @@ public class AddEditFragment extends Fragment {
 
     DatePicker date;
 
+    EditText address;
+
     EditText description;
     Button submit;
     Spinner prioritySpinner;
@@ -56,8 +63,8 @@ public class AddEditFragment extends Fragment {
     private MonthlyViewModel model;
     private NavController navController;
 
-    private SoundPool.Builder poolBuilder ;
-    private SoundPool pool ;
+    private SoundPool.Builder poolBuilder;
+    private SoundPool pool;
     private int updateFinishedSoundId;
 
     //TODO: potentially delete
@@ -90,17 +97,21 @@ public class AddEditFragment extends Fragment {
         description = (EditText) this.getActivity().findViewById(R.id.task_name_label);
         navController = Navigation.findNavController(getView());
 
-        date = (DatePicker) this.getActivity().findViewById(R.id.add_date_picker) ;
+        date = (DatePicker) this.getActivity().findViewById(R.id.add_date_picker);
 
-        poolBuilder = new SoundPool.Builder() ;
-        poolBuilder.setMaxStreams(1) ;
-        pool = poolBuilder.build() ;
-        updateFinishedSoundId = pool.load(getActivity(), R.raw.checkmarksound, 1) ;
+        address = (EditText) this.getActivity().findViewById(R.id.address_input);
+
+        poolBuilder = new SoundPool.Builder();
+        poolBuilder.setMaxStreams(1);
+        pool = poolBuilder.build();
+        updateFinishedSoundId = pool.load(getActivity(), R.raw.checkmarksound, 1);
 
         // setting the listener for the submission button
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AddressParser addressParser = new AddressParser();
+                LatLng latLng;
                 // updating new task information and setting task
                 String selectedColor;
                 int color = radio.getCheckedRadioButtonId();
@@ -112,8 +123,9 @@ public class AddEditFragment extends Fragment {
                     selectedColor = "Green";
                 }
                 String taskDesc = description.getText().toString();
-                String dueDate = (date.getMonth()+1) + "." + date.getDayOfMonth() + "." + date.getYear();
-                Log.d("Date ", dueDate) ;
+                String userAddress = address.getText().toString();
+                String dueDate = (date.getMonth() + 1) + "." + date.getDayOfMonth() + "." + date.getYear();
+                Log.d("Date ", dueDate);
 
                 String[] arr = {selectedColor, dueDate, taskDesc};
 
@@ -121,9 +133,21 @@ public class AddEditFragment extends Fragment {
                 //add to monthly calendar
                 model.setTask(arr);
                 //add to global arrayList of tasks (using add/edit model)
-                Task newTask = new Task(selectedColor, dueDate, taskDesc, priority, false); //TODO: implement proper 'completed' field fetching/setting
+                Task newTask;
+                if (!userAddress.equals("")) {
+                    Address address = addressParser.parseAddress(getContext(), userAddress);
+                    if (address != null) {
+                        latLng = new LatLng(address.getLatitude(), address.getLongitude());
+                        newTask = new Task(selectedColor, dueDate, taskDesc, priority, false, userAddress, latLng, address);
+                    } else {
+                        newTask = new Task(selectedColor, dueDate, taskDesc, priority, false, userAddress);
+                    }
+                } else {
+                    newTask = new Task(selectedColor, dueDate, taskDesc, priority, false);
+                }
+                //TODO: implement proper 'completed' field fetching/setting
                 mViewModel.setTask(newTask);
-                pool.play(updateFinishedSoundId, 0.2f, 0.2f, 1,0, 1.0f) ;
+                pool.play(updateFinishedSoundId, 0.2f, 0.2f, 1, 0, 1.0f);
                 // Return to previous screen.
                 navController.navigateUp();
             }

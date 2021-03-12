@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.SharedPreferences;
 import android.graphics.Paint;
+import android.media.SoundPool;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -45,6 +46,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import tasq.app.Priority;
 import tasq.app.R;
 import tasq.app.Task;
 import tasq.app.ui.addedit.AddEditViewModel;
@@ -56,6 +58,10 @@ public class WeeklyFragment extends Fragment {
     private AddEditViewModel model;
     private ScrollView mScrollView;
     private NavController navController;
+    private SoundPool.Builder poolBuilder ;
+    private SoundPool pool ;
+    private int taskFinishedSoundId ;
+
 
     public static WeeklyFragment newInstance() {
         return new WeeklyFragment();
@@ -80,15 +86,21 @@ public class WeeklyFragment extends Fragment {
         model = new ViewModelProvider(requireActivity()).get(AddEditViewModel.class);
         navController = Navigation.findNavController(getView());
 
-        // Show the current week
-        String weekOfString = getFirstWeekDay() + " to " + getLastWeekDay();
-        TextView headerWeekOf = getActivity().findViewById(R.id.weekly_text_weekOf);
-        headerWeekOf.setText(getString(R.string.weekly_week_of) + " " + weekOfString);
+
+        poolBuilder = new SoundPool.Builder() ;
+        poolBuilder.setMaxStreams(1) ;
+        pool = poolBuilder.build() ;
+        taskFinishedSoundId = pool.load(getActivity(), R.raw.taskdonesound, 1) ;
 
         model.getTask().observe(getViewLifecycleOwner(), item -> {
             Log.d("WEEKLY", "Got event");
             updateUI(item);
         });
+
+        // Show the current week
+        String weekOfString = getFirstWeekDay() + " to " + getLastWeekDay();
+        TextView headerWeekOf = getActivity().findViewById(R.id.weekly_text_weekOf);
+        headerWeekOf.setText(getString(R.string.weekly_week_of) + " " + weekOfString);
     }
 
     /**
@@ -99,7 +111,6 @@ public class WeeklyFragment extends Fragment {
         ArrayList<Task> weekTasks = new ArrayList<>();
         LinearLayout layout = getActivity().findViewById(R.id.weekly_linear_view);
         SimpleDateFormat formatter = new SimpleDateFormat("MM.dd.yyyy");
-        SimpleDateFormat weekformatter = new SimpleDateFormat("MM.dd");
 
         Date weekStart, weekEnd, curTaskDate = null;
         Calendar cal = Calendar.getInstance();
@@ -128,13 +139,11 @@ public class WeeklyFragment extends Fragment {
             }
         }
 
-        Log.w("update-weekly", "start day: " + weekStart.toString());
-        Log.w("update-weekly", "start day: " + weekEnd.toString());
+        Log.d("update-weekly", "start day: " + weekStart.toString());
+        Log.d("update-weekly", "start day: " + weekEnd.toString());
 
         for (Task task :
                 weekTasks) {
-            Log.d("update-weekly", "Creating Task: " + Task.getText(task));
-
             // Make each task selectable to edit it's attributes.
             Button taskButton = new Button(getActivity());
             taskButton.setOnClickListener(new View.OnClickListener() {
@@ -148,11 +157,17 @@ public class WeeklyFragment extends Fragment {
                     editor.putString("taskName", Task.getText(task));
                     editor.putString("taskDate", Task.getDate(task));
                     editor.putString("taskColor", Task.getColor(task));
+                    editor.putString("taskPriority",
+                            Priority.getCapaitalizedStringFromPriority(task.getPriority()));
+                    editor.putString("taskAddress", task.getAddress());
                     editor.apply();
                     navController.navigate(R.id.displayTask_page);
                     task.setText(sharedPreferences.getString("taskName", "---"));
                     task.setDate(sharedPreferences.getString("taskDate", "---"));
                     task.setColor(sharedPreferences.getString("taskColor", "---"));
+                    task.setPriority(Priority.getPriorityFromString(
+                            sharedPreferences.getString("taskPriority", "Low")));
+                    task.setAddress(sharedPreferences.getString("taskAddress", ""));
                 }
             });
 
@@ -197,7 +212,7 @@ public class WeeklyFragment extends Fragment {
                                 task.getPriority(),
                                 false);
                     } else {
-                        // pool.play(taskFinishedSoundId, 2.0f, 2.0f, 1, 0, 1.0f);
+                        pool.play(taskFinishedSoundId, 1.0f, 1.0f, 1, 0, 1.0f);
                         newTask = new Task(Task.getColor(task),
                                 Task.getDate(task),
                                 Task.getText(task),

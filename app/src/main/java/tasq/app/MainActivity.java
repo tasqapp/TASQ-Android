@@ -1,4 +1,4 @@
-/**
+/*
  * HANNAH BUZARD
  * DAVID KIPNIS
  * TYLER KJELDGAARD
@@ -76,7 +76,8 @@ public class MainActivity extends AppCompatActivity {
                 R.id.daily_page,
                 R.id.weekly_page,
                 R.id.monthly_page,
-                R.id.sometime_page)
+                R.id.sometime_page,
+                R.id.map_page)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController =
@@ -92,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
         fragments.add( "Monthly");
         fragments.add( "Someday");
         fragments.add( "Add");
+        fragments.add("Map");
         pages = new VoiceCommands(fragments);
 
         micFab = findViewById(R.id.micFab);
@@ -152,6 +154,9 @@ public class MainActivity extends AppCompatActivity {
                             break;
                         case "Sometime":
                             navId = R.id.sometime_page ;
+                            break;
+                        case "Map":
+                            navId = R.id.map_page;
                             break;
                     }
                     navController.navigate(navId) ;
@@ -241,6 +246,10 @@ public class MainActivity extends AppCompatActivity {
                         navController.navigate(R.id.daily_page);
                     }
                     break;
+                case "map":
+                    if (!curDest.equals("Map")) {
+                        navController.navigate(R.id.map_page);
+                    }
                 default:
                     Toast.makeText(MainActivity.this, "Sorry, I did not understand" +
                             " that. Please try again.", Toast.LENGTH_LONG).show();

@@ -13,6 +13,7 @@
 package tasq.app.ui;
 
 import android.content.SharedPreferences;
+import android.location.Address;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -36,6 +37,9 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.google.android.gms.maps.model.LatLng;
+
+import tasq.app.AddressParser;
 import tasq.app.MainActivity;
 import tasq.app.Priority;
 import tasq.app.R;
@@ -84,13 +88,26 @@ public class DisplayTask extends Fragment {
 
         RadioButton red = getActivity().findViewById(R.id.edit_redbutton);
         RadioButton blue = getActivity().findViewById(R.id.edit_bluebutton);
+        RadioButton green = getActivity().findViewById(R.id.edit_greenbutton);
         RadioGroup buttons = getActivity().findViewById(R.id.edit_radiobuttons);
-
+        EditText address = getActivity().findViewById(R.id.address_input);
         Spinner priority = getActivity().findViewById(R.id.edit_priority_spinner);
 
         String[] setDate = sp.getString("taskDate", "---").split("\\.") ;
         date.init(Integer.parseInt(setDate[2]), Integer.parseInt(setDate[0]) - 1, Integer.parseInt(setDate[1]), null);
         name.setText(sp.getString("taskName", "---"));
+
+        String color = sp.getString("taskColor", "---");
+        if (color.compareTo("Red") == 0) {
+            red.toggle();
+        } else if (color.compareTo("Green") == 0) {
+            green.toggle();
+        } else if (color.compareTo("Blue") == 0) {
+            blue.toggle();
+        }
+
+        address.setText(sp.getString("taskAddress", ""));
+
         priority.setSelection(((ArrayAdapter)priority.getAdapter())
                 .getPosition(sp.getString("taskPriority", "Low")));
 
@@ -99,8 +116,6 @@ public class DisplayTask extends Fragment {
         pool = poolBuilder.build() ;
         updateFinishedSoundId = pool.load(getActivity(), R.raw.checkmarksound, 1) ;
 
-        //TODO: fill in remaining attributes (subtasks, files, etc.)
-
         navController = Navigation.findNavController(getView());
         model = new ViewModelProvider(requireActivity()).get(AddEditViewModel.class);
 
@@ -108,6 +123,8 @@ public class DisplayTask extends Fragment {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AddressParser addressParser = new AddressParser();
+                LatLng latLng;
                 // updating task information
                 String oldDate = sp.getString("taskDate", "---");
                 String oldName = sp.getString("taskName", "---");
@@ -136,12 +153,25 @@ public class DisplayTask extends Fragment {
                     taskColor = "Green";
                     editor.putString("taskColor", "Green");
                 }
+
+                String userAddress = address.getText().toString();
+                editor.putString("taskAddress", userAddress);
+
                 editor.apply();
-                Task newTask = new Task(taskColor,
-                        updatedDate,
-                        name.getText().toString(),
-                        Priority.getPriorityFromString(priority.getSelectedItem().toString()),
-                        false); //TODO: implement proper 'completed' field fetching/setting
+
+                //TODO: implement proper 'completed' field fetching/setting
+                Task newTask;
+                if (!userAddress.equals("")) {
+                    Address address = addressParser.parseAddress(getContext(), userAddress);
+                    if (address != null) {
+                        latLng = new LatLng(address.getLatitude(), address.getLongitude());
+                        newTask = new Task(taskColor, updatedDate, name.getText().toString(), Priority.getPriorityFromString(priority.getSelectedItem().toString()), false, userAddress, latLng, address);
+                    } else {
+                        newTask = new Task(taskColor, updatedDate, name.getText().toString(), Priority.getPriorityFromString(priority.getSelectedItem().toString()), false, userAddress);
+                    }
+                } else {
+                    newTask = new Task(taskColor, updatedDate, name.getText().toString(), Priority.getPriorityFromString(priority.getSelectedItem().toString()), false);
+                }
                 if (newTask != null && oldTask != null) {
                     Log.d("DISPLAY", "Task text: " + taskColor);
                     Log.d("DISPLAY", "Task text: " + Task.getColor(oldTask));

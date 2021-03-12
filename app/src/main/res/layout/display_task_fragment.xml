@@ -125,6 +125,27 @@
 
             </RadioGroup>
             <!--      TODO: add radio button functionality      -->
+<!--     TODO: add an address TextView label, and an address TextEdit field       -->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/address_label"
+                android:layout_below="@id/edit_priority_spinner"
+                android:layout_alignLeft="@id/edit_priority_spinner"
+                android:layout_marginTop="40dp"
+                android:text="@string/address"
+                android:textColor="@color/text_black"/>
+
+            <EditText
+                android:id="@+id/address_input"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/address_label"
+                android:layout_alignLeft="@+id/address_label"
+                android:hint="@string/add_an_address_or_location_here"
+                android:inputType="text"/>
+
             <Button
                 android:id="@+id/edit_submitbutton"
                 android:layout_width="wrap_content"
