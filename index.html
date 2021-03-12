@@ -1,249 +1,97 @@
 <!DOCTYPE html>
+
+
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The TASQ App</title>
-</head>
-<body >
-<header>
-</header>
-<h1>TASQ App</h1>
-<div>
-<button id = "intro" type="button" class="buttonStyle">About our App</button>
-</div>
-<div id = "appIntro" class="modal">
-<div class = "modal-content">
-  <p>TASQ is designed to provide its users with a digitized to-do list - a list that allows the addition, management, and deletion of tasks that the users <br>
-  want to keep track of. When it comes to managing tasks, the app emphasizes both agility and simplicity, while also providing users with the option to <br>
-  customize and edit their tasks more extensively. TASQ provides the users with a convenient user interface that lets an individual view all their tasks <br>
-  for the current day, week, and even month, with each individual view having its own distinct layout. </p>
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <title>{{title}}</title>
+        <link rel="stylesheet" href="/stylesheets/index.css">
+<!--        <link rel="stylesheet" href="/stylesheets/tickets.css">-->
+        <link rel="stylesheet" href="/stylesheets/header.css">
+        <link rel="stylesheet" href="/stylesheets/footer.css">
+        <link rel="stylesheet" href="/stylesheets/index.css">
+        <link rel="stylesheet" href="/stylesheets/modal.css">
+    </head>
+    <body onload="viewModal()">
 
-  <p>TASQ comes with several features that range over a wide span of categories. First, the application features multiple screens (fragments) - ones <br>
-  for displaying current data, as well as screens for data creation and modification. Next, a navigation menu which allows the user to easily move <br>
-  between the different parts of the app. TASQ also comes with database and remote server support for maintaining user logins and keeping track of <br>
-  the application’s users. Alongside its core features, TASQ supports voice commands for the purpose of task addition and page navigation, as well <br>
-  as Google Maps for geographically tracking tasks. Finally, the application has sounds incorporated into some of its different parts. </p>
+    {{> header}}
 
-  <a href = "https://play.google.com/store/apps/details?id=com.microsoft.todos&hl=en_US&gl=US">Microsoft To Do </a> <br>
-  <a href="https://appadvice.com/app/do-simple-to-do-list/421819675">Do! By Simplerion </a><br>
-  <a href="https://play.google.com/store/apps/details?id=com.todoist">Todoist</a><br>
-  <a href= "https://play.google.com/store/apps/details?id=com.google.android.apps.tasks&hl=en_US&gl=US">Google Tasks</a> <br>
-  <a href = "https://apps.apple.com/us/app/focus-to-do-focus-timer-tasks/id966057213">Focus To-Do</a> <br>
-  <a href = "https://tweek.so/">Tweek</a> <br>
-  <a href = "https://play.google.com/store/apps/details?id=com.getitdone.best">Get it Done</a> <br>
-  <a href = "https://ticktick.com/?language=en_US">Tick Tick</a> </p>
+    <div class="grid-container">
+        <div class="infoBlock">
+            <img class = "imageLogo" src="/images/mutualAid_temp.png">
+            <h2>Getting Started</h2>
+            <p>Mutual aid is about helping out people who live in your community. We have made
+                this site in order to help with the process of giving and receiving aid. Others from
+                your community are able to easily view and and seek help through request called tickets
+                Sign in or Sign up to get started!</p>
+            <a href="#" id = "modalButton">Sign Up</a>
+            <p>To make a post regarding requesting aid or offering your services, please visit the ticket page below!
+            The ticket page allows you to create a post, view other community member's posts, and reply to posts.</p>
+            <a href="/tickets">Tickets Page</a>
 
-  <p>Summary of app analysis:</p>
-  <p>In general, we noticed a few deficiencies that similar apps have in common. Those apps are often too complicated in their approach to customizability,
-  making it difficult to create or manage tasks at a fast pace. Some, on the other hand, do not give users the option to customize their tasks enough,
-  which we found to be inconvenient in many cases. TASQ aims to work around those issues, and provide the user with a balance between simplicity and
-  thoroughness when it comes to managing one’s tasks. </p>
-</div>
-</div>
-<div>
-<button id = "evolution" type="button" class="buttonStyle">Evolution of our App</button>
-</div>
-<div id= “evolutionmodal” class="modal">
-  <div class = "modal-content">
-    <h2>Evolution of App:</h2>
-    <h3>Checkpoint 1:</h3>
-    <p>For the 1st checkpoint we designed all of the screens for the app in xml and set up proper navigation between all screens. We designed <br>
-        each screen as a fragment and each screen has a toolbar across the top containing a search icon and a slideout menu as well as a title that <br>
-        changes based on which page you are on. We also created a slideout menu that slides in from the left side of the screen and displays all page <br>
-        options to navigate to: Daily, Weekly, Monthly. We also implemented all of our navigation between screens via the slideout menu. When a user <br>
-        clicks on a view option in the menu, they are then taken to the corresponding screen. <p>
-    <h3>Checkpoint 2:</h3>
-    <p>For this checkpoint, we began the implementation of task addition. At this point, a user was able to access the add/edit fragment from any desired screen, <br>
-        and add a task to their set of tasks, while also being able to modify some of the fields for a task. We also were able to successfully update the monthly <br>
-        screen with the addition of a new task.<p>
-    <h3>Checkpoint 3:</h3>
-    <p>For this checkpoint, we accomplished the proper addition of tasks on the Daily screen. We also  added more extensive functionality to the monthly screen <br>
-        to include the display of all tasks for the day the user selects on the calendar. At this point in the project, each individual task on the daily screen can <br>
-        be modified in terms of its attributes, with the changes being immediately applied and updated when the user hits submit. <p>
-    <h3>Checkpoint 4:</h3>
-    <p>For this checkpoint, we accomplished the proper completion of tasks on the Daily and Monthly screens. We also added task sorting based on the priority assigned <br>
-        to the tasks by the user. Additionally, we added checkboxes and sounds to each individual task on the daily screen so tasks could now be completed. We also <br>
-        added database functionality using Firebase and login and registration screens to the application.<p>
-    <h3>Checkpoint 5:</h3>
-    <p>For this checkpoint, we have finished our entire implementation of TASQ. We added basic voice command functionality, which allows the user to trigger voice <br>
-        commands and ask the app to navigate its menus with voice commands. Additionally, we added Google Maps support to the application, which allows the user to <br>
-        associate tasks with locations by adding addresses to a task that the user is creating/modifying. Alongside the big implementations, we touched up and fixed <br>
-        smaller portions of the application to finalize its performance for the current version. <p>
+            <h2>Find out more more information!</h2>
+            <p>If you would like more information before you get started to can vist our frequently
+            asked questions page where we break down some common misconseptions about mutual aid
+            and some more information on just how exactly you can use this site! Click the button
+            to go here.</p>
+            <a href="/faq">Frequently Asked Questions</a>
+            <h2>See Mutual Aid Groups in your area!</h2>
+            <p>Use the Mutual Aid Map page to view groups that exist near you. If you
+            click any of the links on the map, you will be taken to that mutual aid groups'
+            page. We encourage you to find a group near you to support and be a part of! Click
+             the button below to view the map. </p>
+            <a href="/map">Mutual Aid Map</a>
+            <h2><br>Any questions or comments?</h2>
+            <p>Please contact us at the following!</p>
+          <button  onclick="showContact()">Contact Us</button>
+            <p></p>
+
+        </div>
+        <div class="welcomeBlock">
+            <div class="welcomeContent">
+                <h1>Welcome to Bellingham Mutual Aid!</h1>
+                <p>We are glad you made it!</p>
+            </div>
+        </div>
     </div>
-</div>
-<div>
-<button id = "features" type="button" class="buttonStyle">Features of our finished App</button>
-</div>
-<div id=”finalFeatures” class="modal">
-  <div class = "modal-content">
-<h2>Current MVC Architecture:</h2>
-<p>Model:</p>
-<ul>
-<li>AddEditFragment.java - the file contains all the functionality for creating a new task. All task attributes are modified or added through this class.</li>
-<li>DailyFragment.java - the file contains all the functionality for the daily screen. All individual task fetching and storage, as well as addition are done <br>
-    through this class.</li>
-<li>MonthlyFragment.java - the file contains all the functionality for the monthly screen. The class creates and stores the calendar, as well as any <br>
-    modifications that happen to the screen are done through this file.</li>
-<li>SometimeFragment.java -  the file contains all the functionality for the ‘Sometime’ screen. The functionality is the same as DailyFragment.java, <br>
-    however it contains all tasks without a specific date. </li>
-<li>WeeklyFragment.java - the file contains all the functionality for the weekly screen. Any tasks found within the week are managed and modified through this <br>
-    class. This class also stores all information for the specific week. </li>
-<li>Task.java: The file contains the necessary variables for a single task, which consists of Task Text, Due Date, Color, and a Completed Flag. We will still <br>
-    add more functionality to the Task class to cover </li>
-<li>Login.java: This file connects to the Firebase “Users” table and processes input from the user to search the database for a corresponding email and password. <br>
-    If a match is found, the user is then logged in and directed to the “Daily” screen.</li>
-<li>Registration.java: This file connects to the Firebase “Users” table and processes input from the user to add to the database. The user’s email and password is <br>
-    saved in the database so that the user can login again. After a successful addition to the database, the user is then logged in and directed to the “Daily” page.</li>
-<li>AddressParser.java: Checks the user-inputted address with the GeoCoder and returns an Address </li>
-<li>VoiceCommands.java: This java file is called by MainActivity to get the best match between the list generated by the computer for what the user <br>
-    might have said via voice input and the list we created of options for the user to say (which is a list of screens to navigate to). </li>
-</ul>
-<p>View:</p>
-<ul>
-<li> *ViewModel.java classes - all such classes found in their respective folders (associated with a specific screen) are view classes. These classes aid <br>
-    the app with screen rotations and general UI support. </li>
-<li>*.xml files in package ‘layout’ - all files in the layout folder are the general visual layouts for each respective screen. These are the files that are <br>
-    displayed visually to the user, thus they are the View portion of our model. </li>
-</ul>
-<p>Controller:</p>
-<ul>
-<li>MainActivity.java - currently, this is our controller file. It connects the View files with our Model files, and instantiates the communication between the user <br>
-    and the inner workings of the application.</li>
-</ul>
 
-<h2>Final Features:</h2>
-<ul>
-<li>Login and Registration capability: <br>
-The user is prompted to either login or register when they first open the app. We are using Google Firebase to add users to a database on register and also <br>
-    search the database to find user credentials on login. After a successful login or registration, the user is taken to the Daily Screen.</li>
-<li>View Tasks on Daily Screen: <br>
-Users tasks are shown on the daily screen for the current day. Only the description of the task is shown, however, if the user clicks on the task, all of the task <br>
-    information will be displayed and able to be edited. Each task has a checkbox that can be checked when the task is completed, if a task is completed, the text <br>
-    becomes crossed out.</li>
-<li>View Tasks on Weekly Screen: <br>
-Users tasks are displayed on the weekly screen for the current week (from Monday-Sunday) ordered by day. Like the daily screen, tasks can be clicked on to be edited or <br>
-    to display task information and tasks can be completed by checking the checkbox next to it. </li>
-<li>View Tasks on Monthly Screen: <br>
-The monthly screen displays user tasks on a calendar with colored dots corresponding to the “color” of the task. When a user clicks a day, all of the tasks for that day <br>
-    are displayed at the bottom of the screen. A user can also choose to view these tasks on the daily screen (day set to clicked day) so that they can be edited. The <br>
-    user can scroll through months to see tasks as far in the past and future as they would like.</li>
-<li>View Tasks on Someday Screen: <br>
-When adding a task, a user can choose to not enter a due date, meaning that they just hope to complete the task “someday”. These tasks are displayed on the someday <br>
-    screen. On the someday screen, tasks can be clicked on to be displayed and edited and can be checked to be marked as completed. Tasks are ordered by priority. </li>
-<li>Add Tasks: <br>
-The Add Task screen is displayed when a user clicks the “+” button on any screen. On the add task screen, a user can create a task with the following fields: Description, <br>
-    Color, Priority, Location, and Due Date. Upon submitting the new task, the task is then added to the users’ list of tasks and can be displayed on its corresponding screens. </li>
-<li>Edit Tasks: <br>
-The Edit Task screen can be viewed by clicking on any task on the Daily, Weekly, or Someday screens. On the edit task page, all of the information about the clicked <br>
-    task is displayed and the user has the option to edit any field. The fields they can edit are: Description, Color, Priority, Location, and Due Date. Once the <br>
-changes are submitted, the view for this task on every screen is updated. </li>
-<li>Complete Tasks: <br>
-As explained above, tasks can be completed using the checkboxes associated with each task on every screen (besides monthly). Once a task is completed, it is still <br>
-    displayed but its text is crossed out. A user can also uncheck a checked task to mark it as not completed again.</li>
-<li>View Tasks on a Map: <br>
-If a user chooses to input a location associated with a task, these tasks can now be viewed on a Maps page using google maps. The Maps page is centered around <br>
-    where the user lives (and is adding tasks) and each task shows up as its own marker.</li>
-<li>Voice Command capability: <br>
- If the user presses the microphone button on any screen, they are then prompted to speak the name of a page that they wish to navigate to (for example, if they want <br>
-    to view their daily page they would say “Daily”). The device then listens for input and directs the user to whichever screen they have said.</li>
-</ul>
-
-<h2>GitHub Repository:</h2>
-<a href="https://github.com/tasqapp/TASQ-Android">TASQ GitHub</a>
-
-<h2>GitHub ReadMe:</h2>
-<p>Run instructions <br>
-
-1. Download Group5-TASQ-Checkpoint1.apk on the Android device you wish to run the application on <br>
-2. Once downloaded, select the file and open it. When prompted, select 'yes' <br>
-3. The application will begin installing on your device. Once the installation is complete, select the application, or simply click 'OPEN' on the installation screen. <br>
-
-NOTE: <br>
-1. To add a task, the date must be in the following format: MM.DD.YYYY <br>
-2. The LOG statements in the code are only used to show that the data is being transferred correctly between screens. </p>
-</div>
-</div>
-<div>
-<button  id = "future" type="button" class="buttonStyle">Future TASQ work</button>
-</div>
-<div id="futureWork" class="modal">
-  <div class = "modal-content">
-    <h2>Future Work</h2>
-    <p>
-        By continuing to work on TASQ we could continue to refine the UI and features that we have. One improvement we could make is implementing full task <br>
-        syncing across devices, expanding on our use of a database. By doing so we could improve the user experience when using the app.
-    </p>
-  </div>
-</div>
-
-    <div id="team">
-        <h3>The development team:</h3>
-        <div class="contributor">
-            <p class="name">Hannah Buzard</p>
-            <p class="email">buzardh@wwu.edu</p>
-        </div>
-        <div class="contributor">
-            <p class="name">David Kipnis</p>
-            <p class="email">kipnisd@wwu.edu</p>
-        </div>
-        <div class="contributor">
-            <p class="name">Tyler Kjeldgaard</p>
-            <p class="email">kjeldgt@wwu.edu</p>
-        </div>
-        <div class="contributor">
-            <p class="name">Daniel Shtunyuk</p>
-            <p class="email">shtunyd@wwu.edu</p>
+    {{> footer}}
+    {{> loginModals}}
+    <div id="contactModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close3">&times;</span>
+            <div class ="headerPortion">
+                <h2 id = "ticketTitle"> Contact Us! </h2>
+            </div>
+            <form action="send-email" method="POST" id = "contactForm">
+                <div class = "titleContent">
+                    <p> Full Name</p>
+                    <input type="text" name="fullname" class = "no-outline" placeholder="Enter full name ... ">
+                </div>
+                <div class = "titleContent">
+                    <p> Email Address</p>
+                    <input type="text" name="emailAdd" class = "no-outline" placeholder="Enter email address ... ">
+                </div>
+                <div class = "titleContent">
+                    <p> Message: </p>
+                    <input type="text" name="message" class = "no-outline" placeholder="Enter message content ... ">
+                </div>
+                <p > We will get back to you as soon as possible! Thank you.</p>
+                <div>
+                    <p style = "color: #FF0000; font-size:12px"> {{ contact }} </p>
+                </div>
+                <div class = "submitButton">
+                    <li><button type="submit" value = "Submit" form = "contactForm" class="action-button secondary" id = "messageButton">Send</button></li>
+                </div>
+          </form>
         </div>
     </div>
     <script>
-        var intromodal = document.getElementById("appIntro");
-        var introbutton = document.getElementById("intro");
-        var evobutton = document.getElementById("evolution");
-        var evomodal = document.getElementById("evolutionmodal");
-        var featuresmodal = document.getElementById("finalFeatures");
-        var featuresbutton = document.getElementById("features");
-        var futuremodal = document.getElementById("futureWork");
-        var futurebutton = document.getElementById("future");
-        featuresbutton.onclick = function() {
-            featuresmodal.style.display = "block";
-            evomodal.style.display = "none";
-            futuremodal.style.display = "none";
-            intromodal.style.display = "none";
-        }
-        futurebutton.onclick = function() {
-            featuresmodal.style.display = "none";
-            evomodal.style.display = "none";
-            futuremodal.style.display = "block";
-            intromodal.style.display = "none";
-        }
-        introbutton.onclick = function() {
-           console.log("button clicked");
-            featuresmodal.style.display = "none";
-            evomodal.style.display = "none";
-            futuremodal.style.display = "none";
-            intromodal.style.display = "block";
-        }
-        evobutton.onclick = function() {
-            featuresmodal.style.display = "none";
-            evomodal.style.display = "block";
-            futuremodal.style.display = "none";
-            intromodal.style.display = "none";
-        }
-        window.onclick = function(event) {
-          if (event.target == intromodal) {
-              intromodal.style.display = "none";
-          }
-          if (event.target == evomodal) {
-              evomodal.style.display = "none";
-          }
-          if (event.target == featuresmodal) {
-              featuresmodal.style.display = "none";
-          }
-          if (event.target == futuremodal) {
-              futuremodal.style.display = "none";
-          }
+      function showContact() {
+        var contactModal = document.getElementById("contactModal");
+        contactModal.style.display = "block";
         }
     </script>
-</body>
+    </body>
 </html>
