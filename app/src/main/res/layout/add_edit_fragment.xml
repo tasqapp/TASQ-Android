@@ -51,17 +51,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/due_date_label"
-                android:layout_alignParentStart="true"
                 android:datePickerMode="spinner"
+                android:layout_marginStart="10dp"
                 android:calendarViewShown="false"
-                android:layout_alignParentEnd="true"/>
+                android:layout_alignParentStart="true"/>
 
             <TextView
                 android:id="@+id/task_priority_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/add_date_picker"
-                android:layout_marginStart="50dp"
+                android:layout_below="@+id/radiobuttons"
+                android:layout_toRightOf="@id/add_date_picker"
                 android:layout_marginTop="20dp"
                 android:text="Task Priority"
                 android:textColor="@color/text_black"/>
@@ -77,13 +77,32 @@
                 android:layout_alignLeft="@id/task_priority_label" />
 
             <TextView
+                android:id="@+id/no_due_date_label"
+                android:layout_toRightOf="@+id/add_date_picker"
+                android:layout_alignTop="@+id/due_date_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_due_date"
+                android:textColor="@color/black"
+                />
+
+            <CheckBox
+                android:id="@+id/no_due_date_check"
+                android:layout_below="@id/no_due_date_label"
+                android:layout_toRightOf="@id/add_date_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
                 android:id="@+id/color_tags_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_below="@+id/add_date_picker"
-                android:layout_marginEnd="109dp"
+                android:layout_below="@+id/no_due_date_check"
+                android:layout_toRightOf="@+id/add_date_picker"
                 android:layout_marginTop="20dp"
+                android:layout_marginEnd="75dp"
                 android:text="@string/color_tags_text"
                 android:textColor="@color/text_black"/>
 
@@ -119,9 +138,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/address_label"
-                android:layout_below="@id/priority_spinner"
-                android:layout_alignLeft="@id/priority_spinner"
-                android:layout_marginTop="40dp"
+                android:layout_below="@id/add_date_picker"
+                android:layout_alignLeft="@id/due_date_label"
+                android:layout_marginTop="20dp"
                 android:text="@string/address"
                 android:textColor="@color/text_black"/>
             

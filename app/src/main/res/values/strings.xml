@@ -10,6 +10,7 @@
     <string name="weekly_week_of">Week of:</string>
     <string name="address">Address</string>
     <string name="add_an_address_or_location_here">add an address or location here...</string>
+    <string name="no_due_date">No due date?</string>
 
     <string-array name="priority_list">
         <item>Low</item>
